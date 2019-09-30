@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+dao层接口的全限定名和namespace一样
+dao层接口中的方法名和映射文件中增删改查配置的statement id一致
+方法的参数和配置的输入参数保持一致
+方法的返回值类型和配置中返回类型保持一致
+ -->
+<mapper namespace="com.yh.mapper.ThemeMapper">
+
+    <!--zxs:社区页面最新发布的信息并包括讲师信息，帖子类型，按照发布时间降序排列，也就是最新发布-->
+    <select id="findAllTheme" resultMap="theme_card">
+       SELECT
+            t_theme.theme_id,
+            t_theme.theme_title,
+            t_theme.type_id,
+            t_theme.theme_info,
+            t_theme.img_url,
+            t_theme.theme_user_id,
+            t_theme.upload_time,
+            t_theme.watch_number,
+            t_user.user_id,
+            t_user.ID,
+            t_user.username,
+            t_user.`password`,
+            t_user.phone,
+            t_user.email,
+            t_user.user_type_id,
+            t_user.user_img_url,
+            t_user.user_info,
+            t_type.type_id,
+            t_type.type_name,
+            t_user_type.user_type_id,
+            t_user_type.user_type_name
+            FROM
+            t_theme
+            LEFT JOIN t_type ON t_theme.type_id = t_type.type_id
+            LEFT JOIN t_user ON t_theme.theme_user_id = t_user.user_id
+            LEFT JOIN t_user_type ON t_user.user_type_id = t_user_type.user_type_id
+            ORDER BY
+            t_theme.upload_time DESC
+    </select>
+
+    <resultMap id="theme_card" type="Theme" >
+        <!--主键-->
+        <id column="theme_id" property="themeId"></id>
+        <!--普通属性-->
+        <result column="type_id" property="typeId"></result>
+        <result column="theme_title" property="themeTitle"></result>
+        <result column="theme_info" property="themeInfo"></result>
+        <result column="img_url" property="imgUrl"></result>
+        <result column="upload_time" property="uploadTime"></result>
+        <result column="watch_number" property="watchNumber"></result>
+        <result column="theme_user_id" property="themeUserId"></result>
+        <association property="type" javaType="Type">
+            <id property="typeId" column="type_id"></id>
+            <result property="typeName" column="type_name"></result>
+        </association>
+        <collection property="user" javaType="User">
+            <id property="userId" column="user_id"></id>
+            <result column="ID" property="Id"></result>
+            <result column="username" property="username"></result>
+            <result column="password" property="password"></result>
+            <result column="phone" property="phone"></result>
+            <result column="email" property="email"></result>
+            <result column="user_img_url" property="userImgUrl"></result>
+            <result column="user_info" property="userInfo"></result>
+            <result column="user_type_id" property="userTypeId"></result>
+            <association property="userType" javaType="UserType" >
+                <id property="userTypeId" column="user_type_id"></id>
+                <result property="userTypeName" column="user_type_name"></result>
+            </association>
+        </collection>
+    </resultMap>
+
+    <!--zxs:社区的发布功能，具体需要添加帖子标题，描述，图片地址，标签，以及当前时间和themeUserId-->
+    <insert id="addTheme">
+        INSERT INTO t_theme (theme_title,type_id,theme_info,img_url,theme_user_id,upload_time)
+        VALUES (#{theme.themeTitle},#{theme.typeId},#{theme.themeInfo},#{theme.imgUrl},#{theme.themeUserId},#{theme.uploadTime});
+    </insert>
+
+</mapper>

@@ -44,6 +44,32 @@ public class Theme implements Serializable {
      * 浏览数
      */
     private Integer watchNumber;
+    /*张栩生
+    *添加User对象
+    * */
+    private User user;
+
+    private Type type;
+
+
+   //end张栩生
+
+
+    @Override
+    public String toString() {
+        return "Theme{" +
+                "themeId='" + themeId + '\'' +
+                ", themeTitle='" + themeTitle + '\'' +
+                ", typeId=" + typeId +
+                ", themeInfo='" + themeInfo + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", themeUserId='" + themeUserId + '\'' +
+                ", uploadTime=" + uploadTime +
+                ", watchNumber=" + watchNumber +
+                ", user=" + user +
+                ", type=" + type +
+                '}';
+    }
 
     public String getThemeId() {
         return themeId;
@@ -107,5 +133,21 @@ public class Theme implements Serializable {
 
     public void setWatchNumber(Integer watchNumber) {
         this.watchNumber = watchNumber;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 }

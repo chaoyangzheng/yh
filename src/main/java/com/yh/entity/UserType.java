@@ -21,6 +21,14 @@ public class UserType implements Serializable {
      */
     private String userTypeName;
 
+    @Override
+    public String toString() {
+        return "UserType{" +
+                "userTypeId=" + userTypeId +
+                ", userTypeName='" + userTypeName + '\'' +
+                '}';
+    }
+
     public Integer getUserTypeId() {
         return userTypeId;
     }

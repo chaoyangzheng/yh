@@ -21,6 +21,14 @@ public class Type implements Serializable {
      */
     private String typeName;
 
+    @Override
+    public String toString() {
+        return "Type{" +
+                "typeId=" + typeId +
+                ", typeName='" + typeName + '\'' +
+                '}';
+    }
+
     public Integer getTypeId() {
         return typeId;
     }

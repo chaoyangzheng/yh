@@ -53,6 +53,26 @@ public class User implements Serializable {
      */
     private String userInfo;
 
+    /*张栩生添加
+    * 需要一个金牌老师的对象*/
+    private UserType userType;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", Id=" + Id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", userTypeId=" + userTypeId +
+                ", userImgUrl='" + userImgUrl + '\'' +
+                ", userInfo='" + userInfo + '\'' +
+                ", userType=" + userType +
+                '}';
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -123,5 +143,13 @@ public class User implements Serializable {
 
     public void setUserInfo(String userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 }

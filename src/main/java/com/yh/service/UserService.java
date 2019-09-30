@@ -7,4 +7,5 @@ package com.yh.service;
  * @date 2019/9/29
  */
 public interface UserService {
+
 }
