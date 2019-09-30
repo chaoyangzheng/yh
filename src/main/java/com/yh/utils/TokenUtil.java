@@ -1,10 +1,19 @@
 package com.yh.utils;
 
 /**
- * 请后来修改者按照这个格式添加备注
- * 示例：为了第一次推送，未添加任何数据
- * @author chaoyang
- * @date 2019/9/29
+ * 接收 String 类型的 user_id
+ * 返回 token 值
+ * （约定：盐「当前时间」、生成的 token 英文全部大写）
+ * @author yuanzhe
+ * @date 2019/9/30
  */
 public class TokenUtil {
+
+    public static String TokenProcessor(String userId){
+
+        long millisTime = System.currentTimeMillis();
+
+        String token = MD5Utils.md5(userId + millisTime).toUpperCase();
+        return token;
+    }
 }

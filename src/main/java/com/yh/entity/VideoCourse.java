@@ -56,6 +56,10 @@ public class VideoCourse implements Serializable {
      * 观看数
      */
     private Integer watchNumber;
+    /**
+     * 视频价格
+     */
+    private Double videoPrice;
 
     public String getVideoCourseId() {
         return videoCourseId;
@@ -143,5 +147,13 @@ public class VideoCourse implements Serializable {
 
     public void setWatchNumber(Integer watchNumber) {
         this.watchNumber = watchNumber;
+    }
+
+    public Double getVideoPrice() {
+        return videoPrice;
+    }
+
+    public void setVideoPrice(Double videoPrice) {
+        this.videoPrice = videoPrice;
     }
 }

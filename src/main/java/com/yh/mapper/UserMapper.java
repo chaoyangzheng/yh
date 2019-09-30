@@ -4,6 +4,8 @@ import com.yh.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+import com.yh.entity.User;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -22,4 +24,17 @@ public interface UserMapper {
     public List<User> getGoldenUserForTch();
 
 
+    /**
+     * 功能描述
+     * 通过手机号和密码查询用户
+     * 通过邮箱和密码查询用户
+     * @author chaoyang
+     * @date 2019/9/30
+     * @param  * @param user
+     * @return com.yh.entity.User
+     */
+    @Select("select * from t_user where phone = #{phone} and password = #{password}")
+    User findUserbyPhonePwd(User user);
+    @Select("select * from t_user where email = #{email} and password = #{password}")
+    User findUserbyEmailPwd(User user);
 }
