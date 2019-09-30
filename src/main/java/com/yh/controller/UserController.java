@@ -3,6 +3,7 @@ package com.yh.controller;
 import com.yh.common.JsonResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -15,6 +16,12 @@ import java.util.Map;
  */
 @RestController
 public class UserController {
+    @RequestMapping(value = "/login.do",method = RequestMethod.POST)
+    public void userLogin(@RequestBody Map<String,Object> map){
+        //System.out.println(map);
+        String username = (String) map.get("email");
+
+    }
     /**
      * 功能描述
      * @author chaoyang
@@ -26,5 +33,6 @@ public class UserController {
         System.out.println(map);
         return new JsonResult("0",null);
     }
+
 
 }
