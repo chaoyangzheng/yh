@@ -14,6 +14,7 @@ public class TokenUtil {
     public static String TokenProcessor(String userId){
 
         long millisTime = System.currentTimeMillis();
+
         String token = MD5Utils.md5(userId + millisTime).toUpperCase();
         return token;
     }
