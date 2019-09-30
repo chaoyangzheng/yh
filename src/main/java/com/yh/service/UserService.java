@@ -9,5 +9,12 @@ import java.util.Map;
  * @date 2019/9/29
  */
 public interface UserService {
-    public String login(Map<String ,Object> map);
+
+    String login(Map<String ,Object> map);
+    String regedit(Map<String ,Object> map);
+
+    boolean findEmailOrPhone(Map<String, Object> map);
+
+    String getTokenFromRedisUserId(String userId);
+    String getUserIdFromRedisToken(String token);
 }

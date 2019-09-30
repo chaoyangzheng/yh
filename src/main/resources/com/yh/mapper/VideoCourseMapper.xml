@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yh.mapper.VideoCourseMapper">
+
+    <select id="findRandomVideoCourse" resultType="VideoCourse">
+        SELECT
+        t_video_course.video_course_id,
+        t_video_course.video_course_name,
+        t_video_course.video_title,
+        t_video_course.video_info,
+        t_video_course.type_id,
+        t_video_course.video_course_url,
+        t_video_course.video_course_img_url,
+        t_video_course.upload_user_id,
+        t_video_course.upload_time,
+        t_video_course.teacher_user_id,
+        t_video_course.watch_number
+        FROM
+        t_video_course
+        ORDER BY
+        t_video_course.upload_time DESC
+        LIMIT 0, 10
+    </select>
+
+</mapper>
