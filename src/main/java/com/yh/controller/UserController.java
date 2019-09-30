@@ -1,6 +1,8 @@
 package com.yh.controller;
 
 import com.yh.common.JsonResult;
+import com.yh.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,11 +18,27 @@ import java.util.Map;
  */
 @RestController
 public class UserController {
-    @RequestMapping(value = "/login.do",method = RequestMethod.POST)
-    public void userLogin(@RequestBody Map<String,Object> map){
-        //System.out.println(map);
-        String username = (String) map.get("email");
 
+    @Autowired
+    UserService userService;
+    /**
+     * 功能描述
+     * @author chaoyang
+     * @date 2019/9/30
+     * @param  * @param map
+     * @return void
+     */
+    @RequestMapping(value = "/login.do",method = RequestMethod.POST)
+    public JsonResult userLogin(@RequestBody Map<String,Object> map){
+
+        if (map.get("token")==null&&map.get("password")==null){
+            return new JsonResult("1","passwordNull");
+        }
+        String token = userService.login(map);
+        if (token!=null){
+            return new JsonResult("0",token);
+        }
+        return new JsonResult("1","error");
     }
     /**
      * 功能描述

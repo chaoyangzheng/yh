@@ -1,7 +1,6 @@
 package com.yh.mapper;
 
 import com.yh.entity.Draft;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -10,7 +9,6 @@ import java.util.List;
  * @date 2019/9/30
  * 草稿接口
  */
-@Repository
 public interface DraftMapper {
     /**
      * 功能描述:查看某人所有的草稿
