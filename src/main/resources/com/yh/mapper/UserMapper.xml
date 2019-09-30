@@ -33,4 +33,10 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
             <result property="userTypeName" column="user_type_name"></result>
         </association>
     </resultMap>
+    <insert id="addUserByPhone" >
+        insert into t_user (user_id,phone,password) values (#{userId},#{phone},#{password})
+    </insert>
+    <insert id="addUserByEmail">
+         insert into t_user (user_id,email,password) values (#{userId},#{email},#{password})
+    </insert>
 </mapper>
