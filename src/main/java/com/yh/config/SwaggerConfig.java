@@ -42,13 +42,16 @@ public class SwaggerConfig {
      * 创建该API的基本信息（这些基本信息会展现在文档页面中）
      * 访问地址：http://项目实际地址/swagger-ui.html
      *
-     * @return
+     * @author chaoyang
+     * @date 2019/9/30
+     * 更改了链接地址
+     *
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("测试 APIs")
                 .description("测试api接口文档")
-                .termsOfServiceUrl("http://www.qfedu.com")
+                .termsOfServiceUrl("http://15637237221.wicp.vip/yh/swagger-ui.html")
                 .version("1.0")
                 .build();
     }

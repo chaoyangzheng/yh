@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yh.mapper.ActiveMapper">
+
+    <select id="findLatestActive" resultType="Active">
+        SELECT
+        t_active.active_id,
+        t_active.active_name,
+        t_active.begin_time,
+        t_active.end_time,
+        t_active.active_info,
+        t_active.user_id,
+        t_active.active_type,
+        t_active.active_address,
+        t_active.active_img_url
+        FROM
+        t_active
+        ORDER BY
+        t_active.begin_time DESC
+        LIMIT 0, 4
+    </select>
+
+</mapper>
