@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yh.mapper.CourseTypeMapper">
+
+    <select id="findAllCourseType" resultType="CourseType">
+        SELECT
+        t_course_type.course_type_id,
+        t_course_type.course_type_name
+        FROM
+        t_course_type
+    </select>
+
+</mapper>
