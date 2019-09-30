@@ -1,8 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+dao层接口的全限定名和namespace一样
+dao层接口中的方法名和映射文件中增删改查配置的statement id一致
+方法的参数和配置的输入参数保持一致
+方法的返回值类型和配置中返回类型保持一致
+ -->
 <mapper namespace="com.yh.mapper.UserMapper">
+    <select id="findAllUser" resultMap="user_card">
+        select * from t_user u,t_user_type ut where u.user_type_id = ut.user_type_id
+    </select>
+
+    <select id="getGoldenUserForTch" resultMap="user_card">
+        select *  from t_user u,t_user_type ut where u.user_type_id = ut.user_type_id and u.user_type_id = 4
+    </select>
+
+    <resultMap id="user_card" type="User" >
+        <!--主键-->
+        <id column="user_id" property="userId"></id>
+        <!--普通属性-->
+        <result column="ID" property="Id"></result>
+        <result column="username" property="username"></result>
+        <result column="password" property="password"></result>
+        <result column="phone" property="phone"></result>
+        <result column="email" property="email"></result>
+        <result column="user_img_url" property="userImgUrl"></result>
+        <result column="user_info" property="userInfo"></result>
+        <association property="userType" javaType="UserType" >
+            <id property="userTypeId" column="user_type_id"></id>
+            <result property="userTypeName" column="user_type_name"></result>
+        </association>
+    </resultMap>
     <insert id="addUserByPhone" >
         insert into t_user (user_id,phone,password) values (#{userId},#{phone},#{password})
     </insert>
