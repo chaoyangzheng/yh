@@ -2,6 +2,9 @@ package com.yh.controller;
 
 import com.yh.common.JsonResult;
 import com.yh.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +19,9 @@ import java.util.Map;
  * @author chaoyang
  * @date 2019/9/29
  */
+@Api("我的页面功能模块")
 @RestController
+@RequestMapping("/mine/")
 public class UserController {
 
     @Autowired
@@ -25,9 +30,11 @@ public class UserController {
      * 功能描述
      * @author chaoyang
      * @date 2019/9/30
-     * @param  * @param map
+     * @param  map
      * @return void
      */
+    @ApiOperation(value="用户登录", notes="自动登录需要传送token，手机号/邮箱加密码不需要传递token")
+    @ApiModelProperty(value = "传递的字段应该为'token'或者'password'和'loginCount',其中手机号或邮箱的值都要放到loginCount中")
     @RequestMapping(value = "/login.do",method = RequestMethod.POST)
     public JsonResult userLogin(@RequestBody Map<String,Object> map){
 
@@ -40,16 +47,15 @@ public class UserController {
         }
         return new JsonResult("1","error");
     }
-    /**
-     * 功能描述
-     * @author chaoyang
-     * @date 2019/9/30
-     * 我的模块：
-     */
-    @RequestMapping("/myDraft.do")
-    public JsonResult findMyDraft(@RequestBody Map<String,Object> map){
-        System.out.println(map);
-        return new JsonResult("0",null);
+
+    @ApiOperation(value="检查账户是否存在", notes="传递的数据名称：loginCount")
+    @RequestMapping(value = "/checkPhoneOrEmail.do",method = RequestMethod.POST)
+    public JsonResult checkPhoneOrEmail(@RequestBody Map<String,Object> map){
+        boolean emailOrPhone = userService.findEmailOrPhone(map);
+        if (emailOrPhone){
+            return new JsonResult("1","已存在");
+        }
+        return new JsonResult("0","可用");
     }
 
 
