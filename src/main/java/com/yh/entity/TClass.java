@@ -9,9 +9,10 @@ import java.util.Date;
  * @author SHIGUANGYI
  * @date 2019/9/30
  * 班级
+ * 和关键字冲突，故开头加T区分
  */
 @Component
-public class Class implements Serializable {
+public class TClass implements Serializable {
     /**
      * 班级id，UUID
      */
