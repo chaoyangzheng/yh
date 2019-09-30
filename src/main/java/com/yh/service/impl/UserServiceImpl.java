@@ -3,12 +3,12 @@ package com.yh.service.impl;
 import com.yh.entity.User;
 import com.yh.mapper.UserMapper;
 import com.yh.service.UserService;
+import com.yh.utils.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -62,7 +62,8 @@ public class UserServiceImpl implements UserService {
             user = userMapper.findUserbyPhonePwd(user);
         }
         //生成token
-        token = UUID.randomUUID().toString().replace("-","").toUpperCase();
+        //token = UUID.randomUUID().toString().replace("-","").toUpperCase();
+        token = TokenUtil.TokenProcessor(user.getUserId());
         //删除之前的redis中存储的值
         //将用户放到redis中
         //通过用户设置token，若返回null，则不需要删除token，若返回结果，删除token中对应的值

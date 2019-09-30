@@ -11,10 +11,10 @@ import java.util.Date;
  */
 public class TokenUtil {
 
-    public String TokenProcessor(String user_id){
+    public static String TokenProcessor(String userId){
 
         String nowTime = new Date().toString();
-        String token = MD5Utils.md5(user_id + nowTime).toUpperCase();
+        String token = MD5Utils.md5(userId + nowTime).toUpperCase();
         return token;
     }
 }
