@@ -42,6 +42,9 @@ public class TokenFilter implements Filter {
         if (uri.contains("login")) {
             chain.doFilter(req, resp);
         }
+        if (uri.contains("swagger")) {
+            chain.doFilter(req, resp);
+        }
         // 获取请求体中的 token
         String token = request.getParameter("token");
 
