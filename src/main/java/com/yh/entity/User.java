@@ -53,8 +53,10 @@ public class User implements Serializable {
      */
     private String userInfo;
 
-    /*张栩生添加
-    * 需要一个金牌老师的对象*/
+    /**
+     * 张栩生添加
+     * 需要一个金牌老师的对象
+     */
     private UserType userType;
 
     @Override
