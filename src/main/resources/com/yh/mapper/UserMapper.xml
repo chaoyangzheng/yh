@@ -39,4 +39,15 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
     <insert id="addUserByEmail">
          insert into t_user (user_id,email,password) values (#{userId},#{email},#{password})
     </insert>
+
+
+<!--    &lt;!&ndash;author:zxs&ndash;&gt;-->
+<!--    <select id="findHotSuperUserById" resultType="User" parameterType="java.util.Map">-->
+<!--        select * from t_user where-->
+<!--        <foreach collection="map.keys" item="m" separator="and">-->
+<!--            <if test="null!=map[m]">-->
+<!--                ${m} = #{map.${m}}-->
+<!--            </if>-->
+<!--        </foreach>-->
+<!--    </select>-->
 </mapper>
