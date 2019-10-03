@@ -4,7 +4,7 @@
 
 <mapper namespace="com.yh.mapper.VideoCourseMapper">
 
-    <select id="findLatestBasicVideoCourse" resultType="VideoCourse">
+    <select id="findLatestSingleVideoCourse" resultType="VideoCourse">
         SELECT
         t_video_course.video_course_id,
         t_video_course.video_course_name,
@@ -28,7 +28,7 @@
         LIMIT 0, 10
     </select>
 
-    <select id="findHottestBasicVideoCourse" resultType="VideoCourse">
+    <select id="findHottestSingleVideoCourse" resultType="VideoCourse">
         SELECT
         t_video_course.video_course_id,
         t_video_course.video_course_name,
@@ -52,7 +52,7 @@
         LIMIT 0, 1
     </select>
 
-    <select id="findVideoCourseDefault" resultType="VideoCourse">
+    <select id="findVideoCourseComprehensive" resultType="VideoCourse" parameterType="Integer">
         SELECT
         t_video_course.video_course_id,
         t_video_course.video_course_name,
@@ -69,11 +69,15 @@
         t_video_course.course_type_id
         FROM
         t_video_course
+        <if test="typeId != 0">
+            WHERE
+            t_video_course.type_id = #{typeId}
+        </if>
         ORDER BY
         t_video_course.video_price DESC
     </select>
 
-    <select id="findVideoCourseHottest" resultType="VideoCourse">
+    <select id="findVideoCourseHottest" resultType="VideoCourse" parameterType="Integer">
         SELECT
         t_video_course.video_course_id,
         t_video_course.video_course_name,
@@ -90,8 +94,117 @@
         t_video_course.course_type_id
         FROM
         t_video_course
+        <if test="typeId != 0">
+            WHERE
+            t_video_course.type_id = #{typeId}
+        </if>
         ORDER BY
         t_video_course.watch_number DESC
     </select>
 
+    <select id="findVideoCourseLatest" resultType="VideoCourse" parameterType="Integer">
+        SELECT
+        t_video_course.video_course_id,
+        t_video_course.video_course_name,
+        t_video_course.video_title,
+        t_video_course.video_info,
+        t_video_course.type_id,
+        t_video_course.video_course_url,
+        t_video_course.video_course_img_url,
+        t_video_course.upload_user_id,
+        t_video_course.upload_time,
+        t_video_course.teacher_user_id,
+        t_video_course.watch_number,
+        t_video_course.video_price,
+        t_video_course.course_type_id
+        FROM
+        t_video_course
+        <if test="typeId != 0">
+            WHERE
+            t_video_course.type_id = #{typeId}
+        </if>
+        ORDER BY
+        t_video_course.upload_time DESC
+    </select>
+
+    <select id="findSingleVideoCourseComprehensive" resultType="VideoCourse" parameterType="Integer">
+        SELECT
+        t_video_course.video_course_id,
+        t_video_course.video_course_name,
+        t_video_course.video_title,
+        t_video_course.video_info,
+        t_video_course.type_id,
+        t_video_course.video_course_url,
+        t_video_course.video_course_img_url,
+        t_video_course.upload_user_id,
+        t_video_course.upload_time,
+        t_video_course.teacher_user_id,
+        t_video_course.watch_number,
+        t_video_course.video_price,
+        t_video_course.course_type_id
+        FROM
+        t_video_course
+        <where>
+            t_video_course.course_type_id = 1
+            <if test="typeId != 0">
+                AND t_video_course.type_id = #{typeId}
+            </if>
+        </where>
+        ORDER BY
+        t_video_course.video_price DESC
+    </select>
+
+    <select id="findSingleVideoCourseHottest" resultType="VideoCourse" parameterType="Integer">
+        SELECT
+        t_video_course.video_course_id,
+        t_video_course.video_course_name,
+        t_video_course.video_title,
+        t_video_course.video_info,
+        t_video_course.type_id,
+        t_video_course.video_course_url,
+        t_video_course.video_course_img_url,
+        t_video_course.upload_user_id,
+        t_video_course.upload_time,
+        t_video_course.teacher_user_id,
+        t_video_course.watch_number,
+        t_video_course.video_price,
+        t_video_course.course_type_id
+        FROM
+        t_video_course
+        <where>
+            t_video_course.course_type_id = 1
+            <if test="typeId != 0">
+                AND t_video_course.type_id = #{typeId}
+            </if>
+        </where>
+        ORDER BY
+        t_video_course.watch_number DESC
+    </select>
+
+    <select id="findSingleVideoCourseLatest" resultType="VideoCourse" parameterType="Integer">
+        SELECT
+        t_video_course.video_course_id,
+        t_video_course.video_course_name,
+        t_video_course.video_title,
+        t_video_course.video_info,
+        t_video_course.type_id,
+        t_video_course.video_course_url,
+        t_video_course.video_course_img_url,
+        t_video_course.upload_user_id,
+        t_video_course.upload_time,
+        t_video_course.teacher_user_id,
+        t_video_course.watch_number,
+        t_video_course.video_price,
+        t_video_course.course_type_id
+        FROM
+        t_video_course
+        <where>
+            t_video_course.course_type_id = 1
+            <if test="typeId != 0">
+                AND t_video_course.type_id = #{typeId}
+            </if>
+        </where>
+        ORDER BY
+        t_video_course.upload_time DESC
+    </select>
 </mapper>

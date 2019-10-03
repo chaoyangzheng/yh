@@ -1,5 +1,8 @@
 package com.yh.service;
 
+import com.yh.entity.User;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,4 +20,8 @@ public interface UserService {
 
     String getTokenFromRedisUserId(String userId);
     String getUserIdFromRedisToken(String token);
+
+
+//    /*author:zxs*/
+//    public List<User> findHotSuperUserById();
 }
