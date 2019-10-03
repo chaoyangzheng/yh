@@ -97,6 +97,8 @@ public interface DraftMapper {
 
 
 
+
+
     /**
      * 点击图片进入课程选择
      *图片来自封面
@@ -104,7 +106,17 @@ public interface DraftMapper {
      *@author rongjing
      */
     //图片视频链接
-public VideoCourse findByVideoCourseImgUrl(String video_course_img_url);
+public VideoCourse findByVideoCourseId(String video_course_id);
 
+
+
+    /**
+     * 查看所有视频封面，分页查询，每页显示10个
+     *图片来自视频封面
+     * @result  List<VideoCourse>
+     *@author rongjing
+     * @date 2019/10/03
+     */
+public List<VideoCourse> findAllVideoCourse();
 
 }

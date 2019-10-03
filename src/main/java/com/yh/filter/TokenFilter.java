@@ -43,6 +43,7 @@ public class TokenFilter implements Filter {
         // 如果与登录相关，直接放行
         if (uri.contains("login")) {
             chain.doFilter(req, resp);
+            return;
         }
         if (uri.contains("swagger")) {
             chain.doFilter(req, resp);
