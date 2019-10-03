@@ -20,7 +20,7 @@ import java.io.IOException;
  * @date 2019/9/30
  */
 
-@WebFilter("/*")
+@WebFilter("*.do")
 public class TokenFilter implements Filter {
 
     @Autowired
@@ -49,10 +49,14 @@ public class TokenFilter implements Filter {
         String token = request.getParameter("token");
 
         // 如果 token 存在，依据 token 得到 value 的值（key —》token，value -》name）
-        String id = stringRedisTemplate.opsForValue().get(token);
-        if (id != null) {
-            chain.doFilter(req, resp);
+        if (token!=null){
+            String id = stringRedisTemplate.opsForValue().get(token);
+
+            if (id != null) {
+                chain.doFilter(req, resp);
+            }
         }
+
         response.sendRedirect(request.getContextPath() + "/login.html");
     }
 
