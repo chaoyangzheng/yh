@@ -62,16 +62,6 @@ public class VideoCourse implements Serializable {
     private Double videoPrice;
 
 
-    /**
-     * 课程价格
-     *
-     */
-    private double videoPrice;
-
-    public double getVideoPrice() {
-        return videoPrice;
-    }
-
     public void setVideoPrice(double videoPrice) {
         this.videoPrice = videoPrice;
     }

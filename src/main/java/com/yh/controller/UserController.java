@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @Api("我的页面功能模块")
 @RestController
-@RequestMapping("/mine/")
+@RequestMapping("/mine")
 public class UserController {
 
     @Autowired
@@ -37,7 +37,6 @@ public class UserController {
     @ApiModelProperty(value = "传递的字段应该为'token'或者'password'和'loginCount',其中手机号或邮箱的值都要放到loginCount中")
     @RequestMapping(value = "/login.do",method = RequestMethod.POST)
     public JsonResult userLogin(@RequestBody Map<String,Object> map){
-
         if (map.get("token")==null&&map.get("password")==null){
             return new JsonResult("1","passwordNull");
         }

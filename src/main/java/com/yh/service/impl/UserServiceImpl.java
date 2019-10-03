@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         //设置密码
         String password = (String) map.get("password");
-        if (firstLocation!=null){
+        if (firstLocation>0){
             if (firstLocation.equals(lastLocation)){
                 //用户使用邮箱登录
                 String email = (String) map.get("loginCount");
