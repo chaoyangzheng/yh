@@ -11,46 +11,85 @@
      * @date 2019/9/30
      *
      -->
+
+
+<!--  sql语句细化，更改人：rongjing 更改时间：2019/10/03-->
     
 <!--  开始画，未发表，添加至草稿  -->
     <insert id="addDraft" parameterType="Draft">
-        insert into t_draft value (draft_id,draft_title,type_id,draft_time,user_id,draft_img_url)
+        insert into t_draft value (#{draft_id},#{draft_title},#{type_id},#{draft_time},#{user_id},#{draft_img_url})
     </insert>
 
 <!--更新草稿-->
     <update id="updataDraft" parameterType="Draft">
-        update  t_draft set draft_title=draft_title,type_id=type_id,draft_time=draft_time,draft_img_url where draft_id=draft_id
+        update  t_draft set draft_title=#{draft_title},type_id=#{type_id},draft_time=#{draft_time} where draft_id=#d{raft_id}
     </update>
 
 
 <!--删除草稿-->
     <delete id="deleteByDraftId" parameterType="string">
-        delete from t_draft where  draft_id=draft_id
+        delete from t_draft where  draft_id=#{draft_id}
     </delete>
 
 
 <!--  查看所有草稿按时间倒序方式 -->
     <select id="findAllDraft" resultType="Draft">
-        select draft_id, draft_title,draft_time,user_id,draft_img_url,type_name from t_draft,t_type where user_id = user_id and type_id=type_id  order by draft_time desc
+        select draft_id, draft_title,draft_time,user_id,draft_img_url,type_name from t_draft,t_type where user_id = #{user_id} and type_id=#{type_id } order by draft_time desc
     </select>
     
     
 <!--  根据草稿类型显示草稿,时间默认倒序  -->
     <select id="findByTypeId" resultType="Draft">
-        select draft_id, draft_title,type_name,draft_time,draft_img_url from t_draft,t_type where user_id = user_id and type_id = type_id by draft_time desc
+        select draft_id, draft_title,type_name,draft_time,draft_img_url from t_draft,t_type where user_id = #{user_id} and type_id = #{type_id} by draft_time desc
     </select>
 
 
 
-
-
+<!--用户点击开始画，进入相应视频课程链接  更改人：rongjing  更改时间2019.10.3-->
 
 <!--  图片与视频课程链接  -->
-    <select id="findByVideoCourseImgUrl" parameterType="string">
-        select video_course_id,video_course_name,video_title,video_info,type_id,video_course_url,video_course_img_url,upload_user_id,upload_time,teacher_user_id,watch_number,video_price
-            from t_video_course where video_course_img_url=video_course_img_url
+    <select id="findByVideoCourseId" parameterType="string" resultType="VideoCourse">
+        SELECT
+            t_video_course.video_course_id,
+            t_video_course.video_course_name,
+            t_video_course.video_title,
+            t_video_course.video_info,
+            t_video_course.type_id,
+            t_video_course.video_course_url,
+            t_video_course.video_course_img_url,
+            t_video_course.upload_user_id
+            FROM
+            t_video_course
+        where video_course_id=#{video_course_id}
     </select>
 
+
+
+
+
+
+
+<!--用户浏览所有视频课程封面，分页显示，每页显示10个    更改人：rongjing    更改时间：2019/10/03-->
+
+    <select id="findAllVideoCourse" resultMap="VideoCourse">
+        SELECT
+            t_video_course.video_course_id,
+            t_video_course.video_course_name,
+            t_video_course.video_title,
+            t_video_course.video_info,
+            t_video_course.type_id,
+            t_video_course.video_course_url,
+            t_video_course.video_course_img_url,
+            t_video_course.upload_user_id,
+            t_video_course.upload_time,
+            t_video_course.teacher_user_id,
+            t_video_course.watch_number,
+            t_video_course.video_price,
+            t_video_course.course_type_id
+        FROM
+            t_video_course
+            LIMIT 0, 10
+    </select>
 
 
 

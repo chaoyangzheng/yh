@@ -3,7 +3,7 @@ package com.yh.mapper;
 import com.yh.entity.Draft;
 import com.yh.entity.Type;
 import com.yh.entity.VideoCourse;
-import org.springframework.stereotype.Repository;
+
 
 import java.util.List;
 
@@ -24,7 +24,18 @@ import java.util.List;
  * @date 2019/9/30
  *
  */
-@Repository
+
+
+
+/**
+ * 查看所有视频封面
+ *图片来自视频封面
+ * @result  List<VideoCourse>
+ *@author rongjing
+ * @date 2019/10/03
+ */
+
+
 public interface DraftMapper {
 
 
@@ -86,6 +97,8 @@ public interface DraftMapper {
 
 
 
+
+
     /**
      * 点击图片进入课程选择
      *图片来自封面
@@ -93,7 +106,17 @@ public interface DraftMapper {
      *@author rongjing
      */
     //图片视频链接
-public VideoCourse findByVideoCourseImgUrl(String video_course_img_url);
+public VideoCourse findByVideoCourseId(String video_course_id);
 
+
+
+    /**
+     * 查看所有视频封面，分页查询，每页显示10个
+     *图片来自视频封面
+     * @result  List<VideoCourse>
+     *@author rongjing
+     * @date 2019/10/03
+     */
+public List<VideoCourse> findAllVideoCourse();
 
 }

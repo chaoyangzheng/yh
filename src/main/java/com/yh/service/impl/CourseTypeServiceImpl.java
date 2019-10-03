@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Service
 public class CourseTypeServiceImpl implements CourseTypeService {
-    @Autowired
+    @Autowired(required = false)
     private CourseTypeMapper courseTypeMapper;
 
     /**
