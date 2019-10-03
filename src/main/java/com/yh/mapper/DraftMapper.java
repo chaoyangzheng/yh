@@ -4,6 +4,7 @@ import com.yh.entity.Draft;
 import com.yh.entity.Type;
 import com.yh.entity.VideoCourse;
 
+
 import java.util.List;
 
 
@@ -23,6 +24,18 @@ import java.util.List;
  * @date 2019/9/30
  *
  */
+
+
+
+/**
+ * 查看所有视频封面
+ *图片来自视频封面
+ * @result  List<VideoCourse>
+ *@author rongjing
+ * @date 2019/10/03
+ */
+
+
 public interface DraftMapper {
 
 

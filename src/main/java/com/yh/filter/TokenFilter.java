@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -15,11 +16,13 @@ import java.io.IOException;
  * 依据 token 对比 value 的值是否存在
  * 如果 value 不存在，跳转登录
  * 如果 value 存在，代表 token 也存在，直接放行
+ *
  * @author yuanzhe
  * @date 2019/9/30
- */
+ *//*
 
-//@WebFilter("*.do")
+
+@WebFilter("/*.do")
 public class TokenFilter implements Filter {
 
     @Autowired
@@ -43,20 +46,24 @@ public class TokenFilter implements Filter {
         }
         if (uri.contains("swagger")) {
             chain.doFilter(req, resp);
+            return;
         }
         // 获取请求体中的 token
         String token = request.getParameter("token");
 
         // 如果 token 存在，依据 token 得到 value 的值（key —》token，value -》name）
-        if (token!=null){
+        if (token != null || !token.equals("")) {
             String id = stringRedisTemplate.opsForValue().get(token);
-
             if (id != null) {
                 chain.doFilter(req, resp);
+                return;
             }
         }
-
-        response.sendRedirect(request.getContextPath() + "/login.html");
+        JsonResult jsonResult = new JsonResult("1", "token为空，跳转登录");
+        Object o = JSONArray.toJSON(jsonResult);
+        String string = o.toString();
+        response.getWriter().write(string);
+        //response.sendRedirect(request.getContextPath() + "/login.html");
     }
 
     public void init(FilterConfig config) throws ServletException {
@@ -64,3 +71,4 @@ public class TokenFilter implements Filter {
     }
 
 }
+*/

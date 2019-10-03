@@ -11,7 +11,18 @@ package com.yh.service;
  */
 
 
+
+
+/**
+ * 错误待纠正
+ *
+ * @author rongjing
+ * @date 2019/10/03
+ */
+
 import com.yh.entity.VideoCourse;
+
+import java.util.List;
 
 /**
  *  用户开始画功能
@@ -27,11 +38,27 @@ public interface DraftService {
     /**
      *  用户开始画功能
      * 点击图片进入相关课程视频
-     * @param video_course_img_url
+     * @author rongjing
+     * @param video_course_id
      * @result VideoCourse
-     *
+     * @date 2019/9/30
      */
-    public VideoCourse findByVideoCourseImgUrl(String video_course_img_url);
+
+    public VideoCourse findByVideoCourseId(String video_course_id);
+
+
+
+    /**
+     *  用户查看课程视频封面
+     * 分页展示，每页显示10个
+     * @author rongjing
+     *
+     * 返回值 视频课程对象集合
+     * @result String
+     * @date 2019/10/03
+     */
+    public  List<VideoCourse> findAllVideoCourse();
+
 
 
 }

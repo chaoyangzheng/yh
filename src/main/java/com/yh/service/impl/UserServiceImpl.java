@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -167,6 +168,15 @@ public class UserServiceImpl implements UserService {
         String userId = stringRedisTemplate.opsForValue().get(token);
         return userId;
     }
+
+//    @Override
+//    public List<User> findHotSuperUserById() {
+//        Map<String,Integer> map = userMapper.findHotSuperUserId();
+//        List<User> hotSuperUserList = userMapper.findHotSuperUserById(map);
+//        return hotSuperUserList;
+//    }
+
+
     /**
      * 登录成功 向redis中添加数据
      * @author chaoyang
