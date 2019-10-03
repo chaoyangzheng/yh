@@ -3,7 +3,6 @@ package com.yh.mapper;
 import com.yh.entity.Draft;
 import com.yh.entity.Type;
 import com.yh.entity.VideoCourse;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -24,7 +23,6 @@ import java.util.List;
  * @date 2019/9/30
  *
  */
-@Repository
 public interface DraftMapper {
 
 
