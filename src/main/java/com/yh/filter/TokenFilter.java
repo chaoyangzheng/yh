@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -20,7 +19,7 @@ import java.io.IOException;
  * @date 2019/9/30
  */
 
-@WebFilter("*.do")
+//@WebFilter("*.do")
 public class TokenFilter implements Filter {
 
     @Autowired

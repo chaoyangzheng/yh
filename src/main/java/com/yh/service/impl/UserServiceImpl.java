@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService {
         String  loginCount = (String) map.get("loginCount");
         Integer emailLocation = loginCount.indexOf("@");
         User user = new User();
-        if (emailLocation==null){
+        if (emailLocation<0){
             //验证手机号
             user = userMapper.findUserByPhone(loginCount);
         }else {
