@@ -111,13 +111,15 @@ public class UserServiceImpl implements UserService {
         String  loginCount = (String) map.get("loginCount");
         Integer emailLocation = loginCount.indexOf("@");
         user.setUserId(UUID.randomUUID().toString().replace("-",""));
-        if (emailLocation==null){
+        if (emailLocation<0){
             //通过手机号注册
             user.setPhone(loginCount);
             userMapper.addUserByPhone(user);
+            user = userMapper.findUserByPhone(loginCount);
         }else {
             user.setEmail(loginCount);
             userMapper.addUserByEmail(user);
+            user = userMapper.findUserByEmail(loginCount);
         }
         //添加过用户之后 生成token，将token保存到redis中
         String token = addTokenIntoRedis(user.getUserId());
