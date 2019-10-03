@@ -57,8 +57,13 @@
             t_video_course.type_id,
             t_video_course.video_course_url,
             t_video_course.video_course_img_url,
-            t_video_course.upload_user_id
-            FROM
+            t_video_course.upload_user_id,
+            t_video_course.upload_time,
+            t_video_course.teacher_user_id,
+            t_video_course.watch_number,
+            t_video_course.video_price,
+            t_video_course.course_type_id
+        FROM
             t_video_course
         where video_course_id=#{video_course_id}
     </select>
@@ -71,7 +76,7 @@
 
 <!--用户浏览所有视频课程封面，分页显示，每页显示10个    更改人：rongjing    更改时间：2019/10/03-->
 
-    <select id="findAllVideoCourse" resultMap="VideoCourse">
+    <select id="findAllVideoCourse" resultType="VideoCourse">
         SELECT
             t_video_course.video_course_id,
             t_video_course.video_course_name,

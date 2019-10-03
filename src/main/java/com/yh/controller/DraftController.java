@@ -16,17 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * 请后来修改者按照这个格式添加备注
- * 示例：为了第一次推送，未添加任何数据
- * @author chaoyang
- * @date 2019/9/29
- */
-
-
 
 /**
- * 遇见页面功能 错误，待纠正
+ * 遇见页面功能
  *@author rongjing
  * @date 2019/10/03
  */
@@ -42,10 +34,8 @@ public class DraftController {
 
 
 
-/*
 
-    */
-/**
+    /**
      * 遇见页面开始画功能细节更改
      * 更改提交方式：post
      * 更改返回值类型为：JsonResult
@@ -53,18 +43,14 @@ public class DraftController {
      *@author rongjing
      * @return code=0,info=对应视频课程;code=1,info=错误信息
      * @date 2019/10/03
-     *//*
-
+     */
     @ApiOperation(value = "开始画功能",notes = "根据所给的视频封面选择相应视频课程页面")
     @PostMapping(value = "/queryOne.do")
     public JsonResult queryByVideoCourseId(@ApiParam(value = "视频封面图片对应的视频id",required = true)String video_course_id) {
 
-
-
             VideoCourse videoCourse = draftService.findByVideoCourseId(video_course_id);
 
             if(videoCourse != null){
-
                 return new JsonResult("0",videoCourse);
             }else {
                 return new JsonResult("1","没有相应视频课程信息");
@@ -78,16 +64,14 @@ public class DraftController {
 
 
 
-    */
-/**
+    /**
      * 遇见页面
      * 提交方式：post
      * 返回值类型为：JsonResult
      *@author rongjing
      * @return code=0,info=对应视频课程;code=1,info=错误信息
      * @date 2019/10/03
-     *//*
-
+     */
     @ApiOperation(value = "展示所有视频课程封面，", notes = "返回对象是个list集合分页显示，每页显示10个，不喜欢是类似下一页的功能")
     @PostMapping(value = "/queryAll.do")
     public JsonResult queryAllVideoCourse(){
@@ -106,7 +90,6 @@ public class DraftController {
 
 
     }
-*/
 
 
 }
