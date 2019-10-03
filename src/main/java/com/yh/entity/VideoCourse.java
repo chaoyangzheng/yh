@@ -61,6 +61,32 @@ public class VideoCourse implements Serializable {
      */
     private Double videoPrice;
 
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/3
+     * 课程类型id
+     */
+    private Integer courseTypeId;
+
+    @Override
+    public String toString() {
+        return "VideoCourse{" +
+                "videoCourseId='" + videoCourseId + '\'' +
+                ", videoCourseName='" + videoCourseName + '\'' +
+                ", videoTitle='" + videoTitle + '\'' +
+                ", videoInfo='" + videoInfo + '\'' +
+                ", typeId=" + typeId +
+                ", videoCourseUrl='" + videoCourseUrl + '\'' +
+                ", videoCourseImgUrl='" + videoCourseImgUrl + '\'' +
+                ", uploadUserId='" + uploadUserId + '\'' +
+                ", uploadTime=" + uploadTime +
+                ", teacherUserId='" + teacherUserId + '\'' +
+                ", watchNumber=" + watchNumber +
+                ", videoPrice=" + videoPrice +
+                ", courseTypeId=" + courseTypeId +
+                '}';
+    }
+
     public String getVideoCourseId() {
         return videoCourseId;
     }
@@ -155,5 +181,13 @@ public class VideoCourse implements Serializable {
 
     public void setVideoPrice(Double videoPrice) {
         this.videoPrice = videoPrice;
+    }
+
+    public Integer getCourseTypeId() {
+        return courseTypeId;
+    }
+
+    public void setCourseTypeId(Integer courseTypeId) {
+        this.courseTypeId = courseTypeId;
     }
 }
