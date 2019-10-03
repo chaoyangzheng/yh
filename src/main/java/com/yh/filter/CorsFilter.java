@@ -6,15 +6,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 跨域filter
+ *
+ * @author yuanzhe
+ * @date 2019/10/03
+ */
+
 @WebFilter("/*")
+//@WebFilter(filterName = "CrossFilter", urlPatterns = "/*")
 public class CorsFilter implements Filter {
     public void destroy() {
     }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
 
+        System.out.println(((HttpServletRequest)req).getRequestURI());
         //设置跨域请求
-        HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
         // 响应标头指定 指定可以访问资源的URI路径
@@ -27,7 +35,7 @@ public class CorsFilter implements Filter {
         response.setHeader("Access-Control-Max-Age", "3600");
 
         // 设置 受支持请求标头
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+        response.setHeader("Access-Control-Allow-Headers", "*");
 
         // 指示的请求的响应是否可以暴露于该页面。当true值返回时它可以被暴露
         response.setHeader("Access-Control-Allow-Credentials", "true");
