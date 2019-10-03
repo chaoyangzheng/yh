@@ -26,7 +26,7 @@ import java.io.IOException;
  *//*
 
 
-@WebFilter("/*")
+@WebFilter("/*.do")
 public class TokenFilter implements Filter {
 
     @Autowired

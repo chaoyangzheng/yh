@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @Api("我的页面功能模块")
 @RestController
-@RequestMapping("/mine/")
+@RequestMapping("/mine")
 public class UserController {
 
     @Autowired
@@ -33,11 +33,10 @@ public class UserController {
      * @param  map
      * @return void
      */
-    @ApiOperation(value="用户登录", notes="自动登录需要传送token，手机号/邮箱加密码不需要传递token")
+    @ApiOperation(value="用户登录", notes="自动登录需要传送token，手机号/邮箱加密码不需要传递token；路径/mine/login.do")
     @ApiModelProperty(value = "传递的字段应该为'token'或者'password'和'loginCount',其中手机号或邮箱的值都要放到loginCount中")
     @RequestMapping(value = "/login.do",method = RequestMethod.POST)
     public JsonResult userLogin(@RequestBody Map<String,Object> map){
-
         if (map.get("token")==null&&map.get("password")==null){
             return new JsonResult("1","passwordNull");
         }
@@ -48,7 +47,7 @@ public class UserController {
         return new JsonResult("1","error");
     }
 
-    @ApiOperation(value="检查账户是否存在", notes="传递的数据名称：loginCount")
+    @ApiOperation(value="检查账户是否存在", notes="传递的数据名称：loginCount；路径：/mine/checkPhoneOrEmail.do")
     @RequestMapping(value = "/checkPhoneOrEmail.do",method = RequestMethod.POST)
     public JsonResult checkPhoneOrEmail(@RequestBody Map<String,Object> map){
         boolean emailOrPhone = userService.findEmailOrPhone(map);
@@ -57,6 +56,23 @@ public class UserController {
         }
         return new JsonResult("0","可用");
     }
+    /**
+     * 注册
+     * @author chaoyang
+     * @date 2019/10/3
+     */
+    @ApiOperation(value="用户注册", notes="手机号/邮箱加密码不需要传递token，路径/mine/regedit.do")
+    @ApiModelProperty(value = "传递的字段应该为'password'和'loginCount',其中手机号或邮箱的值都要放到loginCount中")
+    @RequestMapping(value = "/regedit.do",method = RequestMethod.POST)
+    public JsonResult regedit(@RequestBody Map<String,Object> map){
+
+        String token = userService.regedit(map);
+        if (token!=null){
+            return new JsonResult("0",token);
+        }
+        return new JsonResult("1","error");
+    }
+
 
 
 }

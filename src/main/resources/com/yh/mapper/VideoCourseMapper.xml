@@ -4,7 +4,7 @@
 
 <mapper namespace="com.yh.mapper.VideoCourseMapper">
 
-    <select id="findRandomVideoCourse" resultType="VideoCourse">
+    <select id="findLatestBasicVideoCourse" resultType="VideoCourse">
         SELECT
         t_video_course.video_course_id,
         t_video_course.video_course_name,
@@ -16,12 +16,82 @@
         t_video_course.upload_user_id,
         t_video_course.upload_time,
         t_video_course.teacher_user_id,
-        t_video_course.watch_number
+        t_video_course.watch_number,
+        t_video_course.video_price,
+        t_video_course.course_type_id
         FROM
         t_video_course
+        WHERE
+        t_video_course.course_type_id = 1
         ORDER BY
         t_video_course.upload_time DESC
         LIMIT 0, 10
+    </select>
+
+    <select id="findHottestBasicVideoCourse" resultType="VideoCourse">
+        SELECT
+        t_video_course.video_course_id,
+        t_video_course.video_course_name,
+        t_video_course.video_title,
+        t_video_course.video_info,
+        t_video_course.type_id,
+        t_video_course.video_course_url,
+        t_video_course.video_course_img_url,
+        t_video_course.upload_user_id,
+        t_video_course.upload_time,
+        t_video_course.teacher_user_id,
+        t_video_course.watch_number,
+        t_video_course.video_price,
+        t_video_course.course_type_id
+        FROM
+        t_video_course
+        WHERE
+        t_video_course.course_type_id = 1
+        ORDER BY
+        t_video_course.watch_number DESC
+        LIMIT 0, 1
+    </select>
+
+    <select id="findVideoCourseDefault" resultType="VideoCourse">
+        SELECT
+        t_video_course.video_course_id,
+        t_video_course.video_course_name,
+        t_video_course.video_title,
+        t_video_course.video_info,
+        t_video_course.type_id,
+        t_video_course.video_course_url,
+        t_video_course.video_course_img_url,
+        t_video_course.upload_user_id,
+        t_video_course.upload_time,
+        t_video_course.teacher_user_id,
+        t_video_course.watch_number,
+        t_video_course.video_price,
+        t_video_course.course_type_id
+        FROM
+        t_video_course
+        ORDER BY
+        t_video_course.video_price DESC
+    </select>
+
+    <select id="findVideoCourseHottest" resultType="VideoCourse">
+        SELECT
+        t_video_course.video_course_id,
+        t_video_course.video_course_name,
+        t_video_course.video_title,
+        t_video_course.video_info,
+        t_video_course.type_id,
+        t_video_course.video_course_url,
+        t_video_course.video_course_img_url,
+        t_video_course.upload_user_id,
+        t_video_course.upload_time,
+        t_video_course.teacher_user_id,
+        t_video_course.watch_number,
+        t_video_course.video_price,
+        t_video_course.course_type_id
+        FROM
+        t_video_course
+        ORDER BY
+        t_video_course.watch_number DESC
     </select>
 
 </mapper>
