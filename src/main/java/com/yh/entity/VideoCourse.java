@@ -1,5 +1,6 @@
 package com.yh.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;

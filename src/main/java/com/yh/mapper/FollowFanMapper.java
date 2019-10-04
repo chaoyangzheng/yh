@@ -1,5 +1,6 @@
 package com.yh.mapper;
 
+import com.yh.entity.FollowFan;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -20,4 +21,8 @@ public interface FollowFanMapper {
     List<String> findAllFollowByFanId(String fanId);
     @Select("select fan_id from t_follow_fan where follow_id = #{followId}")
     List<String> findAllFanByFollowId(String followId);
+
+    int addFollowUser(FollowFan followFan);
+
+    int unfollowUser(FollowFan followFan);
 }

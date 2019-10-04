@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Service
 public class CourseSysServiceImpl implements CourseSysService {
-    @Autowired
+    @Autowired(required = false)
     private CourseSysMapper courseSysMapper;
 
     /**
