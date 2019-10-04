@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yh.mapper.CourseSysMapper">
+
+    <resultMap id="CourseSysMap" type="CourseSys">
+        <id column="course_sys_id" property="courseSysId"/>
+        <result column="course_sys_name" property="courseSysName"/>
+        <collection property="videoCourseList" select="com.yh.mapper.VideoCourseMapper.findVideoCourseByCourseSysId" column="course_sys_id"/>
+    </resultMap>
+
+    <select id="findComprehensiveCourseSys" resultMap="CourseSysMap">
+        SELECT
+        t_course_sys.course_sys_id,
+        t_course_sys.course_sys_name
+        FROM
+        t_course_sys
+    </select>
+
+</mapper>

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.yh.entity.VideoCourse;
 import com.yh.mapper.VideoCourseMapper;
 import com.yh.service.VideoCourseService;
+import com.yh.utils.PageHelperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,18 +51,9 @@ public class VideoCourseServiceImpl implements VideoCourseService {
      */
     @Override
     public List<VideoCourse> findComprehensiveVideoCourse(Integer pageNum, Integer pageSize, Integer typeId) {
-        if (null == pageNum || pageNum < 1) {
-            pageNum = 1;
-        }
-        if (null == pageSize || pageSize < 1) {
-            pageSize = 10;
-        }
-        if (null == typeId || typeId < 0) {
-            typeId = 0;
-        }
-
-        PageHelper.startPage(pageNum, pageSize);
-        List<VideoCourse> videoCourseList = videoCourseMapper.findVideoCourseComprehensive(typeId);
+        PageHelperUtil pageHelperUtil = PageHelperUtil.initPageHelperParam(pageNum, pageSize, typeId);
+        PageHelper.startPage(pageHelperUtil.getPageNum(), pageHelperUtil.getPageSize());
+        List<VideoCourse> videoCourseList = videoCourseMapper.findVideoCourseComprehensive(pageHelperUtil.getTypeId());
         return videoCourseList;
     }
 
@@ -71,18 +63,9 @@ public class VideoCourseServiceImpl implements VideoCourseService {
      */
     @Override
     public List<VideoCourse> findHottestVideoCourse(Integer pageNum, Integer pageSize, Integer typeId) {
-        if (null == pageNum || pageNum < 1) {
-            pageNum = 1;
-        }
-        if (null == pageSize || pageSize < 1) {
-            pageSize = 10;
-        }
-        if (null == typeId || typeId < 0) {
-            typeId = 0;
-        }
-
-        PageHelper.startPage(pageNum, pageSize);
-        List<VideoCourse> videoCourseList = videoCourseMapper.findVideoCourseHottest(typeId);
+        PageHelperUtil pageHelperUtil = PageHelperUtil.initPageHelperParam(pageNum, pageSize, typeId);
+        PageHelper.startPage(pageHelperUtil.getPageNum(), pageHelperUtil.getPageSize());
+        List<VideoCourse> videoCourseList = videoCourseMapper.findVideoCourseHottest(pageHelperUtil.getTypeId());
         return videoCourseList;
     }
 
@@ -92,18 +75,9 @@ public class VideoCourseServiceImpl implements VideoCourseService {
      */
     @Override
     public List<VideoCourse> findLatestVideoCourse(Integer pageNum, Integer pageSize, Integer typeId) {
-        if (null == pageNum || pageNum < 1) {
-            pageNum = 1;
-        }
-        if (null == pageSize || pageSize < 1) {
-            pageSize = 10;
-        }
-        if (null == typeId || typeId < 0) {
-            typeId = 0;
-        }
-
-        PageHelper.startPage(pageNum, pageSize);
-        List<VideoCourse> videoCourseList = videoCourseMapper.findVideoCourseLatest(typeId);
+        PageHelperUtil pageHelperUtil = PageHelperUtil.initPageHelperParam(pageNum, pageSize, typeId);
+        PageHelper.startPage(pageHelperUtil.getPageNum(), pageHelperUtil.getPageSize());
+        List<VideoCourse> videoCourseList = videoCourseMapper.findVideoCourseLatest(pageHelperUtil.getTypeId());
         return videoCourseList;
     }
 
@@ -113,18 +87,9 @@ public class VideoCourseServiceImpl implements VideoCourseService {
      */
     @Override
     public List<VideoCourse> findComprehensiveSingleVideoCourse(Integer pageNum, Integer pageSize, Integer typeId) {
-        if (null == pageNum || pageNum < 1) {
-            pageNum = 1;
-        }
-        if (null == pageSize || pageSize < 1) {
-            pageSize = 10;
-        }
-        if (null == typeId || typeId < 0) {
-            typeId = 0;
-        }
-
-        PageHelper.startPage(pageNum, pageSize);
-        List<VideoCourse> videoCourseList = videoCourseMapper.findSingleVideoCourseComprehensive(typeId);
+        PageHelperUtil pageHelperUtil = PageHelperUtil.initPageHelperParam(pageNum, pageSize, typeId);
+        PageHelper.startPage(pageHelperUtil.getPageNum(), pageHelperUtil.getPageSize());
+        List<VideoCourse> videoCourseList = videoCourseMapper.findSingleVideoCourseComprehensive(pageHelperUtil.getTypeId());
         return videoCourseList;
     }
 
@@ -134,18 +99,9 @@ public class VideoCourseServiceImpl implements VideoCourseService {
      */
     @Override
     public List<VideoCourse> findHottestSingleVideoCourse(Integer pageNum, Integer pageSize, Integer typeId) {
-        if (null == pageNum || pageNum < 1) {
-            pageNum = 1;
-        }
-        if (null == pageSize || pageSize < 1) {
-            pageSize = 10;
-        }
-        if (null == typeId || typeId < 0) {
-            typeId = 0;
-        }
-
-        PageHelper.startPage(pageNum, pageSize);
-        List<VideoCourse> videoCourseList = videoCourseMapper.findSingleVideoCourseHottest(typeId);
+        PageHelperUtil pageHelperUtil = PageHelperUtil.initPageHelperParam(pageNum, pageSize, typeId);
+        PageHelper.startPage(pageHelperUtil.getPageNum(), pageHelperUtil.getPageSize());
+        List<VideoCourse> videoCourseList = videoCourseMapper.findSingleVideoCourseHottest(pageHelperUtil.getTypeId());
         return videoCourseList;
     }
 
@@ -155,18 +111,9 @@ public class VideoCourseServiceImpl implements VideoCourseService {
      */
     @Override
     public List<VideoCourse> findLatestSingleVideoCourse(Integer pageNum, Integer pageSize, Integer typeId) {
-        if (null == pageNum || pageNum < 1) {
-            pageNum = 1;
-        }
-        if (null == pageSize || pageSize < 1) {
-            pageSize = 10;
-        }
-        if (null == typeId || typeId < 0) {
-            typeId = 0;
-        }
-
-        PageHelper.startPage(pageNum, pageSize);
-        List<VideoCourse> videoCourseList = videoCourseMapper.findSingleVideoCourseLatest(typeId);
+        PageHelperUtil pageHelperUtil = PageHelperUtil.initPageHelperParam(pageNum, pageSize, typeId);
+        PageHelper.startPage(pageHelperUtil.getPageNum(), pageHelperUtil.getPageSize());
+        List<VideoCourse> videoCourseList = videoCourseMapper.findSingleVideoCourseLatest(pageHelperUtil.getTypeId());
         return videoCourseList;
     }
 }
