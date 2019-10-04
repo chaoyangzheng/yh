@@ -4,6 +4,15 @@
 
 <mapper namespace="com.yh.mapper.VideoCourseMapper">
 
+    <resultMap id="VideoCourseMap" type="VideoCourse" autoMapping="true">
+        <id column="video_course_id" property="videoCourseId"/>
+        <result column="type_id" property="typeId"/>
+        <association property="type" select="com.yh.mapper.TypeMapper.findTypeByTypeId" column="type_id"/>
+        <association property="uploadUser" select="com.yh.mapper.UserMapper.findUserByUserId" column="upload_user_id"/>
+        <association property="teacherUser" select="com.yh.mapper.UserMapper.findUserByUserId" column="teacher_user_id"/>
+        <collection property="tagList" select="com.yh.mapper.TagMapper.findTagByVideoCourseId" column="video_course_id"/>
+    </resultMap>
+
     <select id="findLatestSingleVideoCourse" resultType="VideoCourse">
         SELECT
         t_video_course.video_course_id,

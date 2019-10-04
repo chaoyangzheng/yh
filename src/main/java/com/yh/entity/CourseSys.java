@@ -3,6 +3,7 @@ package com.yh.entity;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +21,18 @@ public class CourseSys implements Serializable {
      * 课程系列名
      */
     private String courseSysName;
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 课程系列观看次数
+     */
+    private Integer courseSysWatchNumber;
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 课程系列更新时间
+     */
+    private Date courseSysUpdateTime;
 
     /**
      * @author SHIGUANGYI
@@ -33,6 +46,8 @@ public class CourseSys implements Serializable {
         return "CourseSys{" +
                 "courseSysId='" + courseSysId + '\'' +
                 ", courseSysName='" + courseSysName + '\'' +
+                ", courseSysWatchNumber=" + courseSysWatchNumber +
+                ", courseSysUpdateTime=" + courseSysUpdateTime +
                 ", videoCourseList=" + videoCourseList +
                 '}';
     }
@@ -51,6 +66,22 @@ public class CourseSys implements Serializable {
 
     public void setCourseSysName(String courseSysName) {
         this.courseSysName = courseSysName;
+    }
+
+    public Integer getCourseSysWatchNumber() {
+        return courseSysWatchNumber;
+    }
+
+    public void setCourseSysWatchNumber(Integer courseSysWatchNumber) {
+        this.courseSysWatchNumber = courseSysWatchNumber;
+    }
+
+    public Date getCourseSysUpdateTime() {
+        return courseSysUpdateTime;
+    }
+
+    public void setCourseSysUpdateTime(Date courseSysUpdateTime) {
+        this.courseSysUpdateTime = courseSysUpdateTime;
     }
 
     public List<VideoCourse> getVideoCourseList() {

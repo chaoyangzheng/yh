@@ -37,6 +37,9 @@ public class HomePageController {
     @Autowired
     private CourseSysService courseSysService;
 
+    @Autowired
+    private TClassService tClassService;
+
     /*-------------------------------首页页面-------------------------------*/
 
     /**
@@ -293,9 +296,9 @@ public class HomePageController {
      * @param params 参数map，包含：
      *               当前页码，pageNum，默认1
      *               每页条数，pageSize，默认10
-     * @return code=0,info=当前页课程的list集合;code=1,info=错误信息
+     * @return code=0,info=当前页课程系列的list集合;code=1,info=错误信息
      * @author SHIGUANGYI
-     * @date 2019/10/3
+     * @date 2019/10/4
      * 按综合排序查询系列课程，用于展示到多节课进阶页面的综合
      */
     @ApiOperation(value = "按综合排序查询系列课程", notes = "按综合排序查询系列课程，用于展示到多节课进阶页面的综合")
@@ -307,6 +310,128 @@ public class HomePageController {
             Integer pageSize = (Integer) params.get("pageSize");
             List<CourseSys> courseSysList = courseSysService.findComprehensiveCourseSys(pageNum, pageSize);
             return new JsonResult("0", courseSysList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JsonResult("1", "查询失败" + e.getMessage());
+        }
+    }
+
+    /**
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     * @return code=0,info=当前页课程系列的list集合;code=1,info=错误信息
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 按观看数排序查询系列课程，用于展示到多节课进阶页面的热门
+     */
+    @ApiOperation(value = "按观看数排序查询系列课程", notes = "按观看数排序查询系列课程，用于展示到多节课进阶页面的热门")
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10 //每页条数，默认10\n}")
+    @PostMapping("/hottestCourseSys.do")
+    public JsonResult hottestCourseSys(@RequestBody Map params) {
+        try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
+            List<CourseSys> courseSysList = courseSysService.findHottestCourseSys(pageNum, pageSize);
+            return new JsonResult("0", courseSysList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JsonResult("1", "查询失败" + e.getMessage());
+        }
+    }
+
+    /**
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     * @return code=0,info=当前页课程系列的list集合;code=1,info=错误信息
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 按更新时间排序查询系列课程，用于展示到多节课进阶页面的新增
+     */
+    @ApiOperation(value = "按更新时间排序查询系列课程", notes = "按更新时间排序查询系列课程，用于展示到多节课进阶页面的新增")
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10 //每页条数，默认10\n}")
+    @PostMapping("/latestCourseSys.do")
+    public JsonResult latestCourseSys(@RequestBody Map params) {
+        try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
+            List<CourseSys> courseSysList = courseSysService.findLatestCourseSys(pageNum, pageSize);
+            return new JsonResult("0", courseSysList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JsonResult("1", "查询失败" + e.getMessage());
+        }
+    }
+
+    /*------------------------小班课页面--------------------------*/
+
+    /**
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     * @return code=0,info=当前页小班课的list集合;code=1,info=错误信息
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 按综合排序查询小班课，用于展示到小班课页面的综合
+     */
+    @ApiOperation(value = "按综合排序查询小班课", notes = "按综合排序查询小班课，用于展示到小班课页面的综合")
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10 //每页条数，默认10\n}")
+    @PostMapping("/comprehensiveClass.do")
+    public JsonResult comprehensiveClass(@RequestBody Map params) {
+        try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
+            List<TClass> tClassList = tClassService.findComprehensiveClass(pageNum, pageSize);
+            return new JsonResult("0", tClassList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JsonResult("1", "查询失败" + e.getMessage());
+        }
+    }
+
+    /**
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     * @return code=0,info=当前页小班课的list集合;code=1,info=错误信息
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 按观看数排序查询小班课，用于展示到小班课页面的热门
+     */
+    @ApiOperation(value = "按观看数排序查询小班课", notes = "按观看数排序查询小班课，用于展示到小班课页面的热门")
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10 //每页条数，默认10\n}")
+    @PostMapping("/hottestClass.do")
+    public JsonResult hottestClass(@RequestBody Map params) {
+        try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
+            List<TClass> tClassList = tClassService.findHottestClass(pageNum, pageSize);
+            return new JsonResult("0", tClassList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JsonResult("1", "查询失败" + e.getMessage());
+        }
+    }
+
+    /**
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     * @return code=0,info=当前页小班课的list集合;code=1,info=错误信息
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 按更新时间排序查询小班课，用于展示到小班课页面的最新
+     */
+    @ApiOperation(value = "按更新时间排序查询小班课", notes = "按更新时间排序查询小班课，用于展示到小班课页面的最新")
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10 //每页条数，默认10\n}")
+    @PostMapping("/latestClass.do")
+    public JsonResult latestClass(@RequestBody Map params) {
+        try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
+            List<TClass> tClassList = tClassService.findLatestClass(pageNum, pageSize);
+            return new JsonResult("0", tClassList);
         } catch (Exception e) {
             e.printStackTrace();
             return new JsonResult("1", "查询失败" + e.getMessage());
