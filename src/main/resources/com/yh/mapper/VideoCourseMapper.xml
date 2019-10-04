@@ -207,4 +207,25 @@
         ORDER BY
         t_video_course.upload_time DESC
     </select>
+
+    <select id="findVideoCourseByCourseSysId" resultType="VideoCourse" parameterType="Integer">
+        SELECT
+        t_video_course.video_course_id,
+        t_video_course.video_course_name,
+        t_video_course.video_title,
+        t_video_course.video_info,
+        t_video_course.type_id,
+        t_video_course.video_course_url,
+        t_video_course.video_course_img_url,
+        t_video_course.upload_user_id,
+        t_video_course.upload_time,
+        t_video_course.teacher_user_id,
+        t_video_course.watch_number,
+        t_video_course.video_price,
+        t_video_course.course_type_id
+        FROM
+        t_video_course
+        RIGHT JOIN t_sys_video ON t_video_course.video_course_id = t_sys_video.video_course_id
+        WHERE t_sys_video.course_sys_id = #{courseSysId}
+    </select>
 </mapper>

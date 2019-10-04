@@ -1,6 +1,7 @@
 package com.yh.controller;
 
 import com.yh.common.JsonResult;
+import com.yh.entity.User;
 import com.yh.service.FollowFanService;
 import com.yh.service.UserService;
 import io.swagger.annotations.Api;
@@ -93,6 +94,24 @@ public class UserController {
         List<String> fan = (List<String>) countMap.get("fan");
         countMap.put("fan",fan.size());
         return new JsonResult("0",countMap);
+    }
+    /**
+     * 查看用户的关注
+     * 查看用户的粉丝
+     * @author chaoyang
+     * @date 2019/10/4
+     */
+    @ApiOperation(value="查询用户的具体关注", notes="只需要传入用户的token，返回该用户的全部关注的人的全部信息")
+    @RequestMapping(value = "/followUser.do",method = RequestMethod.POST)
+    public JsonResult findFollowUser(@RequestBody Map<String,Object> map){
+        List<User> allFollowUser = followFanService.findAllFollowUser(map);
+        return new JsonResult("0",allFollowUser);
+    }
+    @ApiOperation(value="查询用户的具体粉丝", notes="只需要传入用户的token，返回该用户的全部粉丝的全部信息")
+    @RequestMapping(value = "/fanUser.do",method = RequestMethod.POST)
+    public JsonResult findFanUser(@RequestBody Map<String,Object> map){
+        List<User> allFanUser = followFanService.findAllFanUser(map);
+        return new JsonResult("0",allFanUser);
     }
 
 
