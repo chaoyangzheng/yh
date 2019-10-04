@@ -9,6 +9,7 @@ import com.yh.utils.DataConversionUtil;
 import io.swagger.annotations.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,7 +32,10 @@ public class DraftController {
     private DraftService draftService;
 
     @Autowired
-    private DataConversionUtil dataConversionUtil;
+    private StringRedisTemplate stringRedisTemplate;
+
+
+
 
 
     /**
@@ -91,10 +95,6 @@ public class DraftController {
             }else {
                 return new JsonResult("1","没有视频课程信息");
             }
-
-
-
-
 
     }
 

@@ -102,17 +102,16 @@ public List<VideoCourse> findAllVideoCourse();
 
 
 
-    /**
-     * 查看所有视频封面，分页查询，每页显示10个
-     *图片来自视频封面
-     * @result  List<VideoCourse>
+  /*  *//**
+     * 收藏测试，但未完善，不可用
+     *收藏视频课程
+     *
      *@author rongjing
-     * @date 2019/10/03
-     */
+     * @date 2019/10/04
+     *//*
 
-//
-//    //收藏测试
-//    public void  insertToCollection(String user_id,String video_course_id);
+    //收藏测试
+    public void  insertToCollection(String user_id,String video_course_id);*/
 
 
 }
