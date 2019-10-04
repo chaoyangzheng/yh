@@ -40,7 +40,7 @@ public class DraftServiceImpl implements DraftService {
      * @author rongjing
      *
      * 需要参数：视频封面地址
-     * @param video_course_id
+     * @param videoCourseId
      *
      * 返回视频课程对象
      * @result videoCourse
@@ -49,9 +49,9 @@ public class DraftServiceImpl implements DraftService {
      */
 
     @Override
-    public VideoCourse findByVideoCourseId(String video_course_id) {
+    public VideoCourse findByVideoCourseId(String videoCourseId) {
 
-        return draftMapper.findByVideoCourseId(video_course_id);
+        return draftMapper.findByVideoCourseId(videoCourseId);
     }
 
 

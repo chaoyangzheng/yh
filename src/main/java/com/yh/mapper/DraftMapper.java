@@ -86,7 +86,7 @@ public interface DraftMapper {
      *@author rongjing
      */
     //图片视频链接
-public VideoCourse findByVideoCourseId(String video_course_id);
+public VideoCourse findByVideoCourseId(String videoCourseId);
 
 
 
