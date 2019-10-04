@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -168,15 +169,6 @@ public class UserServiceImpl implements UserService {
         String userId = stringRedisTemplate.opsForValue().get(token);
         return userId;
     }
-
-//    @Override
-//    public List<User> findHotSuperUserById() {
-//        Map<String,Integer> map = userMapper.findHotSuperUserId();
-//        List<User> hotSuperUserList = userMapper.findHotSuperUserById(map);
-//        return hotSuperUserList;
-//    }
-
-
     /**
      * 登录成功 向redis中添加数据
      * @author chaoyang
@@ -214,4 +206,46 @@ public class UserServiceImpl implements UserService {
         stringRedisTemplate.expire(token,2,TimeUnit.DAYS);
         return token;
     }
+
+    /*author:zxs
+     * Date:19/10/4
+     * update:19/10/5
+     */
+    /*查询社区发现页热门达人*/
+    @Override
+    public List<User> findHotSuperUserById() {
+        List<User> userList = userMapper.findHotSuperUserId();
+        List<User> users = userMapper.findHotSuperUserById(userList);
+        for (int i = 0;i<7;i++){
+            users.get(i).setFansNumber(userList.get(i).getFansNumber());
+        }
+        return users;
+    }
+
+    /*查询社区发现页热门达人的作品数*/
+    @Override
+    public List<Integer> findHotSuperUserShowNumById() {
+        List<User> userList = userMapper.findHotSuperUserId();
+//        for (User u:userList
+//             ) {
+//            System.out.println(u);
+//        }
+        List<Integer> userShowNumList = userMapper.findHotSuperUserShowNumById(userList);
+        return userShowNumList;
+    }
+
+    /*查询社区*/
+    @Override
+    public List<User> findAllUser() {
+        List<User> BbsAllUserList = userMapper.findAllUser();
+        return BbsAllUserList;
+    }
+
+    @Override
+    public List<User> getGoldenUserForTch() {
+        List<User> goldenUserForTch = userMapper.getGoldenUserForTch();
+        return goldenUserForTch;
+    }
+
+    /*end:zxs*/
 }
