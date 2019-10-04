@@ -58,6 +58,11 @@ public class User implements Serializable {
      * 需要一个金牌老师的对象
      */
     private UserType userType;
+    /*
+    * zxs
+    * 需要一个粉丝数的属性*/
+    private Integer fansNumber;
+
 
     @Override
     public String toString() {
@@ -72,6 +77,7 @@ public class User implements Serializable {
                 ", userImgUrl='" + userImgUrl + '\'' +
                 ", userInfo='" + userInfo + '\'' +
                 ", userType=" + userType +
+                ", fansNumber=" + fansNumber +
                 '}';
     }
 
@@ -153,5 +159,13 @@ public class User implements Serializable {
 
     public void setUserType(UserType userType) {
         this.userType = userType;
+    }
+
+    public Integer getFansNumber() {
+        return fansNumber;
+    }
+
+    public void setFansNumber(Integer fansNumber) {
+        this.fansNumber = fansNumber;
     }
 }

@@ -1,11 +1,10 @@
 package com.yh.mapper;
 
 import com.yh.entity.Theme;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import com.yh.entity.User;
 import org.apache.ibatis.annotations.Select;
 
-import java.util.Date;
+
 import java.util.List;
 
 public interface ThemeMapper {
@@ -36,4 +35,5 @@ public interface ThemeMapper {
     public List<Theme> findThemeById(Integer typeId);
 
 
+    public List<Theme> findAllFollowUserTheme(List<User> userList);
 }

@@ -9,12 +9,29 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
 方法的返回值类型和配置中返回类型保持一致
  -->
 <mapper namespace="com.yh.mapper.UserMapper">
+    <!--author:zxs-->
     <select id="findAllUser" resultMap="user_card">
         select * from t_user u,t_user_type ut where u.user_type_id = ut.user_type_id
     </select>
 
     <select id="getGoldenUserForTch" resultMap="user_card">
         select *  from t_user u,t_user_type ut where u.user_type_id = ut.user_type_id and u.user_type_id = 4
+    </select>
+
+    <select id="findHotSuperUserById" resultType="User" parameterType="java.util.List">
+        select * from t_user where user_id in
+        <foreach item="ids" collection="list" open="(" separator="," close=")" index="index">
+            #{ids.userId}
+        </foreach>
+    </select>
+
+    <select id="findHotSuperUserShowNumById" resultType="Integer" parameterType="java.util.List">
+        select count(1) from t_theme where theme_user_id in
+        <foreach item="ids" collection="list" open="(" separator="," close=")" index="index">
+            #{ids.userId}
+        </foreach>
+        GROUP BY
+        t_theme.theme_user_id
     </select>
 
     <resultMap id="user_card" type="User" >
@@ -33,6 +50,9 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
             <result property="userTypeName" column="user_type_name"></result>
         </association>
     </resultMap>
+    <!--end:zxs-->
+
+
     <insert id="addUserByPhone" >
         insert into t_user (user_id,phone,password) values (#{userId},#{phone},#{password})
     </insert>
@@ -53,14 +73,4 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
             select user_id,ID,username,phone,email,user_img_url,user_info from t_user where user_id ='0';
         </if>
     </select>
-
-<!--    &lt;!&ndash;author:zxs&ndash;&gt;-->
-<!--    <select id="findHotSuperUserById" resultType="User" parameterType="java.util.Map">-->
-<!--        select * from t_user where-->
-<!--        <foreach collection="map.keys" item="m" separator="and">-->
-<!--            <if test="null!=map[m]">-->
-<!--                ${m} = #{map.${m}}-->
-<!--            </if>-->
-<!--        </foreach>-->
-<!--    </select>-->
 </mapper>

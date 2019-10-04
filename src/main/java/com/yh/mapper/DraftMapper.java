@@ -1,5 +1,6 @@
 package com.yh.mapper;
 
+import com.sun.javafx.logging.PulseLogger;
 import com.yh.entity.Draft;
 import com.yh.entity.Type;
 import com.yh.entity.VideoCourse;
@@ -85,7 +86,7 @@ public interface DraftMapper {
      *@author rongjing
      */
     //图片视频链接
-public VideoCourse findByVideoCourseId(String video_course_id);
+public VideoCourse findByVideoCourseId(String videoCourseId);
 
 
 
@@ -97,5 +98,21 @@ public VideoCourse findByVideoCourseId(String video_course_id);
      * @date 2019/10/03
      */
 public List<VideoCourse> findAllVideoCourse();
+
+
+
+
+    /**
+     * 查看所有视频封面，分页查询，每页显示10个
+     *图片来自视频封面
+     * @result  List<VideoCourse>
+     *@author rongjing
+     * @date 2019/10/03
+     */
+
+//
+//    //收藏测试
+//    public void  insertToCollection(String user_id,String video_course_id);
+
 
 }
