@@ -9,33 +9,12 @@ import java.util.List;
 
 
 /**
- * 请后来修改者按照这个格式添加备注
- * 示例：为了第一次推送，未添加任何数据
- * @author chaoyang
- * @date 2019/9/29
- */
-
-
-
-/**
- * 用户开始画功能
- * 对于草稿画作的添加，修改，删除
- * @author rongjing
- * @date 2019/9/30
- *
- */
-
-
-
-/**
  * 查看所有视频封面
  *图片来自视频封面
  * @result  List<VideoCourse>
  *@author rongjing
  * @date 2019/10/03
  */
-
-
 public interface DraftMapper {
 
 
