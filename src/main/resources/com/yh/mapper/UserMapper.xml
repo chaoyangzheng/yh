@@ -41,12 +41,17 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
     </insert>
 
     <select id="findAllUserByUserId" parameterType="list" resultType="com.yh.entity.User">
-        select user_id,ID,username,phone,email,user_img_url,user_info from t_user
-        <where>
-            <foreach collection="list" item="item" open="user_id in (" close=")" separator=",">
-                #{item}
-            </foreach>
-        </where>
+        <if test="list.size >0">
+            select user_id,ID,username,phone,email,user_img_url,user_info from t_user
+            <where>
+                <foreach collection="list" item="item" open="user_id in (" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </where>
+        </if>
+        <if test="list.size ==0">
+            select user_id,ID,username,phone,email,user_img_url,user_info from t_user where user_id ='0';
+        </if>
     </select>
 
 <!--    &lt;!&ndash;author:zxs&ndash;&gt;-->
