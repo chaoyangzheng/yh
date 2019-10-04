@@ -23,7 +23,7 @@ public class User implements Serializable {
     /**
      * 账户id，用于前端展示，用户可自行修改，非主键
      */
-    private Integer Id;
+    private String id;
     /**
      * 昵称
      */
@@ -63,7 +63,7 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "userId='" + userId + '\'' +
-                ", Id=" + Id +
+                ", id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
@@ -83,12 +83,12 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    public Integer getId() {
-        return Id;
+    public String getId () {
+        return id;
     }
 
-    public void setId(Integer id) {
-        Id = id;
+    public void setId (String id) {
+        this.id = id;
     }
 
     public String getUsername() {
