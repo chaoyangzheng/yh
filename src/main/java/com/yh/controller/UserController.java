@@ -119,7 +119,7 @@ public class UserController {
      * @date 2019/10/4
      */
     @ApiOperation(value="查询用户的个人信息", notes="只需要传入用户的token，返回该用户的的个人信息，目前只设置了" +
-            "“”“ID、username、phone、email、user_img_url、user_info")
+            "“”“id、username、phone、email、user_img_url、user_info")
     @RequestMapping(value = "/showUserInformation",method = RequestMethod.POST)
     public JsonResult findUserInformation(@RequestBody Map<String,Object> map){
 

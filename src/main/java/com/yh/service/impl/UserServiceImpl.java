@@ -45,21 +45,36 @@ public class UserServiceImpl implements UserService {
             //查不到则用户需要重新登录
             throw new RuntimeException("login/tokenNull");
         }
-            String tempLogin = (String) map.get("loginCount");
+        boolean loginCountExit = findEmailOrPhone(map);
+        if (!loginCountExit){
+            throw new RuntimeException("login/未注册");
+        }
+        String tempLogin = (String) map.get("loginCount");
         Integer firstLocation = tempLogin.indexOf("@");
         Integer lastLocation = tempLogin.lastIndexOf("@");
         User user = new User();
         //设置密码
         String password = (String) map.get("password");
+        if (!passwordCheck(password)){
+            throw new RuntimeException("login/密码至少6位");
+        }
         if (firstLocation>0){
             if (firstLocation.equals(lastLocation)){
                 //用户使用邮箱登录
                 String email = (String) map.get("loginCount");
+                if(!emailCheck(email)){
+                    throw new RuntimeException("login/请使用支持的邮箱：QQ、网易、谷歌、阿里云");
+                }
                 user = userMapper.findUserByEmail(email);
             }
         }else {
             //用户使用手机号登录
             String phone=((String)map.get("loginCount"));
+            Boolean phoneCheck = phoneCheck(phone);
+            if (phoneCheck){
+                throw new RuntimeException("login/请不要调皮，请输入正确的手机号");
+            }
+            System.out.println(phone+phoneCheck);
             user = userMapper.findUserByPhone(phone);
         }
         if (user ==null){
@@ -69,34 +84,6 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("login/密码错误");
         }
         token = addTokenIntoRedis(user.getUserId());
-        /*//生成token
-        token = TokenUtil.TokenProcessor(user.getUserId());
-        //删除之前的redis中存储的值，将用户放到redis中
-        //通过用户设置token，若返回null，则不需要删除token，若返回结果，删除token中对应的值
-        String tokenOld = stringRedisTemplate.opsForValue().getAndSet(user.getUserId(), token);
-        if (tokenOld!=null){
-            //设置0毫秒过期，相当于删除
-            stringRedisTemplate.expire(tokenOld,0,TimeUnit.MILLISECONDS);
-        }
-        String userIdOld = stringRedisTemplate.opsForValue().getAndSet(token, user.getUserId());
-        if (userIdOld!=null){
-            System.out.println(userIdOld);
-            //token 是唯一的，如果返回值不为空，就说明另一个用户的token被取代了，程序运行会有问题
-            //处理方式 将两位用户的token和userId全部从redis中删除，之后发送报警邮件
-            stringRedisTemplate.expire(userIdOld,0,TimeUnit.MILLISECONDS);
-            stringRedisTemplate.expire(user.getUserId(),0,TimeUnit.MILLISECONDS);
-            stringRedisTemplate.expire(token,0,TimeUnit.MILLISECONDS);
-            *//**
-             * @author chaoyang
-             * @date 2019/9/30
-             * 向管理者发送邮件，未实现
-             */
-            /*
-            throw new RuntimeException("login/Error");
-        }
-        //设置两天过期时间
-        stringRedisTemplate.expire(user.getUserId(),2,TimeUnit.DAYS);
-        stringRedisTemplate.expire(token,2,TimeUnit.DAYS);*/
         return token;
     }
     /**
@@ -107,17 +94,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public String regedit(Map<String, Object> map){
         User user = new User();
+        if (!passwordCheck((String) map.get("password"))){
+            throw new RuntimeException("regedit/密码至少6位");
+        }
         user.setPassword((String) map.get("password"));
         //用户通过邮箱或者手机号注册
         String  loginCount = (String) map.get("loginCount");
+        if (findEmailOrPhone(map)) {
+            throw new RuntimeException("regedit/账号已存在");
+        }
         Integer emailLocation = loginCount.indexOf("@");
         user.setUserId(UUID.randomUUID().toString().replace("-",""));
         if (emailLocation<0){
-            //通过手机号注册
+            //通过手机号注册 验证手机号
+           /* if (phoneCheck(loginCount)){
+                throw new RuntimeException("regedit/请不要调皮，请输入正确的手机号");
+            }*/
             user.setPhone(loginCount);
             userMapper.addUserByPhone(user);
             user = userMapper.findUserByPhone(loginCount);
         }else {
+           /* if(!emailCheck(loginCount)){
+                throw new RuntimeException("regedit/请使用支持的邮箱：QQ、网易、谷歌、阿里云");
+            }*/
             user.setEmail(loginCount);
             userMapper.addUserByEmail(user);
             user = userMapper.findUserByEmail(loginCount);
@@ -139,8 +138,14 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         if (emailLocation<0){
             //验证手机号
+            if (phoneCheck(loginCount)){
+                throw new RuntimeException("regedit/请不要调皮，请输入正确的手机号");
+            }
             user = userMapper.findUserByPhone(loginCount);
         }else {
+            if(!emailCheck(loginCount)){
+                throw new RuntimeException("regedit/请使用支持的邮箱：QQ、网易、谷歌、阿里云");
+            }
             user = userMapper.findUserByEmail(loginCount);
         }
         if (user!=null){
@@ -167,6 +172,60 @@ public class UserServiceImpl implements UserService {
     public String getUserIdFromRedisToken(String token){
         String userId = stringRedisTemplate.opsForValue().get(token);
         return userId;
+    }
+
+    /**
+     * 查询用户的个人信息
+     * @author chaoyang
+     * @date 2019/10/4
+     */
+    @Override
+    public User findUserInformation (Map<String, Object> map) {
+        String token = (String) map.get("token");
+        String userId = getUserIdFromRedisToken(token);
+        if (userId==null){
+            throw new RuntimeException("login/未登录");
+        }
+        User user = userMapper.findUserByUserId(userId);
+        if (user==null){
+            throw new RuntimeException("error/数据异常，请联系管理员");
+        }
+        return user;
+    }
+
+    @Override
+    public Boolean phoneCheck (String phone) {
+        //手机号长度验证
+        if (phone.length()!=11){
+            System.out.println("长度错误");
+            return false;
+        }
+        //手机号纯数字验证
+        for ( int  i=phone.length();--i>=0;){
+            int  chr=phone.charAt(i);
+            if(chr<48 || chr>57)
+                System.out.println("数字错误");
+               return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean emailCheck (String email) {
+        Integer location = email.lastIndexOf("@");
+        String suffix = email.substring(location + 1);
+        if ("qq.com".equals(suffix)||"163.com".equals(suffix)||"126.com".equals(suffix)||"gmail.com".equals(suffix)||"aliyun.com".equals(suffix)){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean passwordCheck (String password) {
+        if (password==null||password.equals("")||password.length()<6){
+            return false;
+        }
+        return true;
     }
 
 //    @Override

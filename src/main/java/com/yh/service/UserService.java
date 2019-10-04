@@ -2,7 +2,6 @@ package com.yh.service;
 
 import com.yh.entity.User;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +19,10 @@ public interface UserService {
 
     String getTokenFromRedisUserId(String userId);
     String getUserIdFromRedisToken(String token);
+    User findUserInformation(Map<String, Object> map);
+    Boolean phoneCheck(String phone);
+    Boolean emailCheck(String email);
+    Boolean passwordCheck(String password);
 
 
 //    /*author:zxs*/
