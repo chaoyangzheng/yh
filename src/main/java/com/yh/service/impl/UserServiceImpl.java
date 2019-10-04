@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -46,7 +45,7 @@ public class UserServiceImpl implements UserService {
             //查不到则用户需要重新登录
             throw new RuntimeException("login/tokenNull");
         }
-        String tempLogin = (String) map.get("loginCount");
+            String tempLogin = (String) map.get("loginCount");
         Integer firstLocation = tempLogin.indexOf("@");
         Integer lastLocation = tempLogin.lastIndexOf("@");
         User user = new User();
@@ -91,7 +90,8 @@ public class UserServiceImpl implements UserService {
              * @author chaoyang
              * @date 2019/9/30
              * 向管理者发送邮件，未实现
-             *//*
+             */
+            /*
             throw new RuntimeException("login/Error");
         }
         //设置两天过期时间

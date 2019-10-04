@@ -1,6 +1,8 @@
 package com.yh.service.impl;
 
+import com.yh.entity.User;
 import com.yh.mapper.FollowFanMapper;
+import com.yh.mapper.UserMapper;
 import com.yh.service.FollowFanService;
 import com.yh.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import java.util.Map;
  */
 @Service
 public class FollowFanServiceImpl implements FollowFanService {
+    @Autowired(required = false)
+    UserMapper userMapper;
     @Autowired
     UserService userService;
 
@@ -37,5 +41,36 @@ public class FollowFanServiceImpl implements FollowFanService {
         followFanMap.put("follow",allFollowId);
         followFanMap.put("fan",allFanId);
         return followFanMap;
+    }
+
+    @Override
+    public List<User> findAllFollowUser (Map<String,Object> map) {
+        String token = (String) map.get("token");
+        String userId = userService.getUserIdFromRedisToken(token);
+        List<String> followId = followFanMapper.findAllFollowByFanId(userId);
+        if (followId==null){
+            return null;
+        }
+        List<User> allFollowUser = userMapper.findAllUserByUserId(followId);
+        if (allFollowUser==null){
+            throw new RuntimeException("数据异常");
+        }
+        return allFollowUser;
+    }
+
+    @Override
+    public List<User> findAllFanUser (Map<String,Object> map) {
+        String token = (String) map.get("token");
+        String userId = userService.getUserIdFromRedisToken(token);
+
+        List<String> fanId = followFanMapper.findAllFanByFollowId(userId);
+        if (fanId==null){
+            return null;
+        }
+        List<User> allFanUser = userMapper.findAllUserByUserId(fanId);
+        if (allFanUser==null){
+            throw new RuntimeException("数据异常");
+        }
+        return allFanUser;
     }
 }
