@@ -76,9 +76,14 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
     </resultMap>
 
     <!--zxs:社区的发布功能，具体需要添加帖子标题，描述，图片地址，标签，以及当前时间和themeUserId-->
+    <!--zxs:
+       update:
+       在插入前自动生成uuid并赋值给对象-->
     <insert id="addTheme">
-        INSERT INTO t_theme (theme_title,type_id,theme_info,img_url,theme_user_id,upload_time)
-        VALUES (#{theme.themeTitle},#{theme.typeId},#{theme.themeInfo},#{theme.imgUrl},#{theme.themeUserId},#{theme.uploadTime});
+         <selectKey keyProperty="themeId" resultType="java.lang.String" order="BEFORE">
+            select uuid()
+         </selectKey>
+        INSERT INTO t_theme (theme_id,theme_title,type_id,theme_info,img_url,theme_user_id,upload_time)
+        VALUES (#{themeId},#{themeTitle},#{typeId},#{themeInfo},#{imgUrl},#{themeUserId},#{uploadTime});
     </insert>
-
 </mapper>
