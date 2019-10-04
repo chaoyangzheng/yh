@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 请后来修改者按照这个格式添加备注
@@ -18,20 +19,25 @@ import java.util.Map;
  */
 
 public interface UserMapper {
-    /*author:张栩生
-    * description:点击社区默认跳转关注页面，查询所有是老师的用户*/
+    /*author:张栩生*/
+    /*description:点击社区默认跳转关注页面，查询所有是老师的用户*/
     public List<User> findAllUser();
 
-    /*author:zxs
-    * description:查询金牌讲师*/
+    /*description:查询金牌讲师*/
     public List<User> getGoldenUserForTch();
 
-//    /*author:zxs
-//    * description:查询热门达人*/
-//    @Select("select follow_id,count(1) from t_follow_fan group by follow_id order by count(1) desc LIMIT 0,1;")
-//    public Map<String,Integer> findHotSuperUserId();
-//
-//    public List<User> findHotSuperUserById(Map<String,Integer>map);
+    /* description:查询热门达人的Id和粉丝数集合，7个人*/
+    @Select("select follow_id as userId,count(1) as fansNumber from t_follow_fan group by follow_id order by count(1) desc LIMIT 0,7;")
+    public List<User> findHotSuperUserId();
+
+    /*description:查询热门达人的集合，包含所有属性，7个人*/
+    public List<User> findHotSuperUserById(List<User> userList);
+
+    /*description:查询热门达人的所有作品数集合*/
+    public List<Integer> findHotSuperUserShowNumById(List<User> userList);
+
+    /*end:zxs*/
+
 
     /**
      * 功能描述 要求 手机号和邮箱必须唯一
