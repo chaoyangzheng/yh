@@ -27,14 +27,25 @@ public class PageHelperUtil {
         return pageNum;
     }
 
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
+    }
+
     public Integer getPageSize() {
         return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 
     public Integer getTypeId() {
         return typeId;
     }
 
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
+    }
 
     /**
      * @param pageNum  当前页码
@@ -86,4 +97,5 @@ public class PageHelperUtil {
 
         return pageHelperUtil;
     }
+
 }
