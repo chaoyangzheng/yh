@@ -98,4 +98,11 @@
 
 
 
+
+
+<!--  用户收藏  -->
+    <insert id="insertToCollection" parameterType="string">
+        insert into t_collection () values ();
+    </insert>
+
 </mapper>

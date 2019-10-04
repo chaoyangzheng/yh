@@ -6,11 +6,9 @@ import com.yh.entity.VideoCourse;
 import com.yh.service.DraftService;
 
 import io.swagger.annotations.*;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,9 +42,13 @@ public class DraftController {
      */
     @ApiOperation(value = "开始画功能",notes = "根据所给的视频封面选择相应视频课程页面")
     @PostMapping(value = "/queryOne.do")
-    public JsonResult queryByVideoCourseId(@ApiParam(value = "视频封面图片对应的视频id",required = true)String video_course_id) {
+    @ResponseBody
+    @ApiParam(value = "视频封面图片对应的视频id",required = true)
+    public JsonResult queryByVideoCourseId(@RequestBody String videoCourseId) {
 
-            VideoCourse videoCourse = draftService.findByVideoCourseId(video_course_id);
+        System.out.println(videoCourseId);
+
+            VideoCourse videoCourse = draftService.findByVideoCourseId(videoCourseId);
 
             if(videoCourse != null){
                 return new JsonResult("0",videoCourse);

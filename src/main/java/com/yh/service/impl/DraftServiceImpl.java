@@ -1,7 +1,7 @@
 package com.yh.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.yh.common.JsonResult;
+
 import com.yh.entity.VideoCourse;
 import com.yh.mapper.DraftMapper;
 import com.yh.service.DraftService;
