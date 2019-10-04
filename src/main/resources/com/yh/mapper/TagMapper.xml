@@ -1,0 +1,17 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yh.mapper.TagMapper">
+
+    <select id="findTagByVideoCourseId" resultType="Tag" parameterType="String">
+        SELECT
+        t_tag.tag_id,
+        t_tag.tag_type_id,
+        t_tag.tag_name
+        FROM
+        t_tag
+        RIGHT JOIN t_video_tag ON t_tag.tag_id = t_video_tag.tag_id
+        WHERE
+        t_video_tag.video_id = #{videoCourseId}
+    </select>
+
+</mapper>

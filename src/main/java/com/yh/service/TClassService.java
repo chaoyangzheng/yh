@@ -1,6 +1,6 @@
 package com.yh.service;
 
-import com.yh.entity.CourseSys;
+import com.yh.entity.TClass;
 
 import java.util.List;
 
@@ -8,34 +8,34 @@ import java.util.List;
  * @author SHIGUANGYI
  * @date 2019/10/4
  */
-public interface CourseSysService {
+public interface TClassService {
     /**
      * @param pageNum  当前页码，默认1
      * @param pageSize 每页条数，默认10
-     * @return 系列课程的list集合
+     * @return 小班课的list集合
      * @author SHIGUANGYI
      * @date 2019/10/4
-     * 综合顺序查询多节课进阶列表
+     * 综合顺序查询小班课列表
      */
-    List<CourseSys> findComprehensiveCourseSys(Integer pageNum, Integer pageSize);
+    List<TClass> findComprehensiveClass(Integer pageNum, Integer pageSize);
 
     /**
      * @param pageNum  当前页码，默认1
      * @param pageSize 每页条数，默认10
-     * @return 系列课程的list集合
+     * @return 小班课的list集合
      * @author SHIGUANGYI
      * @date 2019/10/4
-     * 热门顺序查询多节课进阶列表
+     * 热门顺序查询小班课列表
      */
-    List<CourseSys> findHottestCourseSys(Integer pageNum, Integer pageSize);
+    List<TClass> findHottestClass(Integer pageNum, Integer pageSize);
 
     /**
      * @param pageNum  当前页码，默认1
      * @param pageSize 每页条数，默认10
-     * @return 系列课程的list集合
+     * @return 小班课的list集合
      * @author SHIGUANGYI
      * @date 2019/10/4
-     * 更新时间顺序查询多节课进阶列表
+     * 最新顺序查询小班课列表
      */
-    List<CourseSys> findLatestCourseSys(Integer pageNum, Integer pageSize);
+    List<TClass> findLatestClass(Integer pageNum, Integer pageSize);
 }
