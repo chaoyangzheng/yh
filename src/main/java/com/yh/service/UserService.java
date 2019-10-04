@@ -22,6 +22,13 @@ public interface UserService {
     String getUserIdFromRedisToken(String token);
 
 
-//    /*author:zxs*/
-//    public List<User> findHotSuperUserById();
+    /*author:zxs*/
+     List<User> findAllUser();
+
+     List<User> getGoldenUserForTch();
+
+     List<User> findHotSuperUserById();
+
+     List<Integer> findHotSuperUserShowNumById();
+    /*end:zxs*/
 }

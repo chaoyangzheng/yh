@@ -17,7 +17,7 @@ import java.util.Random;
  */
 @Service
 public class VideoCourseServiceImpl implements VideoCourseService {
-    @Autowired
+    @Autowired(required = false)
     private VideoCourseMapper videoCourseMapper;
 
     /**

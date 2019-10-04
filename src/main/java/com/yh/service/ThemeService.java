@@ -2,6 +2,7 @@ package com.yh.service;
 
 import com.yh.common.JsonResult;
 import com.yh.entity.Theme;
+import com.yh.entity.User;
 
 import java.util.List;
 import java.util.Map;
@@ -19,5 +20,7 @@ public interface ThemeService {
     * 作用:社区内发现页按照不同类型的帖子查询*/
     public List<Theme> findThemeById(Integer typeId);
 
-
+    /*author:zxs
+    * 作用:社区内关注页页最新发布*/
+    public List<Theme> findAllFollowUserTheme(List<User> userList);
 }

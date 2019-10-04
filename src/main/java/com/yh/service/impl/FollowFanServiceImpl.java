@@ -1,5 +1,7 @@
 package com.yh.service.impl;
 
+import com.yh.common.JsonResult;
+import com.yh.entity.FollowFan;
 import com.yh.entity.User;
 import com.yh.mapper.FollowFanMapper;
 import com.yh.mapper.UserMapper;
@@ -72,5 +74,30 @@ public class FollowFanServiceImpl implements FollowFanService {
             throw new RuntimeException("数据异常");
         }
         return allFanUser;
+    }
+
+    /*zxs*/
+    @Override
+    public int addFollowUser(Map<String,Object> map) {
+        String token = (String) map.get("token");
+        String fanId = userService.getUserIdFromRedisToken(token);
+        String followId = (String)map.get("followId");
+        FollowFan followFan = new FollowFan();
+        followFan.setFanId(fanId);
+        followFan.setFollowId(followId);
+        int i = followFanMapper.addFollowUser(followFan);
+        return i;
+    }
+
+    @Override
+    public int unfollowUser(Map<String,Object> map) {
+        String token = (String) map.get("token");
+        String fanId = userService.getUserIdFromRedisToken(token);
+        String followId = (String)map.get("followId");
+        FollowFan followFan = new FollowFan();
+        followFan.setFanId(fanId);
+        followFan.setFollowId(followId);
+        int i = followFanMapper.unfollowUser(followFan);
+        return i;
     }
 }
