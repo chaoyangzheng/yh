@@ -2,7 +2,9 @@ package com.yh.service.impl;
 
 import com.yh.common.JsonResult;
 import com.yh.entity.Theme;
+import com.yh.entity.User;
 import com.yh.mapper.ThemeMapper;
+import com.yh.service.FollowFanService;
 import com.yh.service.ThemeService;
 import com.yh.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,10 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    FollowFanService followFanService;
+
 
     JsonResult jsonResult = null;
 
@@ -62,5 +68,11 @@ public class ThemeServiceImpl implements ThemeService {
     public List<Theme> findThemeById(Integer typeId) {
         List<Theme> themeListById = themeMapper.findThemeById(typeId);
         return themeListById;
+    }
+
+    @Override
+    public List<Theme> findAllFollowUserTheme(List<User> userList) {
+        List<Theme> themeList = themeMapper.findAllFollowUserTheme(userList);
+        return themeList;
     }
 }

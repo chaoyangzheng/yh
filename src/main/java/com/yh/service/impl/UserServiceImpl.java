@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -47,7 +46,7 @@ public class UserServiceImpl implements UserService {
             //查不到则用户需要重新登录
             throw new RuntimeException("login/tokenNull");
         }
-        String tempLogin = (String) map.get("loginCount");
+            String tempLogin = (String) map.get("loginCount");
         Integer firstLocation = tempLogin.indexOf("@");
         Integer lastLocation = tempLogin.lastIndexOf("@");
         User user = new User();
@@ -92,7 +91,8 @@ public class UserServiceImpl implements UserService {
              * @author chaoyang
              * @date 2019/9/30
              * 向管理者发送邮件，未实现
-             *//*
+             */
+            /*
             throw new RuntimeException("login/Error");
         }
         //设置两天过期时间
@@ -138,7 +138,7 @@ public class UserServiceImpl implements UserService {
         String  loginCount = (String) map.get("loginCount");
         Integer emailLocation = loginCount.indexOf("@");
         User user = new User();
-        if (emailLocation==null){
+        if (emailLocation<0){
             //验证手机号
             user = userMapper.findUserByPhone(loginCount);
         }else {
@@ -209,7 +209,7 @@ public class UserServiceImpl implements UserService {
 
     /*author:zxs
      * Date:19/10/4
-     * update:19/10/5
+     * update:19/10/4
      */
     /*查询社区发现页热门达人*/
     @Override
@@ -234,13 +234,14 @@ public class UserServiceImpl implements UserService {
         return userShowNumList;
     }
 
-    /*查询社区*/
+    /*查询社区内所有的用户*/
     @Override
     public List<User> findAllUser() {
         List<User> BbsAllUserList = userMapper.findAllUser();
         return BbsAllUserList;
     }
 
+    /*查询所有是金牌讲师的用户*/
     @Override
     public List<User> getGoldenUserForTch() {
         List<User> goldenUserForTch = userMapper.getGoldenUserForTch();

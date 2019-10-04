@@ -1,10 +1,6 @@
 package com.yh.mapper;
 
 import com.yh.entity.User;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Repository;
-import com.yh.entity.User;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -55,6 +51,7 @@ public interface UserMapper {
     User findUserByEmail (String email);
     @Select("select * from t_user where userId = #{userId)")
     User findUserByUserId (String userId);
+    List<User> findAllUserByUserId(List<String> list);
     @Select("select * from t_user where id = #{id)")
     User findUserById (Integer id);
     void addUserByPhone(User user);

@@ -1,14 +1,8 @@
 package com.yh.controller;
 
 import com.yh.common.JsonResult;
-import com.yh.entity.Active;
-import com.yh.entity.CourseType;
-import com.yh.entity.Type;
-import com.yh.entity.VideoCourse;
-import com.yh.service.ActiveService;
-import com.yh.service.CourseTypeService;
-import com.yh.service.TypeService;
-import com.yh.service.VideoCourseService;
+import com.yh.entity.*;
+import com.yh.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -40,6 +34,13 @@ public class HomePageController {
 
     @Autowired
     private VideoCourseService videoCourseService;
+
+    @Autowired
+    private CourseSysService courseSysService;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////首页页面//////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * @return code=0,info=所有总类别的list集合;code=1,info=错误信息
@@ -209,7 +210,9 @@ public class HomePageController {
         }
     }
 
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////单节课体验页面///////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * @param pageNum  当前页码
@@ -283,6 +286,34 @@ public class HomePageController {
         try {
             List<VideoCourse> videoCourseList = videoCourseService.findLatestSingleVideoCourse(pageNum, pageSize, typeId);
             return new JsonResult("0", videoCourseList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JsonResult("1", "查询失败" + e.getMessage());
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////多节课进阶页面///////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @param pageNum  当前页码
+     * @param pageSize 每页条数
+     * @return code=0,info=当前页课程的list集合;code=1,info=错误信息
+     * @author SHIGUANGYI
+     * @date 2019/10/3
+     * 按综合排序查询系列课程，用于展示到多节课进阶页面的综合
+     */
+    @ApiOperation(value = "按综合排序查询系列课程", notes = "按综合排序查询系列课程，用于展示到多节课进阶页面的综合")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "pageNum", value = "当前页码", dataType = "Integer", defaultValue = "1"),
+            @ApiImplicitParam(paramType = "query", name = "pageSize", value = "每页条数", dataType = "Integer", defaultValue = "10")
+    })
+    @PostMapping("/comprehensiveCourseSys.do")
+    public JsonResult comprehensiveCourseSys(Integer pageNum, Integer pageSize) {
+        try {
+            List<CourseSys> courseSysList = courseSysService.findComprehensiveCourseSys(pageNum, pageSize);
+            return new JsonResult("0", courseSysList);
         } catch (Exception e) {
             e.printStackTrace();
             return new JsonResult("1", "查询失败" + e.getMessage());

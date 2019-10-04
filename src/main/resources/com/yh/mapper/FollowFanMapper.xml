@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yh.mapper.FollowFanMapper">
+
+    <insert id="addFollowUser">
+        <selectKey keyProperty="followFanId" resultType="java.lang.String" order="BEFORE">
+            select uuid()
+        </selectKey>
+        INSERT INTO t_follow_fan (follow_fan_id,fan_id,follow_id)
+        VALUES (#{followFanId},#{fanId},#{followId});
+    </insert>
+
+    <delete id="unfollowUser">
+            delete from t_follow_fan where fan_id = #{fanId} and follow_id = #{followId}
+    </delete>
+</mapper>
