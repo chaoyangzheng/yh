@@ -21,6 +21,7 @@ package com.yh.service;
  */
 
 import com.yh.entity.VideoCourse;
+import io.swagger.models.auth.In;
 
 import java.util.List;
 
@@ -40,6 +41,7 @@ public interface DraftService {
      * 点击图片进入相关课程视频
      * @author rongjing
      * @param video_course_id
+     *
      * @result VideoCourse
      * @date 2019/9/30
      */
@@ -54,12 +56,12 @@ public interface DraftService {
      *  用户查看课程视频封面
      * 分页展示，每页显示10个
      * @author rongjing
-     *
-     * 返回值 视频课程对象集合
-     * @result String
-     * @date 2019/10/03
+     * @param currentPage 当前页（integer类型）
+     * @param  pageSize 每页显示条数 （integer类型）
+     * @result List集合，VideoCourse
+     * @date 2019/10/04
      */
-    public  List<VideoCourse> findAllVideoCourse();
+    public  List<VideoCourse> findAllVideoCourse(Integer currentPage, Integer pageSize);
 
 
 
