@@ -40,13 +40,13 @@ public interface DraftService {
      *  用户开始画功能
      * 点击图片进入相关课程视频
      * @author rongjing
-     * @param video_course_id
+     * @param videoCourseId
      *
      * @result VideoCourse
      * @date 2019/9/30
      */
 
-    public VideoCourse findByVideoCourseId(String video_course_id);
+    public VideoCourse findByVideoCourseId(String videoCourseId);
 
 
 

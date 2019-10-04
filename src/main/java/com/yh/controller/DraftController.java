@@ -5,14 +5,14 @@ import com.yh.common.JsonResult;
 import com.yh.entity.VideoCourse;
 import com.yh.service.DraftService;
 
+import com.yh.utils.DataConversionUtil;
 import io.swagger.annotations.*;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -30,7 +30,8 @@ public class DraftController {
     @Autowired
     private DraftService draftService;
 
-
+    @Autowired
+    private DataConversionUtil dataConversionUtil;
 
 
     /**
@@ -43,10 +44,13 @@ public class DraftController {
      * @date 2019/10/03
      */
     @ApiOperation(value = "开始画功能",notes = "根据所给的视频封面选择相应视频课程页面")
-    @PostMapping(value = "/queryOne.do")
-    public JsonResult queryByVideoCourseId(@ApiParam(value = "视频封面图片对应的视频id",required = true)String video_course_id) {
+    @RequestMapping(value = "/queryOne.do",method = RequestMethod.POST)
 
-            VideoCourse videoCourse = draftService.findByVideoCourseId(video_course_id);
+    public JsonResult queryByVideoCourseId( @ApiParam(value = "视频封面图片对应的视频id",required = true)@RequestBody Map<String,String> map) {
+
+        System.out.println(map.get("videoCourseId"));
+
+            VideoCourse videoCourse = draftService.findByVideoCourseId(map.get("videoCourseId"));
 
             if(videoCourse != null){
                 return new JsonResult("0",videoCourse);

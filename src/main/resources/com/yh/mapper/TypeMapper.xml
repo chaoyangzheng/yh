@@ -12,4 +12,14 @@
         t_type
     </select>
 
+    <select id="findTypeByTypeId" resultType="Type" parameterType="Integer">
+        SELECT
+        t_type.type_id,
+        t_type.type_name
+        FROM
+        t_type
+        WHERE
+        t_type.type_id = #{typeId}
+    </select>
+
 </mapper>

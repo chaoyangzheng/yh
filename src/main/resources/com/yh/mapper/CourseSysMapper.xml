@@ -13,9 +13,33 @@
     <select id="findComprehensiveCourseSys" resultMap="CourseSysMap">
         SELECT
         t_course_sys.course_sys_id,
-        t_course_sys.course_sys_name
+        t_course_sys.course_sys_name,
+        t_course_sys.course_sys_watch_number,
+        t_course_sys.course_sys_update_time
         FROM
         t_course_sys
+    </select>
+
+    <select id="findHottestCourseSys" resultMap="CourseSysMap">
+        SELECT
+        t_course_sys.course_sys_id,
+        t_course_sys.course_sys_name,
+        t_course_sys.course_sys_watch_number,
+        t_course_sys.course_sys_update_time
+        FROM
+        t_course_sys
+        ORDER BY t_course_sys.course_sys_watch_number DESC
+    </select>
+
+    <select id="findLatestCourseSys" resultMap="CourseSysMap">
+        SELECT
+        t_course_sys.course_sys_id,
+        t_course_sys.course_sys_name,
+        t_course_sys.course_sys_watch_number,
+        t_course_sys.course_sys_update_time
+        FROM
+        t_course_sys
+        ORDER BY t_course_sys.course_sys_update_time DESC
     </select>
 
 </mapper>

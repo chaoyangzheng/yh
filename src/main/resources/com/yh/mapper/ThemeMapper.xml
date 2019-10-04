@@ -43,6 +43,42 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
             t_theme.upload_time DESC
     </select>
 
+    <select id="findAllFollowUserTheme" resultMap="theme_card" parameterType="java.util.List">
+       SELECT
+            t_theme.theme_id,
+            t_theme.theme_title,
+            t_theme.type_id,
+            t_theme.theme_info,
+            t_theme.img_url,
+            t_theme.theme_user_id,
+            t_theme.upload_time,
+            t_theme.watch_number,
+            t_user.user_id,
+            t_user.ID,
+            t_user.username,
+            t_user.`password`,
+            t_user.phone,
+            t_user.email,
+            t_user.user_type_id,
+            t_user.user_img_url,
+            t_user.user_info,
+            t_type.type_id,
+            t_type.type_name,
+            t_user_type.user_type_id,
+            t_user_type.user_type_name
+            FROM
+            t_theme
+            LEFT JOIN t_type ON t_theme.type_id = t_type.type_id
+            LEFT JOIN t_user ON t_theme.theme_user_id = t_user.user_id
+            LEFT JOIN t_user_type ON t_user.user_type_id = t_user_type.user_type_id
+            WHERE theme_user_id in
+            <foreach item="ids" collection="list" open="(" separator="," close=")" index="index">
+                #{ids.userId}
+            </foreach>
+            ORDER BY
+            t_theme.upload_time DESC
+    </select>
+
     <resultMap id="theme_card" type="Theme" >
         <!--主键-->
         <id column="theme_id" property="themeId"></id>

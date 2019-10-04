@@ -3,16 +3,15 @@ package com.yh.controller;
 import com.yh.common.JsonResult;
 import com.yh.entity.*;
 import com.yh.service.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author SHIGUANGYI
@@ -38,9 +37,10 @@ public class HomePageController {
     @Autowired
     private CourseSysService courseSysService;
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////首页页面//////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Autowired
+    private TClassService tClassService;
+
+    /*-------------------------------首页页面-------------------------------*/
 
     /**
      * @return code=0,info=所有总类别的list集合;code=1,info=错误信息
@@ -133,23 +133,23 @@ public class HomePageController {
     }
 
     /**
-     * @param pageNum  当前页码
-     * @param pageSize 每页条数
-     * @param typeId   总类别id
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     *               总类别id，typeId，默认0，0=全部，1=水彩，2=素描，3=彩铅，4=油画
      * @return code=0,info=当前页课程的list集合;code=1,info=错误信息
      * @author SHIGUANGYI
      * @date 2019/10/3
      * 按综合排序查询课程，用于展示到首页|全部/水彩/素描等页面的综合
      */
     @ApiOperation(value = "按综合排序查询课程", notes = "按综合排序查询课程，用于展示到首页|全部/水彩/素描等页面的综合")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "pageNum", value = "当前页码", dataType = "Integer", defaultValue = "1"),
-            @ApiImplicitParam(paramType = "query", name = "pageSize", value = "每页条数", dataType = "Integer", defaultValue = "10"),
-            @ApiImplicitParam(paramType = "query", name = "typeId", value = "总类别id，0=全部，1=水彩，2=素描，3=彩铅，4=油画", dataType = "Integer", defaultValue = "0")
-    })
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10, //每页条数，默认10,\n\"typeId\":0 //总类别id，0=全部，1=水彩，2=素描，3=彩铅，4=油画\n}")
     @PostMapping("/comprehensiveVideoCourse.do")
-    public JsonResult comprehensiveVideoCourse(Integer pageNum, Integer pageSize, Integer typeId) {
+    public JsonResult comprehensiveVideoCourse(@RequestBody Map params) {
         try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
+            Integer typeId = (Integer) params.get("typeId");
             List<VideoCourse> videoCourseList = videoCourseService.findComprehensiveVideoCourse(pageNum, pageSize, typeId);
             return new JsonResult("0", videoCourseList);
         } catch (Exception e) {
@@ -159,23 +159,23 @@ public class HomePageController {
     }
 
     /**
-     * @param pageNum  当前页码
-     * @param pageSize 每页条数
-     * @param typeId   总类别id
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     *               总类别id，typeId，默认0，0=全部，1=水彩，2=素描，3=彩铅，4=油画
      * @return code=0,info=当前页课程的list集合;code=1,info=错误信息
      * @author SHIGUANGYI
      * @date 2019/10/3
      * 按热门排序查询课程，用于展示到首页|全部/水彩/素描等页面的热门
      */
     @ApiOperation(value = "按热门排序查询课程", notes = "按热门排序查询课程，用于展示到首页|全部/水彩/素描等页面的热门")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "pageNum", value = "当前页码", dataType = "Integer", defaultValue = "1"),
-            @ApiImplicitParam(paramType = "query", name = "pageSize", value = "每页条数", dataType = "Integer", defaultValue = "10"),
-            @ApiImplicitParam(paramType = "query", name = "typeId", value = "总类别id，0=全部，1=水彩，2=素描，3=彩铅，4=油画", dataType = "Integer", defaultValue = "0")
-    })
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10, //每页条数，默认10,\n\"typeId\":0 //总类别id，0=全部，1=水彩，2=素描，3=彩铅，4=油画\n}")
     @PostMapping("/hottestVideoCourse.do")
-    public JsonResult hottestVideoCourse(Integer pageNum, Integer pageSize, Integer typeId) {
+    public JsonResult hottestVideoCourse(@RequestBody Map params) {
         try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
+            Integer typeId = (Integer) params.get("typeId");
             List<VideoCourse> videoCourseList = videoCourseService.findHottestVideoCourse(pageNum, pageSize, typeId);
             return new JsonResult("0", videoCourseList);
         } catch (Exception e) {
@@ -185,23 +185,23 @@ public class HomePageController {
     }
 
     /**
-     * @param pageNum  当前页码
-     * @param pageSize 每页条数
-     * @param typeId   总类别id
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     *               总类别id，typeId，默认0，0=全部，1=水彩，2=素描，3=彩铅，4=油画
      * @return code=0,info=当前页课程的list集合;code=1,info=错误信息
      * @author SHIGUANGYI
      * @date 2019/10/3
      * 按上传时间排序查询课程，用于展示到首页|全部/水彩/素描等页面的最新
      */
     @ApiOperation(value = "按上传时间排序查询课程", notes = "按上传时间排序查询课程，用于展示到首页|全部/水彩/素描等页面的最新")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "pageNum", value = "当前页码", dataType = "Integer", defaultValue = "1"),
-            @ApiImplicitParam(paramType = "query", name = "pageSize", value = "每页条数", dataType = "Integer", defaultValue = "10"),
-            @ApiImplicitParam(paramType = "query", name = "typeId", value = "总类别id，0=全部，1=水彩，2=素描，3=彩铅，4=油画", dataType = "Integer", defaultValue = "0")
-    })
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10, //每页条数，默认10,\n\"typeId\":0 //总类别id，0=全部，1=水彩，2=素描，3=彩铅，4=油画\n}")
     @PostMapping("/latestVideoCourse.do")
-    public JsonResult latestVideoCourse(Integer pageNum, Integer pageSize, Integer typeId) {
+    public JsonResult latestVideoCourse(@RequestBody Map params) {
         try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
+            Integer typeId = (Integer) params.get("typeId");
             List<VideoCourse> videoCourseList = videoCourseService.findLatestVideoCourse(pageNum, pageSize, typeId);
             return new JsonResult("0", videoCourseList);
         } catch (Exception e) {
@@ -210,28 +210,26 @@ public class HomePageController {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////单节课体验页面///////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /*-----------------------------单节课体验页面----------------------------*/
 
     /**
-     * @param pageNum  当前页码
-     * @param pageSize 每页条数
-     * @param typeId   总类别id
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     *               总类别id，typeId，默认0，0=全部，1=水彩，2=素描，3=彩铅，4=油画
      * @return code=0,info=当前页课程的list集合;code=1,info=错误信息
      * @author SHIGUANGYI
      * @date 2019/10/3
      * 按综合排序查询课程，用于展示到单节课体验|全部/水彩/素描等页面的综合
      */
     @ApiOperation(value = "按综合排序查询课程", notes = "按综合排序查询课程，用于展示到单节课体验|全部/水彩/素描等页面的综合")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "pageNum", value = "当前页码", dataType = "Integer", defaultValue = "1"),
-            @ApiImplicitParam(paramType = "query", name = "pageSize", value = "每页条数", dataType = "Integer", defaultValue = "10"),
-            @ApiImplicitParam(paramType = "query", name = "typeId", value = "总类别id，0=全部，1=水彩，2=素描，3=彩铅，4=油画", dataType = "Integer", defaultValue = "0")
-    })
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10, //每页条数，默认10,\n\"typeId\":0 //总类别id，0=全部，1=水彩，2=素描，3=彩铅，4=油画\n}")
     @PostMapping("/comprehensiveSingleVideoCourse.do")
-    public JsonResult comprehensiveSingleVideoCourse(Integer pageNum, Integer pageSize, Integer typeId) {
+    public JsonResult comprehensiveSingleVideoCourse(@RequestBody Map params) {
         try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
+            Integer typeId = (Integer) params.get("typeId");
             List<VideoCourse> videoCourseList = videoCourseService.findComprehensiveSingleVideoCourse(pageNum, pageSize, typeId);
             return new JsonResult("0", videoCourseList);
         } catch (Exception e) {
@@ -241,23 +239,23 @@ public class HomePageController {
     }
 
     /**
-     * @param pageNum  当前页码
-     * @param pageSize 每页条数
-     * @param typeId   总类别id
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     *               总类别id，typeId，默认0，0=全部，1=水彩，2=素描，3=彩铅，4=油画
      * @return code=0,info=当前页课程的list集合;code=1,info=错误信息
      * @author SHIGUANGYI
      * @date 2019/10/3
      * 按热门排序查询课程，用于展示到单节课体验|全部/水彩/素描等页面的热门
      */
     @ApiOperation(value = "按热门排序查询课程", notes = "按热门排序查询课程，用于展示到单节课体验|全部/水彩/素描等页面的热门")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "pageNum", value = "当前页码", dataType = "Integer", defaultValue = "1"),
-            @ApiImplicitParam(paramType = "query", name = "pageSize", value = "每页条数", dataType = "Integer", defaultValue = "10"),
-            @ApiImplicitParam(paramType = "query", name = "typeId", value = "总类别id，0=全部，1=水彩，2=素描，3=彩铅，4=油画", dataType = "Integer", defaultValue = "0")
-    })
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10, //每页条数，默认10,\n\"typeId\":0 //总类别id，0=全部，1=水彩，2=素描，3=彩铅，4=油画\n}")
     @PostMapping("/hottestSingleVideoCourse.do")
-    public JsonResult hottestSingleVideoCourse(Integer pageNum, Integer pageSize, Integer typeId) {
+    public JsonResult hottestSingleVideoCourse(@RequestBody Map params) {
         try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
+            Integer typeId = (Integer) params.get("typeId");
             List<VideoCourse> videoCourseList = videoCourseService.findHottestSingleVideoCourse(pageNum, pageSize, typeId);
             return new JsonResult("0", videoCourseList);
         } catch (Exception e) {
@@ -267,23 +265,23 @@ public class HomePageController {
     }
 
     /**
-     * @param pageNum  当前页码
-     * @param pageSize 每页条数
-     * @param typeId   总类别id
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     *               总类别id，typeId，默认0，0=全部，1=水彩，2=素描，3=彩铅，4=油画
      * @return code=0,info=当前页课程的list集合;code=1,info=错误信息
      * @author SHIGUANGYI
      * @date 2019/10/3
      * 按上传时间排序查询课程，用于展示到单节课体验|全部/水彩/素描等页面的最新
      */
     @ApiOperation(value = "按上传时间排序查询课程", notes = "按上传时间排序查询课程，用于展示到单节课体验|全部/水彩/素描等页面的最新")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "pageNum", value = "当前页码", dataType = "Integer", defaultValue = "1"),
-            @ApiImplicitParam(paramType = "query", name = "pageSize", value = "每页条数", dataType = "Integer", defaultValue = "10"),
-            @ApiImplicitParam(paramType = "query", name = "typeId", value = "总类别id，0=全部，1=水彩，2=素描，3=彩铅，4=油画", dataType = "Integer", defaultValue = "0")
-    })
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10, //每页条数，默认10,\n\"typeId\":0 //总类别id，0=全部，1=水彩，2=素描，3=彩铅，4=油画\n}")
     @PostMapping("/latestSingleVideoCourse.do")
-    public JsonResult latestSingleVideoCourse(Integer pageNum, Integer pageSize, Integer typeId) {
+    public JsonResult latestSingleVideoCourse(@RequestBody Map params) {
         try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
+            Integer typeId = (Integer) params.get("typeId");
             List<VideoCourse> videoCourseList = videoCourseService.findLatestSingleVideoCourse(pageNum, pageSize, typeId);
             return new JsonResult("0", videoCourseList);
         } catch (Exception e) {
@@ -292,28 +290,148 @@ public class HomePageController {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////多节课进阶页面///////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /*------------------------多节课进阶页面--------------------------*/
 
     /**
-     * @param pageNum  当前页码
-     * @param pageSize 每页条数
-     * @return code=0,info=当前页课程的list集合;code=1,info=错误信息
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     * @return code=0,info=当前页课程系列的list集合;code=1,info=错误信息
      * @author SHIGUANGYI
-     * @date 2019/10/3
+     * @date 2019/10/4
      * 按综合排序查询系列课程，用于展示到多节课进阶页面的综合
      */
     @ApiOperation(value = "按综合排序查询系列课程", notes = "按综合排序查询系列课程，用于展示到多节课进阶页面的综合")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "pageNum", value = "当前页码", dataType = "Integer", defaultValue = "1"),
-            @ApiImplicitParam(paramType = "query", name = "pageSize", value = "每页条数", dataType = "Integer", defaultValue = "10")
-    })
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10 //每页条数，默认10\n}")
     @PostMapping("/comprehensiveCourseSys.do")
-    public JsonResult comprehensiveCourseSys(Integer pageNum, Integer pageSize) {
+    public JsonResult comprehensiveCourseSys(@RequestBody Map params) {
         try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
             List<CourseSys> courseSysList = courseSysService.findComprehensiveCourseSys(pageNum, pageSize);
             return new JsonResult("0", courseSysList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JsonResult("1", "查询失败" + e.getMessage());
+        }
+    }
+
+    /**
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     * @return code=0,info=当前页课程系列的list集合;code=1,info=错误信息
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 按观看数排序查询系列课程，用于展示到多节课进阶页面的热门
+     */
+    @ApiOperation(value = "按观看数排序查询系列课程", notes = "按观看数排序查询系列课程，用于展示到多节课进阶页面的热门")
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10 //每页条数，默认10\n}")
+    @PostMapping("/hottestCourseSys.do")
+    public JsonResult hottestCourseSys(@RequestBody Map params) {
+        try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
+            List<CourseSys> courseSysList = courseSysService.findHottestCourseSys(pageNum, pageSize);
+            return new JsonResult("0", courseSysList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JsonResult("1", "查询失败" + e.getMessage());
+        }
+    }
+
+    /**
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     * @return code=0,info=当前页课程系列的list集合;code=1,info=错误信息
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 按更新时间排序查询系列课程，用于展示到多节课进阶页面的新增
+     */
+    @ApiOperation(value = "按更新时间排序查询系列课程", notes = "按更新时间排序查询系列课程，用于展示到多节课进阶页面的新增")
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10 //每页条数，默认10\n}")
+    @PostMapping("/latestCourseSys.do")
+    public JsonResult latestCourseSys(@RequestBody Map params) {
+        try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
+            List<CourseSys> courseSysList = courseSysService.findLatestCourseSys(pageNum, pageSize);
+            return new JsonResult("0", courseSysList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JsonResult("1", "查询失败" + e.getMessage());
+        }
+    }
+
+    /*------------------------小班课页面--------------------------*/
+
+    /**
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     * @return code=0,info=当前页小班课的list集合;code=1,info=错误信息
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 按综合排序查询小班课，用于展示到小班课页面的综合
+     */
+    @ApiOperation(value = "按综合排序查询小班课", notes = "按综合排序查询小班课，用于展示到小班课页面的综合")
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10 //每页条数，默认10\n}")
+    @PostMapping("/comprehensiveClass.do")
+    public JsonResult comprehensiveClass(@RequestBody Map params) {
+        try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
+            List<TClass> tClassList = tClassService.findComprehensiveClass(pageNum, pageSize);
+            return new JsonResult("0", tClassList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JsonResult("1", "查询失败" + e.getMessage());
+        }
+    }
+
+    /**
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     * @return code=0,info=当前页小班课的list集合;code=1,info=错误信息
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 按观看数排序查询小班课，用于展示到小班课页面的热门
+     */
+    @ApiOperation(value = "按观看数排序查询小班课", notes = "按观看数排序查询小班课，用于展示到小班课页面的热门")
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10 //每页条数，默认10\n}")
+    @PostMapping("/hottestClass.do")
+    public JsonResult hottestClass(@RequestBody Map params) {
+        try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
+            List<TClass> tClassList = tClassService.findHottestClass(pageNum, pageSize);
+            return new JsonResult("0", tClassList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JsonResult("1", "查询失败" + e.getMessage());
+        }
+    }
+
+    /**
+     * @param params 参数map，包含：
+     *               当前页码，pageNum，默认1
+     *               每页条数，pageSize，默认10
+     * @return code=0,info=当前页小班课的list集合;code=1,info=错误信息
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 按更新时间排序查询小班课，用于展示到小班课页面的最新
+     */
+    @ApiOperation(value = "按更新时间排序查询小班课", notes = "按更新时间排序查询小班课，用于展示到小班课页面的最新")
+    @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\", //用户token\n\"pageNum\":1, //当前页码，默认1\n\"pageSize\":10 //每页条数，默认10\n}")
+    @PostMapping("/latestClass.do")
+    public JsonResult latestClass(@RequestBody Map params) {
+        try {
+            Integer pageNum = (Integer) params.get("pageNum");
+            Integer pageSize = (Integer) params.get("pageSize");
+            List<TClass> tClassList = tClassService.findLatestClass(pageNum, pageSize);
+            return new JsonResult("0", tClassList);
         } catch (Exception e) {
             e.printStackTrace();
             return new JsonResult("1", "查询失败" + e.getMessage());

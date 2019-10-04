@@ -273,4 +273,47 @@ public class UserServiceImpl implements UserService {
         stringRedisTemplate.expire(token,2,TimeUnit.DAYS);
         return token;
     }
+
+    /*author:zxs
+     * Date:19/10/4
+     * update:19/10/4
+     */
+    /*查询社区发现页热门达人*/
+    @Override
+    public List<User> findHotSuperUserById() {
+        List<User> userList = userMapper.findHotSuperUserId();
+        List<User> users = userMapper.findHotSuperUserById(userList);
+        for (int i = 0;i<7;i++){
+            users.get(i).setFansNumber(userList.get(i).getFansNumber());
+        }
+        return users;
+    }
+
+    /*查询社区发现页热门达人的作品数*/
+    @Override
+    public List<Integer> findHotSuperUserShowNumById() {
+        List<User> userList = userMapper.findHotSuperUserId();
+//        for (User u:userList
+//             ) {
+//            System.out.println(u);
+//        }
+        List<Integer> userShowNumList = userMapper.findHotSuperUserShowNumById(userList);
+        return userShowNumList;
+    }
+
+    /*查询社区内所有的用户*/
+    @Override
+    public List<User> findAllUser() {
+        List<User> BbsAllUserList = userMapper.findAllUser();
+        return BbsAllUserList;
+    }
+
+    /*查询所有是金牌讲师的用户*/
+    @Override
+    public List<User> getGoldenUserForTch() {
+        List<User> goldenUserForTch = userMapper.getGoldenUserForTch();
+        return goldenUserForTch;
+    }
+
+    /*end:zxs*/
 }
