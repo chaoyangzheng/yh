@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author SHIGUANGYI
@@ -60,13 +61,37 @@ public class VideoCourse implements Serializable {
      * 视频价格
      */
     private Double videoPrice;
-
     /**
      * @author SHIGUANGYI
      * @date 2019/10/3
      * 课程类型id
      */
     private Integer courseTypeId;
+
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 总类型
+     */
+    private Type type;
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 上传者
+     */
+    private User uploadUser;
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 讲师
+     */
+    private User teacherUser;
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 标签列表
+     */
+    private List<Tag> tagList;
 
     @Override
     public String toString() {
@@ -84,6 +109,10 @@ public class VideoCourse implements Serializable {
                 ", watchNumber=" + watchNumber +
                 ", videoPrice=" + videoPrice +
                 ", courseTypeId=" + courseTypeId +
+                ", type=" + type +
+                ", uploadUser=" + uploadUser +
+                ", teacherUser=" + teacherUser +
+                ", tagList=" + tagList +
                 '}';
     }
 
@@ -189,5 +218,37 @@ public class VideoCourse implements Serializable {
 
     public void setCourseTypeId(Integer courseTypeId) {
         this.courseTypeId = courseTypeId;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public User getUploadUser() {
+        return uploadUser;
+    }
+
+    public void setUploadUser(User uploadUser) {
+        this.uploadUser = uploadUser;
+    }
+
+    public User getTeacherUser() {
+        return teacherUser;
+    }
+
+    public void setTeacherUser(User teacherUser) {
+        this.teacherUser = teacherUser;
+    }
+
+    public List<Tag> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(List<Tag> tagList) {
+        this.tagList = tagList;
     }
 }

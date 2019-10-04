@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yh.mapper.TClassMapper">
+
+    <select id="findComprehensiveClass" resultType="TClass">
+        SELECT
+        t_class.class_id,
+        t_class.class_name,
+        t_class.class_number,
+        t_class.create_user_id,
+        t_class.teacher_user_id,
+        t_class.create_time,
+        t_class.class_time
+        FROM
+        t_class
+    </select>
+
+    <select id="findHottestClass" resultType="TClass">
+        SELECT
+        t_class.class_id,
+        t_class.class_name,
+        t_class.class_number,
+        t_class.create_user_id,
+        t_class.teacher_user_id,
+        t_class.create_time,
+        t_class.class_time
+        FROM
+        t_class
+        ORDER BY t_class.class_number DESC
+    </select>
+
+    <select id="findLatestClass" resultType="TClass">
+        SELECT
+        t_class.class_id,
+        t_class.class_name,
+        t_class.class_number,
+        t_class.create_user_id,
+        t_class.teacher_user_id,
+        t_class.create_time,
+        t_class.class_time
+        FROM
+        t_class
+        ORDER BY t_class.create_time DESC
+    </select>
+
+</mapper>
