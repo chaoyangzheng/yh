@@ -3,6 +3,7 @@ package com.yh.entity;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author SHIGUANGYI
@@ -20,6 +21,22 @@ public class CourseSys implements Serializable {
      */
     private String courseSysName;
 
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 视频课程列表
+     */
+    private List<VideoCourse> videoCourseList;
+
+    @Override
+    public String toString() {
+        return "CourseSys{" +
+                "courseSysId='" + courseSysId + '\'' +
+                ", courseSysName='" + courseSysName + '\'' +
+                ", videoCourseList=" + videoCourseList +
+                '}';
+    }
+
     public String getCourseSysId() {
         return courseSysId;
     }
@@ -34,5 +51,13 @@ public class CourseSys implements Serializable {
 
     public void setCourseSysName(String courseSysName) {
         this.courseSysName = courseSysName;
+    }
+
+    public List<VideoCourse> getVideoCourseList() {
+        return videoCourseList;
+    }
+
+    public void setVideoCourseList(List<VideoCourse> videoCourseList) {
+        this.videoCourseList = videoCourseList;
     }
 }

@@ -26,6 +26,7 @@ public interface VideoCourseMapper {
     VideoCourse findHottestSingleVideoCourse();
 
     /**
+     * @param typeId 总类别id
      * @return 默认价格降序视频课程列表
      * @author SHIGUANGYI
      * @date 2019/10/3
@@ -34,6 +35,7 @@ public interface VideoCourseMapper {
     List<VideoCourse> findVideoCourseComprehensive(Integer typeId);
 
     /**
+     * @param typeId 总类别id
      * @return 观看数降序视频课程列表
      * @author SHIGUANGYI
      * @date 2019/10/3
@@ -42,6 +44,7 @@ public interface VideoCourseMapper {
     List<VideoCourse> findVideoCourseHottest(Integer typeId);
 
     /**
+     * @param typeId 总类别id
      * @return 观看数降序视频课程列表
      * @author SHIGUANGYI
      * @date 2019/10/3
@@ -50,6 +53,7 @@ public interface VideoCourseMapper {
     List<VideoCourse> findVideoCourseLatest(Integer typeId);
 
     /**
+     * @param typeId 总类别id
      * @return 默认价格降序单节课体验列表
      * @author SHIGUANGYI
      * @date 2019/10/3
@@ -58,6 +62,7 @@ public interface VideoCourseMapper {
     List<VideoCourse> findSingleVideoCourseComprehensive(Integer typeId);
 
     /**
+     * @param typeId 总类别id
      * @return 观看数降序单节课体验列表
      * @author SHIGUANGYI
      * @date 2019/10/3
@@ -66,10 +71,20 @@ public interface VideoCourseMapper {
     List<VideoCourse> findSingleVideoCourseHottest(Integer typeId);
 
     /**
+     * @param typeId 总类别id
      * @return 上传时间降序单节课体验列表
      * @author SHIGUANGYI
      * @date 2019/10/3
      * 上传时间降序查询单节课体验列表
      */
     List<VideoCourse> findSingleVideoCourseLatest(Integer typeId);
+
+    /**
+     * @param courseSysId 课程系列id
+     * @return 课程系列的视频课程列表
+     * @author SHIGUANGYI
+     * @date 2019/10/4
+     * 根据课程系列id查询视频课程列表
+     */
+    List<VideoCourse> findVideoCourseByCourseSysId(Integer courseSysId);
 }
