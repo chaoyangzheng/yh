@@ -51,8 +51,15 @@ public interface UserMapper {
     User findUserByUserId (String userId);
     List<User> findAllUserByUserId(List<String> list);
     @Select("select * from t_user where id = #{id)")
-    User findUserById (String id);
+    List<User> findUserById (String id);
     void addUserByPhone(User user);
     void addUserByEmail(User user);
+    /**
+     * 修改个人信息，，动态sql
+     * @author chaoyang
+     * @date 2019/10/5
+     */
+    void updateUserInformation(User user);
+
 
 }

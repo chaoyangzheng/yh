@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
         Integer lastLocation = tempLogin.lastIndexOf("@");
         User user = new User();
         //设置密码
-        String password = (String) map.get("password");
+        String password = ((String) map.get("password")).trim();
         if (!passwordCheck(password)){
             throw new RuntimeException("login/密码至少6位");
         }
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
                 //用户使用邮箱登录
                 String email = (String) map.get("loginCount");
                 if(!emailCheck(email)){
-                    throw new RuntimeException("login/请使用支持的邮箱：QQ、网易、谷歌、阿里云");
+                    throw new RuntimeException("login/请使用正确的邮箱格式，支持的邮箱：QQ、网易、谷歌、阿里云");
                 }
                 user = userMapper.findUserByEmail(email);
             }
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
             //用户使用手机号登录
             String phone=((String)map.get("loginCount"));
             Boolean phoneCheck = phoneCheck(phone);
-            if (phoneCheck){
+            if (!phoneCheck){
                 throw new RuntimeException("login/请不要调皮，请输入正确的手机号");
             }
             System.out.println(phone+phoneCheck);
@@ -95,30 +95,37 @@ public class UserServiceImpl implements UserService {
     @Override
     public String regedit(Map<String, Object> map){
         User user = new User();
-        if (!passwordCheck((String) map.get("password"))){
-            throw new RuntimeException("regedit/密码至少6位");
+       /* if (!passwordCheck((String) map.get("password"))){
+            throw new RuntimeException("regedit/请检查密码格式");
+        }*/
+        String password=((String) map.get("password")).trim();
+        if (!passwordCheck(password)) {
+            throw new RuntimeException("regedit/密码必须是英文或数字，长度最低为6位");
         }
-        user.setPassword((String) map.get("password"));
+        user.setPassword(password);
         //用户通过邮箱或者手机号注册
         String  loginCount = (String) map.get("loginCount");
         if (findEmailOrPhone(map)) {
             throw new RuntimeException("regedit/账号已存在");
         }
         Integer emailLocation = loginCount.indexOf("@");
+        //生成uuid和默认头像
         user.setUserId(UUID.randomUUID().toString().replace("-",""));
+        user.setUserImgUrl("http://15637237221.wicp.vip/show/headImg.png.wicp.vip/show/headImg.png");
         if (emailLocation<0){
             //通过手机号注册 验证手机号
-           /* if (phoneCheck(loginCount)){
+            if (!phoneCheck(loginCount)){
                 throw new RuntimeException("regedit/请不要调皮，请输入正确的手机号");
-            }*/
+            }
             user.setPhone(loginCount);
             userMapper.addUserByPhone(user);
             user = userMapper.findUserByPhone(loginCount);
         }else {
-           /* if(!emailCheck(loginCount)){
-                throw new RuntimeException("regedit/请使用支持的邮箱：QQ、网易、谷歌、阿里云");
-            }*/
+            if(!emailCheck(loginCount)){
+                throw new RuntimeException("regedit/请使用正确的邮箱格式，支持的邮箱：QQ、网易、谷歌、阿里云");
+            }
             user.setEmail(loginCount);
+
             userMapper.addUserByEmail(user);
             user = userMapper.findUserByEmail(loginCount);
         }
@@ -139,13 +146,13 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         if (emailLocation<0){
             //验证手机号
-            if (phoneCheck(loginCount)){
+            if (!phoneCheck(loginCount)){
                 throw new RuntimeException("regedit/请不要调皮，请输入正确的手机号");
             }
             user = userMapper.findUserByPhone(loginCount);
         }else {
             if(!emailCheck(loginCount)){
-                throw new RuntimeException("regedit/请使用支持的邮箱：QQ、网易、谷歌、阿里云");
+                throw new RuntimeException("regedit/请使用正确的邮箱格式，支持的邮箱：QQ、网易、谷歌、阿里云");
             }
             user = userMapper.findUserByEmail(loginCount);
         }
@@ -189,7 +196,7 @@ public class UserServiceImpl implements UserService {
         }
         User user = userMapper.findUserByUserId(userId);
         if (user==null){
-            throw new RuntimeException("error/数据异常，请联系管理员");
+            throw new RuntimeException("error/用户未登录或者数据异常，若数据异常请联系管理员");
         }
         return user;
     }
@@ -204,9 +211,10 @@ public class UserServiceImpl implements UserService {
         //手机号纯数字验证
         for ( int  i=phone.length();--i>=0;){
             int  chr=phone.charAt(i);
-            if(chr<48 || chr>57)
+            if(chr<48 || chr>57){
                 System.out.println("数字错误");
-               return false;
+                return false;
+            }
         }
         return true;
     }
@@ -215,15 +223,168 @@ public class UserServiceImpl implements UserService {
     public Boolean emailCheck (String email) {
         Integer location = email.lastIndexOf("@");
         String suffix = email.substring(location + 1);
-        if ("qq.com".equals(suffix)||"163.com".equals(suffix)||"126.com".equals(suffix)||"gmail.com".equals(suffix)||"aliyun.com".equals(suffix)){
+        String prefix = email.substring(0,location);
+        if (!("qq.com".equals(suffix)||"163.com".equals(suffix)||"126.com".equals(suffix)||"gmail.com".equals(suffix)||"aliyun.com".equals(suffix))){
+            return false;
+        }
+        //英文：65-90/97-122
+        //数字：48-57
+        if (!checkChar(prefix)){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean passwordCheck (String password) {
+        password = password.trim();
+        if (password==null||password.equals("")||password.length()<6){
+            return false;
+        }
+        if (!checkChar(password)){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean checkChar (String chr) {
+        for ( int  i=chr.length();--i>=0;) {
+            int temp = chr.charAt(i);
+            if (temp>96&&temp<123){
+                continue;
+            }
+            if (temp>64&&temp<91){
+                continue;
+            }
+            if(temp>47&&temp<58){
+                continue;
+            }
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public User updateUserInformation (Map<String, Object> map) {
+        String token = (String) map.get("token");
+        String userId = getUserIdFromRedisToken(token);
+        if (userId==null){
+            return null;
+        }
+        User user = new User();
+        user.setUserId(userId);
+        String userImgUrl = (String) map.get("userImgUrl");
+        if (userImgUrl!=null){
+            user.setUserImgUrl(userImgUrl);
+        }
+        String userInfo = (String) map.get("userInfo");
+        if (userInfo!=null){
+            user.setUserInfo(userInfo);
+        }
+        String username = (String) map.get("username");
+        if (username!=null){
+            user.setUsername(username);
+        }
+        userMapper.updateUserInformation(user);
+        user = userMapper.findUserByUserId(user.getUserId());
+        if (user!=null){
+            user.setPassword(null);
+            user.setUserTypeId(null);
+            user.setUserType(null);
+        }
+        return user;
+    }
+
+    @Override
+    public User updatePhoneOrEmail (Map<String, Object> map) {
+        User user = new User();
+        //先校验要绑定的是否已经在数据库中了
+        String phone = (String) map.get("phone");
+        String email = (String) map.get("email");
+        if (phone!=null){
+            if (!phoneCheck(phone)) {
+                throw new RuntimeException("mine/手机号错误");
+            }
+            map.put("loginCount",phone);
+            user.setPhone(phone);
+        }else{
+            if (email==null){
+                throw new RuntimeException("没有要绑定的邮箱或者手机号");
+            }else {
+                if (!emailCheck(email)){
+                    throw new RuntimeException("mine/邮箱错误");
+                }
+                map.put("loginCount",email);
+                user.setEmail(email);
+            }
+        }
+        if(findEmailOrPhone(map)){
+            throw new RuntimeException("mine/该账号已被绑定");
+        }
+        String token = (String) map.get("token");
+        String userId = getUserIdFromRedisToken(token);
+        if (userId==null){
+            return null;
+        }
+        user.setUserId(userId);
+        userMapper.updateUserInformation(user);
+        user = userMapper.findUserByUserId(userId);
+        if (user!=null&&(user.getPhone().equals(phone)||user.getEmail().equals(email))){
+            user.setPassword(null);
+            user.setUserTypeId(null);
+            user.setUserType(null);
+            return user;
+        }
+        return null;
+    }
+
+    @Override
+    public User updateUserOfId (Map<String, Object> map) {
+        String token = (String) map.get("token");
+        String userId = getUserIdFromRedisToken(token);
+        if (userId==null){
+            return null;
+        }
+        String id = (String) map.get("id");
+        if (id==null){
+            throw new RuntimeException("mine/没有要设置的id值");
+        }
+        if (!idCheck(id)) {
+            throw new RuntimeException("mine/请遵循id设置规范");
+        }
+        if (!checkUserOfId(id)) {
+            throw new RuntimeException("mine/用户已设置id");
+        }
+        User user = new User();
+        user.setUserId(userId);
+        user.setId(id);
+        userMapper.updateUserInformation(user);
+        if (id.equals(userMapper.findUserByUserId(userId).getId())){
+            user.setPassword(null);
+            user.setUserTypeId(null);
+            user.setUserType(null);
+            return user;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean checkUserOfId (String id) {
+        List<User> lists = userMapper.findUserById(id);
+        if (lists==null||lists.size()<1){
             return true;
         }
         return false;
     }
 
     @Override
-    public Boolean passwordCheck (String password) {
-        if (password==null||password.equals("")||password.length()<6){
+    public boolean idCheck (String id) {
+        //id由6-12为英文或者数字组成
+        if (!checkChar(id)){
+            return false;
+        }
+        if (id.length()>12||id.length()<6){
             return false;
         }
         return true;

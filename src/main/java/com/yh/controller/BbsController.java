@@ -7,6 +7,7 @@ import com.yh.entity.Theme;
 import com.yh.entity.Type;
 import com.yh.entity.User;
 import com.yh.service.*;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.Map;
 * author:zxs
 * Date:19/10/3
 * description:社区内的帖子*/
+@Api(description = "社区内的功能")
 @RestController
 @RequestMapping("/Bbs")
 public class BbsController {
