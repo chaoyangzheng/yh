@@ -40,6 +40,32 @@ public class HomePageController {
     @Autowired
     private TClassService tClassService;
 
+    /**
+     * 将Object（String或数字）转换为Integer
+     *
+     * @param obj 待转换对象
+     * @return 转换成功返回Integer对象，失败返回null
+     * @author SHIGUANGYI
+     * @date 2019/10/5
+     */
+    private Integer objToInt(Object obj) {
+        if (null == obj || "".equals(obj)) {
+            return null;
+        } else if (obj instanceof Integer) {
+            return (Integer) obj;
+        } else if (obj instanceof Double) {
+            return ((Double) obj).intValue();
+        } else if (obj instanceof String && ((String) obj).replace(" ", "").matches("^-?\\d+(\\.\\d+)?$")) {
+            String num = ((String) obj).replace(" ", "");
+            if (num.contains(".")) {
+                num = num.substring(0, num.indexOf('.'));
+            }
+            return Integer.valueOf(num);
+        } else {
+            return null;
+        }
+    }
+
     /*-------------------------------首页页面-------------------------------*/
 
     /**
@@ -147,9 +173,9 @@ public class HomePageController {
     @PostMapping("/comprehensiveVideoCourse.do")
     public JsonResult comprehensiveVideoCourse(@RequestBody Map params) {
         try {
-            Integer pageNum = (Integer) params.get("pageNum");
-            Integer pageSize = (Integer) params.get("pageSize");
-            Integer typeId = (Integer) params.get("typeId");
+            Integer pageNum = objToInt(params.get("pageNum"));
+            Integer pageSize = objToInt(params.get("pageSize"));
+            Integer typeId = objToInt(params.get("typeId"));
             List<VideoCourse> videoCourseList = videoCourseService.findComprehensiveVideoCourse(pageNum, pageSize, typeId);
             return new JsonResult("0", videoCourseList);
         } catch (Exception e) {
@@ -173,9 +199,9 @@ public class HomePageController {
     @PostMapping("/hottestVideoCourse.do")
     public JsonResult hottestVideoCourse(@RequestBody Map params) {
         try {
-            Integer pageNum = (Integer) params.get("pageNum");
-            Integer pageSize = (Integer) params.get("pageSize");
-            Integer typeId = (Integer) params.get("typeId");
+            Integer pageNum = objToInt(params.get("pageNum"));
+            Integer pageSize = objToInt(params.get("pageSize"));
+            Integer typeId = objToInt(params.get("typeId"));
             List<VideoCourse> videoCourseList = videoCourseService.findHottestVideoCourse(pageNum, pageSize, typeId);
             return new JsonResult("0", videoCourseList);
         } catch (Exception e) {
@@ -199,9 +225,9 @@ public class HomePageController {
     @PostMapping("/latestVideoCourse.do")
     public JsonResult latestVideoCourse(@RequestBody Map params) {
         try {
-            Integer pageNum = (Integer) params.get("pageNum");
-            Integer pageSize = (Integer) params.get("pageSize");
-            Integer typeId = (Integer) params.get("typeId");
+            Integer pageNum = objToInt(params.get("pageNum"));
+            Integer pageSize = objToInt(params.get("pageSize"));
+            Integer typeId = objToInt(params.get("typeId"));
             List<VideoCourse> videoCourseList = videoCourseService.findLatestVideoCourse(pageNum, pageSize, typeId);
             return new JsonResult("0", videoCourseList);
         } catch (Exception e) {
@@ -227,9 +253,9 @@ public class HomePageController {
     @PostMapping("/comprehensiveSingleVideoCourse.do")
     public JsonResult comprehensiveSingleVideoCourse(@RequestBody Map params) {
         try {
-            Integer pageNum = (Integer) params.get("pageNum");
-            Integer pageSize = (Integer) params.get("pageSize");
-            Integer typeId = (Integer) params.get("typeId");
+            Integer pageNum = objToInt(params.get("pageNum"));
+            Integer pageSize = objToInt(params.get("pageSize"));
+            Integer typeId = objToInt(params.get("typeId"));
             List<VideoCourse> videoCourseList = videoCourseService.findComprehensiveSingleVideoCourse(pageNum, pageSize, typeId);
             return new JsonResult("0", videoCourseList);
         } catch (Exception e) {
@@ -253,9 +279,9 @@ public class HomePageController {
     @PostMapping("/hottestSingleVideoCourse.do")
     public JsonResult hottestSingleVideoCourse(@RequestBody Map params) {
         try {
-            Integer pageNum = (Integer) params.get("pageNum");
-            Integer pageSize = (Integer) params.get("pageSize");
-            Integer typeId = (Integer) params.get("typeId");
+            Integer pageNum = objToInt(params.get("pageNum"));
+            Integer pageSize = objToInt(params.get("pageSize"));
+            Integer typeId = objToInt(params.get("typeId"));
             List<VideoCourse> videoCourseList = videoCourseService.findHottestSingleVideoCourse(pageNum, pageSize, typeId);
             return new JsonResult("0", videoCourseList);
         } catch (Exception e) {
@@ -279,9 +305,9 @@ public class HomePageController {
     @PostMapping("/latestSingleVideoCourse.do")
     public JsonResult latestSingleVideoCourse(@RequestBody Map params) {
         try {
-            Integer pageNum = (Integer) params.get("pageNum");
-            Integer pageSize = (Integer) params.get("pageSize");
-            Integer typeId = (Integer) params.get("typeId");
+            Integer pageNum = objToInt(params.get("pageNum"));
+            Integer pageSize = objToInt(params.get("pageSize"));
+            Integer typeId = objToInt(params.get("typeId"));
             List<VideoCourse> videoCourseList = videoCourseService.findLatestSingleVideoCourse(pageNum, pageSize, typeId);
             return new JsonResult("0", videoCourseList);
         } catch (Exception e) {
@@ -306,8 +332,8 @@ public class HomePageController {
     @PostMapping("/comprehensiveCourseSys.do")
     public JsonResult comprehensiveCourseSys(@RequestBody Map params) {
         try {
-            Integer pageNum = (Integer) params.get("pageNum");
-            Integer pageSize = (Integer) params.get("pageSize");
+            Integer pageNum = objToInt(params.get("pageNum"));
+            Integer pageSize = objToInt(params.get("pageSize"));
             List<CourseSys> courseSysList = courseSysService.findComprehensiveCourseSys(pageNum, pageSize);
             return new JsonResult("0", courseSysList);
         } catch (Exception e) {
@@ -330,8 +356,8 @@ public class HomePageController {
     @PostMapping("/hottestCourseSys.do")
     public JsonResult hottestCourseSys(@RequestBody Map params) {
         try {
-            Integer pageNum = (Integer) params.get("pageNum");
-            Integer pageSize = (Integer) params.get("pageSize");
+            Integer pageNum = objToInt(params.get("pageNum"));
+            Integer pageSize = objToInt(params.get("pageSize"));
             List<CourseSys> courseSysList = courseSysService.findHottestCourseSys(pageNum, pageSize);
             return new JsonResult("0", courseSysList);
         } catch (Exception e) {
@@ -354,8 +380,8 @@ public class HomePageController {
     @PostMapping("/latestCourseSys.do")
     public JsonResult latestCourseSys(@RequestBody Map params) {
         try {
-            Integer pageNum = (Integer) params.get("pageNum");
-            Integer pageSize = (Integer) params.get("pageSize");
+            Integer pageNum = objToInt(params.get("pageNum"));
+            Integer pageSize = objToInt(params.get("pageSize"));
             List<CourseSys> courseSysList = courseSysService.findLatestCourseSys(pageNum, pageSize);
             return new JsonResult("0", courseSysList);
         } catch (Exception e) {
@@ -380,8 +406,8 @@ public class HomePageController {
     @PostMapping("/comprehensiveClass.do")
     public JsonResult comprehensiveClass(@RequestBody Map params) {
         try {
-            Integer pageNum = (Integer) params.get("pageNum");
-            Integer pageSize = (Integer) params.get("pageSize");
+            Integer pageNum = objToInt(params.get("pageNum"));
+            Integer pageSize = objToInt(params.get("pageSize"));
             List<TClass> tClassList = tClassService.findComprehensiveClass(pageNum, pageSize);
             return new JsonResult("0", tClassList);
         } catch (Exception e) {
@@ -404,8 +430,8 @@ public class HomePageController {
     @PostMapping("/hottestClass.do")
     public JsonResult hottestClass(@RequestBody Map params) {
         try {
-            Integer pageNum = (Integer) params.get("pageNum");
-            Integer pageSize = (Integer) params.get("pageSize");
+            Integer pageNum = objToInt(params.get("pageNum"));
+            Integer pageSize = objToInt(params.get("pageSize"));
             List<TClass> tClassList = tClassService.findHottestClass(pageNum, pageSize);
             return new JsonResult("0", tClassList);
         } catch (Exception e) {
@@ -428,8 +454,8 @@ public class HomePageController {
     @PostMapping("/latestClass.do")
     public JsonResult latestClass(@RequestBody Map params) {
         try {
-            Integer pageNum = (Integer) params.get("pageNum");
-            Integer pageSize = (Integer) params.get("pageSize");
+            Integer pageNum = objToInt(params.get("pageNum"));
+            Integer pageSize = objToInt(params.get("pageSize"));
             List<TClass> tClassList = tClassService.findLatestClass(pageNum, pageSize);
             return new JsonResult("0", tClassList);
         } catch (Exception e) {
