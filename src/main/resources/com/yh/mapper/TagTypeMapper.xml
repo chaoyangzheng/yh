@@ -2,4 +2,17 @@
 
 <mapper namespace="com.yh.mapper.TagTypeMapper">
 
+    <resultMap id="TagTypeMap" type="TagType" autoMapping="true">
+        <id column="tag_type_id" property="tagTypeId"/>
+        <collection property="tagList" select="com.yh.mapper.TagMapper.findTagByTagTypeId" column="tag_type_id"/>
+    </resultMap>
+
+    <select id="findAllTagType" resultMap="TagTypeMap">
+        SELECT
+        t_tag_type.tag_type_id,
+        t_tag_type.tag_type_name
+        FROM
+        t_tag_type
+    </select>
+
 </mapper>

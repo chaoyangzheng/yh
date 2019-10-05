@@ -14,4 +14,15 @@
         t_video_tag.video_id = #{videoCourseId}
     </select>
 
+    <select id="findTagByTagTypeId" resultType="Tag" parameterType="Integer">
+        SELECT
+        t_tag.tag_id,
+        t_tag.tag_type_id,
+        t_tag.tag_name
+        FROM
+        t_tag
+        WHERE
+        t_tag.tag_type_id = #{tagTypeId}
+    </select>
+
 </mapper>

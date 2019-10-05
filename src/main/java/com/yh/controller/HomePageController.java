@@ -40,6 +40,9 @@ public class HomePageController {
     @Autowired
     private TClassService tClassService;
 
+    @Autowired
+    private TagTypeService tagTypeService;
+
     /**
      * 将Object（String或数字）转换为Integer
      *
@@ -414,7 +417,7 @@ public class HomePageController {
     @ApiImplicitParam(name = "params", value = "{\n\"token\":\"token\" //用户token\n}")
     @PostMapping("/tagList.do")
     public JsonResult tagList() {
-
-        return new JsonResult("0", null);
+        List<TagType> tagTypeList = tagTypeService.findAllTagType();
+        return new JsonResult("0", tagTypeList);
     }
 }

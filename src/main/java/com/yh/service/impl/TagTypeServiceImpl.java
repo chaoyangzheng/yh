@@ -23,6 +23,7 @@ public class TagTypeServiceImpl implements TagTypeService {
      */
     @Override
     public List<TagType> findAllTagType() {
-        return null;
+        List<TagType> tagTypeList = tagTypeMapper.findAllTagType();
+        return tagTypeList;
     }
 }

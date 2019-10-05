@@ -1,6 +1,5 @@
 package com.yh.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -68,6 +67,12 @@ public class VideoCourse implements Serializable {
      * 课程类型id
      */
     private Integer courseTypeId;
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/5
+     * 视频时长
+     */
+    private String videoTime;
 
     /**
      * @author SHIGUANGYI
@@ -93,29 +98,6 @@ public class VideoCourse implements Serializable {
      * 标签列表
      */
     private List<Tag> tagList;
-
-    @Override
-    public String toString() {
-        return "VideoCourse{" +
-                "videoCourseId='" + videoCourseId + '\'' +
-                ", videoCourseName='" + videoCourseName + '\'' +
-                ", videoTitle='" + videoTitle + '\'' +
-                ", videoInfo='" + videoInfo + '\'' +
-                ", typeId=" + typeId +
-                ", videoCourseUrl='" + videoCourseUrl + '\'' +
-                ", videoCourseImgUrl='" + videoCourseImgUrl + '\'' +
-                ", uploadUserId='" + uploadUserId + '\'' +
-                ", uploadTime=" + uploadTime +
-                ", teacherUserId='" + teacherUserId + '\'' +
-                ", watchNumber=" + watchNumber +
-                ", videoPrice=" + videoPrice +
-                ", courseTypeId=" + courseTypeId +
-                ", type=" + type +
-                ", uploadUser=" + uploadUser +
-                ", teacherUser=" + teacherUser +
-                ", tagList=" + tagList +
-                '}';
-    }
 
     public String getVideoCourseId() {
         return videoCourseId;
@@ -219,6 +201,14 @@ public class VideoCourse implements Serializable {
 
     public void setCourseTypeId(Integer courseTypeId) {
         this.courseTypeId = courseTypeId;
+    }
+
+    public String getVideoTime() {
+        return videoTime;
+    }
+
+    public void setVideoTime(String videoTime) {
+        this.videoTime = videoTime;
     }
 
     public Type getType() {
