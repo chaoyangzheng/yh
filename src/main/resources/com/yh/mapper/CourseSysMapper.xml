@@ -4,9 +4,10 @@
 
 <mapper namespace="com.yh.mapper.CourseSysMapper">
 
-    <resultMap id="CourseSysMap" type="CourseSys">
+    <resultMap id="CourseSysMap" type="CourseSys" autoMapping="true">
         <id column="course_sys_id" property="courseSysId"/>
-        <result column="course_sys_name" property="courseSysName"/>
+        <result column="teacher_user_id" property="teacherUserId"/>
+        <association property="teacher" select="com.yh.mapper.UserMapper.findUserByUserId" column="teacher_user_id"/>
         <collection property="videoCourseList" select="com.yh.mapper.VideoCourseMapper.findVideoCourseByCourseSysId" column="course_sys_id"/>
     </resultMap>
 
@@ -15,7 +16,9 @@
         t_course_sys.course_sys_id,
         t_course_sys.course_sys_name,
         t_course_sys.course_sys_watch_number,
-        t_course_sys.course_sys_update_time
+        t_course_sys.course_sys_update_time,
+        t_course_sys.course_sys_img_url,
+        t_course_sys.teacher_user_id
         FROM
         t_course_sys
     </select>
@@ -25,7 +28,9 @@
         t_course_sys.course_sys_id,
         t_course_sys.course_sys_name,
         t_course_sys.course_sys_watch_number,
-        t_course_sys.course_sys_update_time
+        t_course_sys.course_sys_update_time,
+        t_course_sys.course_sys_img_url,
+        t_course_sys.teacher_user_id
         FROM
         t_course_sys
         ORDER BY t_course_sys.course_sys_watch_number DESC
@@ -36,7 +41,9 @@
         t_course_sys.course_sys_id,
         t_course_sys.course_sys_name,
         t_course_sys.course_sys_watch_number,
-        t_course_sys.course_sys_update_time
+        t_course_sys.course_sys_update_time,
+        t_course_sys.course_sys_img_url,
+        t_course_sys.teacher_user_id
         FROM
         t_course_sys
         ORDER BY t_course_sys.course_sys_update_time DESC

@@ -33,7 +33,25 @@ public class CourseSys implements Serializable {
      * 课程系列更新时间
      */
     private Date courseSysUpdateTime;
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/5
+     * 课程系列封面地址
+     */
+    private String courseSysImgUrl;
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/5
+     * 课程系列讲师id
+     */
+    private String teacherUserId;
 
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/5
+     * 课程系列讲师
+     */
+    private User teacher;
     /**
      * @author SHIGUANGYI
      * @date 2019/10/4
@@ -48,6 +66,9 @@ public class CourseSys implements Serializable {
                 ", courseSysName='" + courseSysName + '\'' +
                 ", courseSysWatchNumber=" + courseSysWatchNumber +
                 ", courseSysUpdateTime=" + courseSysUpdateTime +
+                ", courseSysImgUrl='" + courseSysImgUrl + '\'' +
+                ", teacherUserId='" + teacherUserId + '\'' +
+                ", teacher=" + teacher +
                 ", videoCourseList=" + videoCourseList +
                 '}';
     }
@@ -82,6 +103,30 @@ public class CourseSys implements Serializable {
 
     public void setCourseSysUpdateTime(Date courseSysUpdateTime) {
         this.courseSysUpdateTime = courseSysUpdateTime;
+    }
+
+    public String getCourseSysImgUrl() {
+        return courseSysImgUrl;
+    }
+
+    public void setCourseSysImgUrl(String courseSysImgUrl) {
+        this.courseSysImgUrl = courseSysImgUrl;
+    }
+
+    public String getTeacherUserId() {
+        return teacherUserId;
+    }
+
+    public void setTeacherUserId(String teacherUserId) {
+        this.teacherUserId = teacherUserId;
+    }
+
+    public User getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(User teacher) {
+        this.teacher = teacher;
     }
 
     public List<VideoCourse> getVideoCourseList() {
