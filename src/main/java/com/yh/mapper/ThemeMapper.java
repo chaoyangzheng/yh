@@ -38,5 +38,7 @@ public interface ThemeMapper {
     public List<Theme> findAllFollowUserTheme(List<User> userList);
 
 
+    /*author:zxs
+    * 作用:查询热门达人的作品图片*/
     public List<Theme> findHotSuperUserShowImgById(List<User> userList);
 }
