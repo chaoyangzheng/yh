@@ -31,9 +31,12 @@ public interface ThemeMapper {
     * 描述:按照获取到的typeId来查询帖子
     * Date:19/10/3
     * */
-    @Select("select * from t_theme where type_id = #{typeId}")
+//    @Select("select * from t_theme where type_id = #{typeId}")
     public List<Theme> findThemeById(Integer typeId);
 
 
     public List<Theme> findAllFollowUserTheme(List<User> userList);
+
+
+    public List<Theme> findHotSuperUserShowImgById(List<User> userList);
 }
