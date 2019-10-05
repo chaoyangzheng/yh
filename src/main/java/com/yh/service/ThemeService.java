@@ -23,4 +23,9 @@ public interface ThemeService {
     /*author:zxs
     * 作用:社区内关注页页最新发布*/
     public List<Theme> findAllFollowUserTheme(List<User> userList);
+
+
+    /*author:zxs
+    * 作用:社区内发现页热门达人的作品*/
+    public List<Theme> findHotSuperUserShowImgById();
 }

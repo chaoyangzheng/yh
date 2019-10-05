@@ -18,7 +18,7 @@ import java.util.Map;
  * @date 2019/9/30
  * 首页控制器
  */
-@Api("首页及其相关页面")
+@Api(description = "首页及其相关页面")
 @RestController
 @RequestMapping("/HomePage")
 public class HomePageController {
