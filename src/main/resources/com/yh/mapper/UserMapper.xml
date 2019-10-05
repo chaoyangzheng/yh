@@ -90,11 +90,11 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
         <if test="email!=null">
             email = #{email},
         </if>
-        <if test="user_info!=null">
-            user_info = #{user_info},
+        <if test="userInfo!=null">
+            user_info = #{userInfo},
         </if>
-        <if test="user_img_url!=null">
-            user_img_url = #{user_img_url},
+        <if test="userImgUrl!=null">
+            user_img_url = #{userImgUrl},
         </if>
          user_id = #{userId}
          where user_id = #{userId}
