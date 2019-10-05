@@ -43,6 +43,37 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
             t_theme.upload_time DESC
     </select>
 
+    <select id="findThemeById" parameterType="Integer" resultMap="theme_card">
+        SELECT
+            t_theme.theme_id,
+            t_theme.theme_title,
+            t_theme.type_id,
+            t_theme.theme_info,
+            t_theme.img_url,
+            t_theme.theme_user_id,
+            t_theme.upload_time,
+            t_theme.watch_number,
+            t_user.user_id,
+            t_user.ID,
+            t_user.username,
+            t_user.`password`,
+            t_user.phone,
+            t_user.email,
+            t_user.user_type_id,
+            t_user.user_img_url,
+            t_user.user_info,
+            t_type.type_id,
+            t_type.type_name,
+            t_user_type.user_type_id,
+            t_user_type.user_type_name
+            FROM
+            t_theme
+            LEFT JOIN t_type ON t_theme.type_id = t_type.type_id
+            LEFT JOIN t_user ON t_theme.theme_user_id = t_user.user_id
+            LEFT JOIN t_user_type ON t_user.user_type_id = t_user_type.user_type_id
+            WHERE t_theme.type_id = #{typeId}
+    </select>
+
     <select id="findAllFollowUserTheme" resultMap="theme_card" parameterType="java.util.List">
        SELECT
             t_theme.theme_id,
@@ -122,4 +153,16 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
         INSERT INTO t_theme (theme_id,theme_title,type_id,theme_info,img_url,theme_user_id,upload_time)
         VALUES (#{themeId},#{themeTitle},#{typeId},#{themeInfo},#{imgUrl},#{themeUserId},#{uploadTime});
     </insert>
+
+    <select id="findHotSuperUserShowImgById" resultType="Theme" parameterType="java.util.List">
+<!--        select img_url,theme_user_id-->
+<!--        from t_theme where theme_user_id in-->
+<!--        (0,1,2,3,4,5,6)-->
+<!--        ORDER BY-->
+<!--        instr(-->
+<!--        <foreach item="ids" collection="list" open="'" separator="," close=",'" index="index">-->
+<!--            #{ids.userId}-->
+<!--        </foreach>-->
+<!--        , CONCAT(',',theme_user_id,','))-->
+    </select>
 </mapper>
