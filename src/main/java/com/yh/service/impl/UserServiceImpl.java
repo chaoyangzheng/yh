@@ -205,14 +205,12 @@ public class UserServiceImpl implements UserService {
     public Boolean phoneCheck (String phone) {
         //手机号长度验证
         if (phone.length()!=11){
-            System.out.println("长度错误");
             return false;
         }
         //手机号纯数字验证
         for ( int  i=phone.length();--i>=0;){
             int  chr=phone.charAt(i);
             if(chr<48 || chr>57){
-                System.out.println("数字错误");
                 return false;
             }
         }

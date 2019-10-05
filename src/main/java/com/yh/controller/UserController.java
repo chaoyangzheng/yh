@@ -56,7 +56,7 @@ public class UserController {
     public JsonResult checkPhoneOrEmail(@RequestBody Map<String,Object> map){
         boolean emailOrPhone = userService.findEmailOrPhone(map);
         if (emailOrPhone){
-            return new JsonResult("1","error");
+            return new JsonResult("1","账号已存在");
         }
         return new JsonResult("0","");
     }
