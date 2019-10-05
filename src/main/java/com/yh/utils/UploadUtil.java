@@ -24,6 +24,7 @@ public class UploadUtil {
 
         String serverPath = "/usr/local/tomcat/webapps/show";
 
+
         File file1 = new File(serverPath);
         if (!file1.exists()) {
             file1.mkdirs();
