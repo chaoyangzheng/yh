@@ -1,13 +1,10 @@
 package com.yh.controller;
 
 import com.yh.common.JsonResult;
-
 import com.yh.entity.VideoCourse;
 import com.yh.service.DraftService;
-
 import com.yh.utils.DataConversionUtil;
 import io.swagger.annotations.*;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +19,7 @@ import java.util.Map;
  */
 
 
-@Api("遇见模块功能")
+@Api(description = "遇见模块功能")
 @RestController
 @RequestMapping("/Draft")
 public class DraftController {

@@ -7,6 +7,7 @@ import com.yh.entity.Theme;
 import com.yh.entity.Type;
 import com.yh.entity.User;
 import com.yh.service.*;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.Map;
 * author:zxs
 * Date:19/10/3
 * description:社区内的帖子*/
+@Api(description = "社区内的功能")
 @RestController
 @RequestMapping("/Bbs")
 public class BbsController {
@@ -48,7 +50,7 @@ public class BbsController {
         * 5.获取到当前typeName集合的值，按名字查看帖子
         * 6.关注热门达人
         * */
-    @ApiOperation(value = "社区发现-默认最新的内容，不需要参数",notes = "查看社区发现页面默认的最新展示栏")
+    @ApiOperation(value = "社区发现-默认最新的内容，不需要参数,postman已测",notes = "查看社区发现页面默认的最新展示栏")
     @ApiModelProperty(value = "")
     @RequestMapping(value = "/findAll.do",method = RequestMethod.POST)
     public JsonResult findAllTheme(){
@@ -56,7 +58,7 @@ public class BbsController {
         return themeList;
     }
 
-    @ApiOperation(value = "社区发现-标签栏-不需要参数",notes = "查看社区发现页面水彩，彩铅，油画等")
+    @ApiOperation(value = "社区发现-标签栏-不需要参数，postman已测",notes = "查看社区发现页面水彩，彩铅，油画等")
     @ApiModelProperty(value = "")
     @RequestMapping(value = "/findTypeName.do",method = RequestMethod.POST)
     public JsonResult findTypeName(){
@@ -64,15 +66,16 @@ public class BbsController {
         return new JsonResult("0",typeList);
     }
 
-    @ApiOperation(value = "社区发现-查看标签栏内容-需要参数",notes = "查看社区发现页面水彩，彩铅，油画等具体帖子内容")
+    @ApiOperation(value = "社区发现-查看标签栏内容-需要参数，postman已测",notes = "查看社区发现页面水彩，彩铅，油画等具体帖子内容")
     @ApiModelProperty(value = "需要Integer类型的typeId")
     @RequestMapping(value = "/findTypeContext.do",method = RequestMethod.POST)
-    public JsonResult findTypeContext(Integer typeId){
+    public JsonResult findTypeContext(@RequestBody Map<String,Object>map){
+        Integer typeId = (Integer)map.get("typeId");
         List<Theme> themeListById = themeService.findThemeById(typeId);
         return new JsonResult("0",themeListById);
     }
 
-    @ApiOperation(value = "社区发现-活动图片，不需要参数",notes = "查看社区发现页面上面活动图片")
+    @ApiOperation(value = "社区发现-活动图片，不需要参数，postman已测",notes = "查看社区发现页面上面活动图片")
     @ApiModelProperty(value = "")
     @RequestMapping(value = "/findActiveImg.do",method = RequestMethod.POST)
     public JsonResult findActiveImg(){
@@ -81,7 +84,7 @@ public class BbsController {
     }
 
 
-    @ApiOperation(value = "社区发现-查看热门达人，不需要参数",notes = "查看社区发现热门达人,hotUserList是粉丝量前7user用户集合，HotUserShowNumList是对应的作品数集合")
+    @ApiOperation(value = "社区发现-查看热门达人，不需要参数-postman已测，但内部仍需更改",notes = "查看社区发现热门达人,hotUserList是粉丝量前7user用户集合，HotUserShowNumList是对应的作品数集合")
     @ApiModelProperty(value = "")
     @RequestMapping(value = "/findHotUser.do",method = RequestMethod.POST)
     public JsonResult findHotUser(){
@@ -93,7 +96,7 @@ public class BbsController {
         return new JsonResult("0",hotUser);
     }
 
-    @ApiOperation(value = "社区发现-关注热门达人，需要参数",notes = "关注社区发现热门达人，需要用户的userId传token,以及要加关注用户的userId命名为followId")
+    @ApiOperation(value = "社区发现-关注热门达人，需要参数-postman已测可用，但代码逻辑仍需完善",notes = "关注社区发现热门达人，需要用户的userId传token,以及要加关注用户的userId命名为followId")
     @ApiModelProperty(value = "")
     @RequestMapping(value = "/followHotUser.do",method = RequestMethod.POST)
     public JsonResult followHotUser(@RequestBody Map<String,Object> map){
@@ -118,7 +121,7 @@ public class BbsController {
         if (i == 0){
             return new JsonResult("1","取消关注失败，服务器异常，请重试");
         }
-        return new JsonResult("0","关注成功");
+        return new JsonResult("0","取消关注成功");
     }
     /*@end:关注热门达人未实现
     *@Date:19/10/4*/
@@ -134,7 +137,7 @@ public class BbsController {
     *@Date:19/10/4
     *@description:关注页需要
     * */
-    @ApiOperation(value = "社区关注-发布帖子",notes = "用户必须已经登录过且themeUserId存在token中")
+    @ApiOperation(value = "社区关注-发布帖子-需要参数",notes = "用户必须已经登录过且themeUserId存在token中")
     @ApiModelProperty(value = "传递的字段应该为帖子标题，描述，图片地址，标签，以及当前时间和themeUserId")
     @RequestMapping(value = "/addTheme.do",method = RequestMethod.POST)
     public JsonResult addTheme(@RequestBody Map<String,Object>map){
@@ -145,7 +148,7 @@ public class BbsController {
         return jsonResult;
     }
 
-    @ApiOperation(value = "社区关注-推荐老师",notes = "登录过就把themeUserId存token中我展示金牌讲师，没登录我给展示所有用户信息")
+    @ApiOperation(value = "社区关注-推荐老师-需要参数",notes = "登录过就把themeUserId存token中我展示金牌讲师，没登录我给展示所有用户信息")
     @ApiModelProperty(value = "")
     @RequestMapping(value = "/findGoldenUserForTch.do",method = RequestMethod.POST)
     public JsonResult findGoldenUserForTch(@RequestBody Map<String,Object>map){
@@ -157,7 +160,7 @@ public class BbsController {
         return new JsonResult("0",goldenUserList);
     }
 
-    @ApiOperation(value = "社区关注-关注用户的最新发布，需要参数，",notes = "社区关注页面的，需要传入用户的token")
+    @ApiOperation(value = "社区关注-关注用户的最新发布-需要参数，",notes = "社区关注页面的，需要传入用户的token")
     @ApiModelProperty(value = "")
     @RequestMapping(value = "/findFollowUserTheme.do",method = RequestMethod.POST)
     public JsonResult findFollowUserTheme(@RequestBody Map<String,Object> map){
