@@ -21,7 +21,7 @@ import java.util.Map;
  * @author chaoyang
  * @date 2019/9/29
  */
-@Api("我的页面功能模块")
+@Api(description = "我的页面功能模块")
 @RestController
 @RequestMapping("/mine")
 public class UserController {
@@ -51,7 +51,6 @@ public class UserController {
         }
         return new JsonResult("1","error");
     }
-
     @ApiOperation(value="检查账户是否存在", notes="传递的数据名称：loginCount")
     @RequestMapping(value = "/checkPhoneOrEmail.do",method = RequestMethod.POST)
     public JsonResult checkPhoneOrEmail(@RequestBody Map<String,Object> map){
@@ -107,7 +106,7 @@ public class UserController {
         List<User> allFollowUser = followFanService.findAllFollowUser(map);
         return new JsonResult("0",allFollowUser);
     }
-    @ApiOperation(value="查询用户的具体粉丝", notes="只需要传入用户的token，返回该用户的全部粉丝的全部信息")
+    @ApiOperation(value="查询用户的具体粉丝", notes="需要传入用户的token，返回该用户的全部粉丝的全部信息")
     @RequestMapping(value = "/fanUser.do",method = RequestMethod.POST)
     public JsonResult findFanUser(@RequestBody Map<String,Object> map){
         List<User> allFanUser = followFanService.findAllFanUser(map);
@@ -118,14 +117,59 @@ public class UserController {
      * @author chaoyang
      * @date 2019/10/4
      */
-    @ApiOperation(value="查询用户的个人信息", notes="只需要传入用户的token，返回该用户的的个人信息，目前只设置了" +
+    @ApiOperation(value="查询用户的个人信息", notes="需要传入用户的token，返回该用户的的个人信息，目前只设置了" +
             "“”“id、username、phone、email、user_img_url、user_info")
-    @RequestMapping(value = "/showUserInformation",method = RequestMethod.POST)
+    @RequestMapping(value = "/showUserInformation.do",method = RequestMethod.POST)
     public JsonResult findUserInformation(@RequestBody Map<String,Object> map){
-
-
-        return null;
+        if (map.get("token")==null){
+            return new JsonResult("1","请先登录");
+        }
+        User userInformation = userService.findUserInformation(map);
+        return new JsonResult("0",userInformation);
     }
+    /**
+     * 修改个人信息
+     * @author chaoyang
+     * @date 2019/10/5
+     */
+    @ApiOperation(value="修改用户的个人信息", notes="需要传入用户的token，和要修改的信息，使用json传输信息")
+    @RequestMapping(value = "/updateUserInformation.do",method = RequestMethod.POST)
+    public JsonResult updateUserInformation(@RequestBody Map<String,Object> map){
+        User user = userService.updateUserInformation(map);
+        if (user!=null){
+            return new JsonResult("0",user);
+        }
+        return new JsonResult("1","用户未登录或者数据异常，请重新登录尝试，仍未解决请联系管理员");
+    }
+    /**
+     * 绑定邮箱或者手机号
+     * @author chaoyang
+     * @date 2019/10/5
+     */
+    @ApiOperation(value="绑定邮箱或者手机号", notes="需要传入用户的token，要绑定那个，手机号是phone，邮箱是email；查询手机号或者邮箱是否已存在请使用checkPhoneOrEmail.do")
+    @RequestMapping(value = "/updateUserPhoneOrEmail.do",method = RequestMethod.POST)
+    public JsonResult updateUserPhoneOrEmail(@RequestBody Map<String,Object> map){
+        User user = userService.updatePhoneOrEmail(map);
+        if (user!=null){
+            return new JsonResult("0",user);
+        }
+        return new JsonResult("1","用户未登录或者数据异常，请重新登录尝试，仍未解决请联系管理员");
+    }
+    /**
+     * 绑定id，一个用户只能设置一次id由6-12为英文或者数字组成
+     * @author chaoyang
+     * @date 2019/10/5
+     */
+    @ApiOperation(value="设置id", notes="需要传入用户的token，要绑定的id，一个用户只能设置一次id由6-12为英文或者数字组成，在传用户信息的时候id已经传过去了")
+    @RequestMapping(value = "/updateUserOfId.do",method = RequestMethod.POST)
+    public JsonResult updateUserOfId(@RequestBody Map<String,Object> map){
+        User user = userService.updateUserOfId(map);
+        if (user!=null){
+            return new JsonResult("0",user);
+        }
+        return new JsonResult("1","用户未登录或者数据异常");
+    }
+
 
 
 
