@@ -51,7 +51,6 @@ public class UserController {
         }
         return new JsonResult("1","error");
     }
-
     @ApiOperation(value="检查账户是否存在", notes="传递的数据名称：loginCount")
     @RequestMapping(value = "/checkPhoneOrEmail.do",method = RequestMethod.POST)
     public JsonResult checkPhoneOrEmail(@RequestBody Map<String,Object> map){
@@ -162,7 +161,7 @@ public class UserController {
      * @date 2019/10/5
      */
     @ApiOperation(value="设置id", notes="需要传入用户的token，要绑定的id，一个用户只能设置一次id由6-12为英文或者数字组成，在传用户信息的时候id已经传过去了")
-    @RequestMapping(value = "/updateUserPhoneOrEmail.do",method = RequestMethod.POST)
+    @RequestMapping(value = "/updateUserOfId.do",method = RequestMethod.POST)
     public JsonResult updateUserOfId(@RequestBody Map<String,Object> map){
         User user = userService.updateUserOfId(map);
         if (user!=null){
