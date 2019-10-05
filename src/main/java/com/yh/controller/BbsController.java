@@ -82,15 +82,17 @@ public class BbsController {
     }
 
 
-    @ApiOperation(value = "社区发现-查看热门达人，不需要参数-postman已测，但内部仍需更改",notes = "查看社区发现热门达人,hotUserList是粉丝量前7user用户集合，HotUserShowNumList是对应的作品数集合")
+    @ApiOperation(value = "社区发现-查看热门达人，不需要参数-postman已测，但内部仍需更改",notes = "查看社区发现热门达人,hotUserList是粉丝量前7user用户集合，HotUserShowNumList是对应的作品数集合,hotSuperUserShowImg里面包含了热门达人的id和作品图片")
     @ApiModelProperty(value = "")
     @RequestMapping(value = "/findHotUser.do",method = RequestMethod.POST)
     public JsonResult findHotUser(){
         List<User> hotUserList = userService.findHotSuperUserById();
         List<Integer> hotUserShowNumList = userService.findHotSuperUserShowNumById();
+        List<Theme> hotSuperUserShowImg = themeService.findHotSuperUserShowImgById();
         HashMap<Object, Object> hotUser = new HashMap<>();
         hotUser.put("hotUserList",hotUserList);
         hotUser.put("hotUserShowNumList",hotUserShowNumList);
+        hotUser.put("hotSuperUserShowImg",hotSuperUserShowImg);
         return new JsonResult("0",hotUser);
     }
 
@@ -133,7 +135,11 @@ public class BbsController {
     /*@关注页
     *@author:zxs
     *@Date:19/10/4
-    *@description:关注页需要
+    * @Date:19/10/5
+    *@description:社区关注页,
+    * 1.发布帖子，图片上传尚未完善
+    * 2.登录就展示金牌讲师，没登录就展示所有用户信息
+    * 3.关注页面的最新发布，先从粉丝表查出所有关注的用户，再展示所有关注的用户的所有帖子按时间倒序排列。
     * */
     @ApiOperation(value = "社区关注-发布帖子-需要参数",notes = "用户必须已经登录过且themeUserId存在token中")
     @ApiModelProperty(value = "传递的字段应该为帖子标题，描述，图片地址，标签，以及当前时间和themeUserId")
@@ -168,6 +174,4 @@ public class BbsController {
     }
     /*@end
     * */
-
-
 }
