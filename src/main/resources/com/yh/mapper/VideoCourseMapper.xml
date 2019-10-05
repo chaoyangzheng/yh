@@ -7,13 +7,15 @@
     <resultMap id="VideoCourseMap" type="VideoCourse" autoMapping="true">
         <id column="video_course_id" property="videoCourseId"/>
         <result column="type_id" property="typeId"/>
+        <result column="upload_user_id" property="uploadUserId"/>
+        <result column="teacher_user_id" property="teacherUserId"/>
         <association property="type" select="com.yh.mapper.TypeMapper.findTypeByTypeId" column="type_id"/>
         <association property="uploadUser" select="com.yh.mapper.UserMapper.findUserByUserId" column="upload_user_id"/>
         <association property="teacherUser" select="com.yh.mapper.UserMapper.findUserByUserId" column="teacher_user_id"/>
         <collection property="tagList" select="com.yh.mapper.TagMapper.findTagByVideoCourseId" column="video_course_id"/>
     </resultMap>
 
-    <select id="findLatestSingleVideoCourse" resultType="VideoCourse">
+    <select id="findLatestSingleVideoCourse" resultMap="VideoCourseMap">
         SELECT
         t_video_course.video_course_id,
         t_video_course.video_course_name,
@@ -37,7 +39,7 @@
         LIMIT 0, 10
     </select>
 
-    <select id="findHottestSingleVideoCourse" resultType="VideoCourse">
+    <select id="findHottestSingleVideoCourse" resultMap="VideoCourseMap">
         SELECT
         t_video_course.video_course_id,
         t_video_course.video_course_name,
@@ -61,7 +63,7 @@
         LIMIT 0, 1
     </select>
 
-    <select id="findVideoCourseComprehensive" resultType="VideoCourse" parameterType="Integer">
+    <select id="findVideoCourseComprehensive" resultMap="VideoCourseMap" parameterType="Integer">
         SELECT
         t_video_course.video_course_id,
         t_video_course.video_course_name,
@@ -86,7 +88,7 @@
         t_video_course.video_price DESC
     </select>
 
-    <select id="findVideoCourseHottest" resultType="VideoCourse" parameterType="Integer">
+    <select id="findVideoCourseHottest" resultMap="VideoCourseMap" parameterType="Integer">
         SELECT
         t_video_course.video_course_id,
         t_video_course.video_course_name,
@@ -111,7 +113,7 @@
         t_video_course.watch_number DESC
     </select>
 
-    <select id="findVideoCourseLatest" resultType="VideoCourse" parameterType="Integer">
+    <select id="findVideoCourseLatest" resultMap="VideoCourseMap" parameterType="Integer">
         SELECT
         t_video_course.video_course_id,
         t_video_course.video_course_name,
@@ -136,7 +138,7 @@
         t_video_course.upload_time DESC
     </select>
 
-    <select id="findSingleVideoCourseComprehensive" resultType="VideoCourse" parameterType="Integer">
+    <select id="findSingleVideoCourseComprehensive" resultMap="VideoCourseMap" parameterType="Integer">
         SELECT
         t_video_course.video_course_id,
         t_video_course.video_course_name,
@@ -163,7 +165,7 @@
         t_video_course.video_price DESC
     </select>
 
-    <select id="findSingleVideoCourseHottest" resultType="VideoCourse" parameterType="Integer">
+    <select id="findSingleVideoCourseHottest" resultMap="VideoCourseMap" parameterType="Integer">
         SELECT
         t_video_course.video_course_id,
         t_video_course.video_course_name,
@@ -190,7 +192,7 @@
         t_video_course.watch_number DESC
     </select>
 
-    <select id="findSingleVideoCourseLatest" resultType="VideoCourse" parameterType="Integer">
+    <select id="findSingleVideoCourseLatest" resultMap="VideoCourseMap" parameterType="Integer">
         SELECT
         t_video_course.video_course_id,
         t_video_course.video_course_name,
@@ -217,7 +219,7 @@
         t_video_course.upload_time DESC
     </select>
 
-    <select id="findVideoCourseByCourseSysId" resultType="VideoCourse" parameterType="Integer">
+    <select id="findVideoCourseByCourseSysId" resultMap="VideoCourseMap" parameterType="Integer">
         SELECT
         t_video_course.video_course_id,
         t_video_course.video_course_name,

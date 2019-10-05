@@ -22,6 +22,12 @@ public class TClass implements Serializable {
      */
     private String className;
     /**
+     * @author SHIGUANGYI
+     * @date 2019/10/5
+     * 班级描述
+     */
+    private String classInfo;
+    /**
      * 班级人数
      */
     private Integer classNumber;
@@ -41,6 +47,25 @@ public class TClass implements Serializable {
      * 上课时间
      */
     private String classTime;
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/5
+     * 小班课封面
+     */
+    private String classImgUrl;
+
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/5
+     * 小班课创建人
+     */
+    private User creator;
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/5
+     * 小班课导师
+     */
+    private User teacher;
 
     public String getClassId() {
         return classId;
@@ -56,6 +81,14 @@ public class TClass implements Serializable {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public String getClassInfo() {
+        return classInfo;
+    }
+
+    public void setClassInfo(String classInfo) {
+        this.classInfo = classInfo;
     }
 
     public Integer getClassNumber() {
@@ -96,5 +129,29 @@ public class TClass implements Serializable {
 
     public void setClassTime(String classTime) {
         this.classTime = classTime;
+    }
+
+    public String getClassImgUrl() {
+        return classImgUrl;
+    }
+
+    public void setClassImgUrl(String classImgUrl) {
+        this.classImgUrl = classImgUrl;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
+
+    public User getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(User teacher) {
+        this.teacher = teacher;
     }
 }

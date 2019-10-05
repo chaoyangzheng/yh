@@ -47,7 +47,7 @@ public interface UserMapper {
     User findUserByPhone (String phone);
     @Select("select * from t_user where email = #{email}")
     User findUserByEmail (String email);
-    @Select("select * from t_user where user_id = #{userId)")
+    @Select("select * from t_user where user_id = #{userId}")
     User findUserByUserId (String userId);
     List<User> findAllUserByUserId(List<String> list);
     @Select("select * from t_user where id = #{id)")

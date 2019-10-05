@@ -4,42 +4,55 @@
 
 <mapper namespace="com.yh.mapper.TClassMapper">
 
-    <select id="findComprehensiveClass" resultType="TClass">
+    <resultMap id="TClassMap" type="TClass" autoMapping="true">
+        <result column="create_user_id" property="createUserId"/>
+        <result column="teacher_user_id" property="teacherUserId"/>
+        <association property="creator" select="com.yh.mapper.UserMapper.findUserByUserId" column="create_user_id"/>
+        <association property="teacher" select="com.yh.mapper.UserMapper.findUserByUserId" column="teacher_user_id"/>
+    </resultMap>
+
+    <select id="findComprehensiveClass" resultMap="TClassMap">
         SELECT
         t_class.class_id,
         t_class.class_name,
+        t_class.class_info,
         t_class.class_number,
         t_class.create_user_id,
         t_class.teacher_user_id,
         t_class.create_time,
-        t_class.class_time
+        t_class.class_time,
+        t_class.class_img_url
         FROM
         t_class
     </select>
 
-    <select id="findHottestClass" resultType="TClass">
+    <select id="findHottestClass" resultMap="TClassMap">
         SELECT
         t_class.class_id,
         t_class.class_name,
+        t_class.class_info,
         t_class.class_number,
         t_class.create_user_id,
         t_class.teacher_user_id,
         t_class.create_time,
-        t_class.class_time
+        t_class.class_time,
+        t_class.class_img_url
         FROM
         t_class
         ORDER BY t_class.class_number DESC
     </select>
 
-    <select id="findLatestClass" resultType="TClass">
+    <select id="findLatestClass" resultMap="TClassMap">
         SELECT
         t_class.class_id,
         t_class.class_name,
+        t_class.class_info,
         t_class.class_number,
         t_class.create_user_id,
         t_class.teacher_user_id,
         t_class.create_time,
-        t_class.class_time
+        t_class.class_time,
+        t_class.class_img_url
         FROM
         t_class
         ORDER BY t_class.create_time DESC

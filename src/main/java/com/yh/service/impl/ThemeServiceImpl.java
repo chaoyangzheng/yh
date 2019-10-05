@@ -4,6 +4,7 @@ import com.yh.common.JsonResult;
 import com.yh.entity.Theme;
 import com.yh.entity.User;
 import com.yh.mapper.ThemeMapper;
+import com.yh.mapper.UserMapper;
 import com.yh.service.FollowFanService;
 import com.yh.service.ThemeService;
 import com.yh.service.UserService;
@@ -28,12 +29,13 @@ public class ThemeServiceImpl implements ThemeService {
     @Autowired
     FollowFanService followFanService;
 
-
-    JsonResult jsonResult = null;
+    @Autowired(required = false)
+    UserMapper userMapper;
 
     @Override
     public JsonResult findAllTheme() {
         List<Theme> themeList = themeMapper.findAllTheme();
+        JsonResult jsonResult = new JsonResult();
         jsonResult.setCode("0");
         jsonResult.setInfo(themeList);
         return jsonResult;
@@ -51,6 +53,7 @@ public class ThemeServiceImpl implements ThemeService {
         theme.setThemeUserId(userIdFromRedisToken);
         theme.setUploadTime(new Date());
         int i = themeMapper.addTheme(theme);
+        JsonResult jsonResult = new JsonResult();
         if (i==1){
             jsonResult.setCode("0");
             jsonResult.setInfo("添加成功");
@@ -74,5 +77,12 @@ public class ThemeServiceImpl implements ThemeService {
     public List<Theme> findAllFollowUserTheme(List<User> userList) {
         List<Theme> themeList = themeMapper.findAllFollowUserTheme(userList);
         return themeList;
+    }
+
+    @Override
+    public List<Theme> findHotSuperUserShowImgById() {
+        List<User> userList = userMapper.findHotSuperUserId();
+        List<Theme> showImgById = themeMapper.findHotSuperUserShowImgById(userList);
+        return showImgById;
     }
 }
