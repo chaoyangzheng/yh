@@ -155,14 +155,12 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
     </insert>
 
     <select id="findHotSuperUserShowImgById" resultType="Theme" parameterType="java.util.List">
-<!--        select img_url,theme_user_id-->
-<!--        from t_theme where theme_user_id in-->
-<!--        (0,1,2,3,4,5,6)-->
-<!--        ORDER BY-->
-<!--        instr(-->
-<!--        <foreach item="ids" collection="list" open="'" separator="," close=",'" index="index">-->
-<!--            #{ids.userId}-->
-<!--        </foreach>-->
-<!--        , CONCAT(',',theme_user_id,','))-->
+        select img_url,theme_user_id
+        from t_theme where theme_user_id in
+        <foreach item="ids" collection="list" open="(" separator="," close=")" index="index">
+            #{ids.userId}
+        </foreach>
+        ORDER BY
+        theme_user_id
     </select>
 </mapper>
