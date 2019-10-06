@@ -50,7 +50,7 @@ public interface UserMapper {
     @Select("select * from t_user where user_id = #{userId}")
     User findUserByUserId (String userId);
     List<User> findAllUserByUserId(List<String> list);
-    @Select("select * from t_user where id = #{id)")
+    @Select("select * from t_user where id = #{id}")
     List<User> findUserById (String id);
     void addUserByPhone(User user);
     void addUserByEmail(User user);
