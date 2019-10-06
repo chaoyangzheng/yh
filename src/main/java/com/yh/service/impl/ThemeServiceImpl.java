@@ -4,11 +4,14 @@ import com.yh.common.JsonResult;
 import com.yh.entity.Theme;
 import com.yh.entity.User;
 import com.yh.mapper.ThemeMapper;
+import com.yh.mapper.UserMapper;
 import com.yh.service.FollowFanService;
 import com.yh.service.ThemeService;
 import com.yh.service.UserService;
+import com.yh.utils.UploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -28,29 +31,33 @@ public class ThemeServiceImpl implements ThemeService {
     @Autowired
     FollowFanService followFanService;
 
-
-    JsonResult jsonResult = null;
+    @Autowired(required = false)
+    UserMapper userMapper;
 
     @Override
     public JsonResult findAllTheme() {
         List<Theme> themeList = themeMapper.findAllTheme();
+        JsonResult jsonResult = new JsonResult();
         jsonResult.setCode("0");
         jsonResult.setInfo(themeList);
         return jsonResult;
     }
 
     @Override
-    public JsonResult addTheme(Map<String,Object>map) {
+    public JsonResult addTheme(Map<String,Object>map,MultipartFile file) {
 
         String userIdFromRedisToken = userService.getUserIdFromRedisToken((String) map.get("token"));
         Theme theme = new Theme();
         theme.setThemeTitle((String) map.get("themeTitle"));
         theme.setTypeId((Integer)map.get("typeId"));
         theme.setThemeInfo((String)map.get("themeInfo"));
-        theme.setImgUrl((String)map.get("imgUrl"));
+        UploadUtil uploadUtil = new UploadUtil();
+        String imgUrl = uploadUtil.ImgUpload(file);
+        theme.setImgUrl(imgUrl);
         theme.setThemeUserId(userIdFromRedisToken);
         theme.setUploadTime(new Date());
         int i = themeMapper.addTheme(theme);
+        JsonResult jsonResult = new JsonResult();
         if (i==1){
             jsonResult.setCode("0");
             jsonResult.setInfo("添加成功");
@@ -74,5 +81,12 @@ public class ThemeServiceImpl implements ThemeService {
     public List<Theme> findAllFollowUserTheme(List<User> userList) {
         List<Theme> themeList = themeMapper.findAllFollowUserTheme(userList);
         return themeList;
+    }
+
+    @Override
+    public List<Theme> findHotSuperUserShowImgById() {
+        List<User> userList = userMapper.findHotSuperUserId();
+        List<Theme> showImgById = themeMapper.findHotSuperUserShowImgById(userList);
+        return showImgById;
     }
 }

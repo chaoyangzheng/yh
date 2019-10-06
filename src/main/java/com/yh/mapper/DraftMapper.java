@@ -1,10 +1,8 @@
 package com.yh.mapper;
 
-import com.sun.javafx.logging.PulseLogger;
 import com.yh.entity.Draft;
 import com.yh.entity.Type;
 import com.yh.entity.VideoCourse;
-
 
 import java.util.List;
 

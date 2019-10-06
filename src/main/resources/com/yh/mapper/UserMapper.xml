@@ -38,7 +38,7 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
         <!--主键-->
         <id column="user_id" property="userId"></id>
         <!--普通属性-->
-        <result column="ID" property="Id"></result>
+        <result column="id" property="id"></result>
         <result column="username" property="username"></result>
         <result column="password" property="password"></result>
         <result column="phone" property="phone"></result>
@@ -54,15 +54,15 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
 
 
     <insert id="addUserByPhone" >
-        insert into t_user (user_id,phone,password) values (#{userId},#{phone},#{password})
+        insert into t_user (user_id,phone,password,user_img_url) values (#{userId},#{phone},#{password},#{userImgUrl})
     </insert>
     <insert id="addUserByEmail">
-         insert into t_user (user_id,email,password) values (#{userId},#{email},#{password})
+         insert into t_user (user_id,email,password,user_img_url) values (#{userId},#{email},#{password},#{userImgUrl})
     </insert>
 
     <select id="findAllUserByUserId" parameterType="list" resultType="com.yh.entity.User">
         <if test="list.size >0">
-            select user_id,ID,username,phone,email,user_img_url,user_info from t_user
+            select user_id,id,username,phone,email,user_img_url,user_info from t_user
             <where>
                 <foreach collection="list" item="item" open="user_id in (" close=")" separator=",">
                     #{item}
@@ -70,7 +70,33 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
             </where>
         </if>
         <if test="list.size ==0">
-            select user_id,ID,username,phone,email,user_img_url,user_info from t_user where user_id ='0';
+            select user_id,id,username,phone,email,user_img_url,user_info from t_user where user_id ='0';
         </if>
     </select>
+    <update id="updateUserInformation" parameterType="com.yh.entity.User">
+        update t_user set
+        <if test="id!=null">
+             id = #{id},
+        </if>
+        <if test="username!=null">
+            username = #{username},
+        </if>
+        <if test="password!=null">
+            password = #{password},
+        </if>
+        <if test="phone!=null">
+            phone = #{phone},
+        </if>
+        <if test="email!=null">
+            email = #{email},
+        </if>
+        <if test="user_info!=null">
+            user_info = #{user_info},
+        </if>
+        <if test="user_img_url!=null">
+            user_img_url = #{user_img_url},
+        </if>
+         user_id = #{userId}
+         where user_id = #{userId}
+    </update>
 </mapper>

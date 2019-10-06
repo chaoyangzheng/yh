@@ -3,6 +3,7 @@ package com.yh.entity;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author SHIGUANGYI
@@ -21,6 +22,13 @@ public class TagType implements Serializable {
      */
     private String tagTypeName;
 
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/5
+     * 所属标签类型的标签列表
+     */
+    private List<Tag> tagList;
+
     public Integer getTagTypeId() {
         return tagTypeId;
     }
@@ -35,5 +43,13 @@ public class TagType implements Serializable {
 
     public void setTagTypeName(String tagTypeName) {
         this.tagTypeName = tagTypeName;
+    }
+
+    public List<Tag> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(List<Tag> tagList) {
+        this.tagList = tagList;
     }
 }

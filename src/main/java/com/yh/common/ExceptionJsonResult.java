@@ -7,6 +7,13 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 异常jsonResult
+ *
+ * @author yuanzhe
+ * @date 2019/10/04
+ *
+ */
 
 @Data
 public class ExceptionJsonResult implements Serializable {

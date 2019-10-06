@@ -1,15 +1,11 @@
 package com.yh.controller;
 
 import com.yh.common.JsonResult;
-
 import com.yh.entity.VideoCourse;
 import com.yh.service.DraftService;
-
-
+import com.yh.utils.DataConversionUtil;
 import io.swagger.annotations.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,10 +28,7 @@ public class DraftController {
     private DraftService draftService;
 
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-
-
-
+    private DataConversionUtil dataConversionUtil;
 
 
     /**
