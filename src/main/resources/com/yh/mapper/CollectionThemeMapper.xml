@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.yh.mapper.CollectionThemeMapper">
+
+
+
+
+
+    <!--  用户收藏帖子  更改人：rongjing 时间：2019/10/06-->
+    <insert id="insertThemeToCollection" parameterType="string">
+        insert into t_collection_theme (user_id,theme_id) values (#{userId},#{themeId})
+    </insert>
+    
+
+
+</mapper>

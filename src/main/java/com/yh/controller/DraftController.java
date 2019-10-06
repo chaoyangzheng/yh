@@ -5,9 +5,9 @@ import com.yh.common.JsonResult;
 import com.yh.entity.VideoCourse;
 import com.yh.service.DraftService;
 
-import com.yh.utils.DataConversionUtil;
+
 import io.swagger.annotations.*;
-import org.apache.ibatis.annotations.Param;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,7 @@ import java.util.Map;
  */
 
 
-@Api("遇见模块功能")
+@Api(description = "遇见模块功能")
 @RestController
 @RequestMapping("/Draft")
 public class DraftController {
@@ -78,7 +78,7 @@ public class DraftController {
      * @return code=0,info=对应视频课程;code=1,info=错误信息
      * @date 2019/10/04
      */
-    @ApiOperation(value = "展示所有视频课程封面，", notes = "返回对象是个list集合分页显示，每页显示10个，不喜欢是下一页的功能")
+    @ApiOperation(value = "展示所有视频课程封面，用于遇见页面浏览", notes = "返回对象是个list集合分页显示，默认每页显示10个，不喜欢是下一页的功能")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query" ,name = "currentPage",value = "当前页页码",dataType = "Integer",defaultValue = "1"),
             @ApiImplicitParam(paramType = "query", name = "pageSize",value = "每页显示个数",dataType = "Integer",defaultValue = "10")

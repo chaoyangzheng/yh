@@ -102,16 +102,6 @@ public List<VideoCourse> findAllVideoCourse();
 
 
 
-  /*  *//**
-     * 收藏测试，但未完善，不可用
-     *收藏视频课程
-     *
-     *@author rongjing
-     * @date 2019/10/04
-     *//*
-
-    //收藏测试
-    public void  insertToCollection(String user_id,String video_course_id);*/
 
 
 }

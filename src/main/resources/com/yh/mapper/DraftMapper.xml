@@ -101,12 +101,8 @@
 
 
 
-<!--
-    insert into t_draft value (#{draft_id},#{draft_title},#{type_id},#{draft_time},#{user_id},#{draft_img_url})
 
-&lt;!&ndash;  用户收藏  &ndash;&gt;
-    <insert id="insertToCollection" parameterType="string">
-        insert into t_collection () values ();
-    </insert>-->
+
+
 
 </mapper>
