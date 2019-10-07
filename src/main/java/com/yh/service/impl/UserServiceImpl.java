@@ -60,14 +60,14 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("login/密码至少6位");
         }
         if (firstLocation>0){
-            if (firstLocation.equals(lastLocation)){
-                //用户使用邮箱登录
-                String email = (String) map.get("loginCount");
-                if(!emailCheck(email)){
-                    throw new RuntimeException("login/请使用正确的邮箱格式，支持的邮箱：QQ、网易、谷歌、阿里云");
+                if (firstLocation.equals(lastLocation)){
+                    //用户使用邮箱登录
+                    String email = (String) map.get("loginCount");
+                    if(!emailCheck(email)){
+                        throw new RuntimeException("login/请使用正确的邮箱格式，支持的邮箱：QQ、网易、谷歌、阿里云");
+                    }
+                    user = userMapper.findUserByEmail(email);
                 }
-                user = userMapper.findUserByEmail(email);
-            }
         }else {
             //用户使用手机号登录
             String phone=((String)map.get("loginCount"));
@@ -75,7 +75,6 @@ public class UserServiceImpl implements UserService {
             if (!phoneCheck){
                 throw new RuntimeException("login/请不要调皮，请输入正确的手机号");
             }
-            System.out.println(phone+phoneCheck);
             user = userMapper.findUserByPhone(phone);
         }
         if (user ==null){
