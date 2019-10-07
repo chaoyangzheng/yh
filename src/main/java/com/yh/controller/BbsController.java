@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -146,11 +147,14 @@ public class BbsController {
     @ApiOperation(value = "社区关注-发布帖子-需要参数",notes = "用户必须已经登录过且themeUserId存在token中")
     @ApiModelProperty(value = "传递的字段应该为帖子标题，描述，图片地址，标签，以及当前时间和themeUserId")
     @RequestMapping(value = "/addTheme.do",method = RequestMethod.POST)
-    public JsonResult addTheme(@RequestBody Map<String,Object>map){
-        if (map.get("token") == null){
-            return new JsonResult("1","还未登录，请先登录再查看我的关注列表");
-        }
-        JsonResult jsonResult = themeService.addTheme(map);
+    public JsonResult addTheme(MultipartFile file,String token,String themeInfo,Integer typeId,String themeTitle){
+        System.out.println("aaaaa");
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("token",token);
+        map.put("themeInfo",themeInfo);
+        map.put("typeId",typeId);
+        map.put("themeTitle",themeTitle);
+        JsonResult jsonResult = themeService.addTheme(map,file);
         return jsonResult;
     }
 

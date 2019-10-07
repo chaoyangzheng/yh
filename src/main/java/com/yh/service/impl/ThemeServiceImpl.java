@@ -8,8 +8,10 @@ import com.yh.mapper.UserMapper;
 import com.yh.service.FollowFanService;
 import com.yh.service.ThemeService;
 import com.yh.service.UserService;
+import com.yh.utils.UploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -42,14 +44,16 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public JsonResult addTheme(Map<String,Object>map) {
+    public JsonResult addTheme(Map<String,Object>map,MultipartFile file) {
 
         String userIdFromRedisToken = userService.getUserIdFromRedisToken((String) map.get("token"));
         Theme theme = new Theme();
         theme.setThemeTitle((String) map.get("themeTitle"));
         theme.setTypeId((Integer)map.get("typeId"));
         theme.setThemeInfo((String)map.get("themeInfo"));
-        theme.setImgUrl((String)map.get("imgUrl"));
+        UploadUtil uploadUtil = new UploadUtil();
+        String imgUrl = uploadUtil.ImgUpload(file);
+        theme.setImgUrl(imgUrl);
         theme.setThemeUserId(userIdFromRedisToken);
         theme.setUploadTime(new Date());
         int i = themeMapper.addTheme(theme);
