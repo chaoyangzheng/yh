@@ -23,8 +23,7 @@ public class UploadUtil {
 
     public String ImgUpload(MultipartFile file) {
 
-//        String serverPath = "/usr/local/tomcat/webapps/show";
-        String serverPath ="C:\\Users\\Administrator\\Desktop\\show";
+        String serverPath = "/usr/local/tomcat/webapps/show";
 
 
         File file1 = new File(serverPath);
