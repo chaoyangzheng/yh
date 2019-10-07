@@ -116,4 +116,16 @@ public class VideoCourseServiceImpl implements VideoCourseService {
         List<VideoCourse> videoCourseList = videoCourseMapper.findSingleVideoCourseLatest(pageHelperUtil.getTypeId());
         return videoCourseList;
     }
+
+    /**
+     * @author SHIGUANGYI
+     * @date 2019/10/6
+     */
+    @Override
+    public List<VideoCourse> findVideoCourseByCondition(Integer pageNum, Integer pageSize, List<String> tagIdList, List<String> conditionList) {
+        PageHelperUtil pageHelperUtil = PageHelperUtil.initPageHelperParam(pageNum, pageSize);
+        PageHelper.startPage(pageHelperUtil.getPageNum(), pageHelperUtil.getPageSize());
+        List<VideoCourse> videoCourseList = videoCourseMapper.findVideoCourseByCondition(tagIdList, conditionList);
+        return videoCourseList;
+    }
 }

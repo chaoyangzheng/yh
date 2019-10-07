@@ -51,22 +51,23 @@ public class CollectionController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "type",value = "收藏类型，视频或者帖子",dataType = "String"),
             @ApiImplicitParam( name = "userId",value = "用户id",dataType = "String"),
-            @ApiImplicitParam( name = "collectionId",value = "收藏内容的id",dataType = "String")
+            @ApiImplicitParam( name = "thingsId",value = "收藏内容的id",dataType = "String")
     })
     @PostMapping(value = "/collection.do")
-    public JsonResult judgeType(@RequestBody Map<String,String>map){
+    public JsonResult collectionDo(@RequestBody Map<String,String>map){
 
         String userId = map.get("userId");
 
         String type = map.get("type");
 
-        String collectionId = map.get("collectionId");
+        String thingsId = map.get("thingsId");
+
 
         if("".equals(userId) || userId == null){
 
            return new JsonResult("1","没有用户id");
         }
-        if ("".equals(collectionId) || collectionId == null) {
+        if ("".equals(thingsId) || thingsId == null) {
             return new JsonResult("1","没有收藏的东西的id");
         }
 
@@ -75,17 +76,60 @@ public class CollectionController {
         }
 
         if ("视频".equals(type)) {
-            collectionVideoService.insertVideoToCollection(userId,collectionId);
+            collectionVideoService.insertVideoToCollection(userId,thingsId);
             return new JsonResult("0","已成功收藏该视频");
 
         } else if ("帖子".equals(type)) {
-            collectionThemeService.insertThemeToCollection(userId,collectionId);
+            collectionThemeService.insertThemeToCollection(userId,thingsId);
             return new JsonResult("0","已成功收藏该帖子");
         }
 
         return new JsonResult("1","收藏失败,原因未知");
     }
 
+
+
+
+
+
+    @ApiOperation(value = "取消收藏帖子或者视频功能", notes = "需要传用户的id，收藏内容的id，还有收藏内容类型：视频或者帖子")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "type",value = "收藏类型，视频或者帖子",dataType = "String"),
+            @ApiImplicitParam( name = "userId",value = "用户id",dataType = "String"),
+            @ApiImplicitParam( name = "thingsId",value = "收藏内容的id",dataType = "String")
+    })
+    @PostMapping(value = "/cancelCollection.do")
+    public JsonResult cancelCollectionDo(@RequestBody Map<String,String>map){
+
+        String userId = map.get("userId");
+
+        String type = map.get("type");
+
+        String thingsId = map.get("thingsId");
+
+        if("".equals(userId) || userId == null){
+
+            return new JsonResult("1","没有用户id");
+        }
+        if ("".equals(thingsId) || thingsId == null) {
+            return new JsonResult("1","没有取消收藏的内容的id");
+        }
+
+        if("".equals(type) || type == null){
+            return new JsonResult("1","没有类型，不知道取消收藏的是哪种类型，是帖子还是视频呢");
+        }
+
+        if ("视频".equals(type)) {
+            collectionVideoService.deleteVideoToCollection(userId,thingsId);
+            return new JsonResult("0","已成功取消收藏该视频");
+
+        } else if ("帖子".equals(type)) {
+            collectionThemeService.deleteThemeToCollection(userId,thingsId);
+            return new JsonResult("0","已成功取消收藏该帖子");
+        }
+
+        return new JsonResult("1","取消收藏失败,原因未知");
+    }
 
 
 }

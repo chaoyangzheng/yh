@@ -2,16 +2,20 @@ package com.yh.mapper;
 
 public interface CollectionThemeMapper {
     /**
-     * 收藏测试，但未完善，不可用
+     * 收藏
      *收藏帖子
-     * @param  user_id (用户id) string
-     * @param  theme_id (帖子id) string
+     * @param  userId (用户id) string
+     * @param  themeId (帖子id) string
      *@author rongjing
-     * @date 2019/10/05
+     * @date 2019/10/07
      */
 
-    //收藏帖子测试
-    public void  insertThemeToCollection(String user_id,String theme_id);
+    //收藏帖子
+    public void  insertThemeToCollection(String userId,String themeId,String collectionThemeId);
+
+
+    //取消收藏帖子
+    public void deleteThemeToCollection(String userId,String themeId);
 
 
 

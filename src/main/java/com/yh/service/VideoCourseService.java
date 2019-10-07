@@ -90,4 +90,16 @@ public interface VideoCourseService {
      * 热门顺序查询单节课体验列表
      */
     List<VideoCourse> findLatestSingleVideoCourse(Integer pageNum, Integer pageSize, Integer typeId);
+
+    /**
+     * @param pageNum  当前页码，默认1
+     * @param pageSize 每页条数，默认10
+     * @param tagIdList 标签id的list集合
+     * @param conditionList 所搜条件的list集合
+     * @return 视频课程的list集合
+     * @author SHIGUANGYI
+     * @date 2019/10/6
+     * 根据搜索条件查询视频课程列表
+     */
+    List<VideoCourse> findVideoCourseByCondition(Integer pageNum, Integer pageSize, List<String> tagIdList, List<String> conditionList);
 }

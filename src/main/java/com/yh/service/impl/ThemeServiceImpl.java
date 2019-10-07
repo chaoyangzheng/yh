@@ -45,8 +45,10 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public JsonResult addTheme(Map<String,Object>map,MultipartFile file) {
-
-        String userIdFromRedisToken = userService.getUserIdFromRedisToken((String) map.get("token"));
+        String token = (String)map.get("token");
+//        System.out.println("测试"+token);
+        String id = userService.getUserIdFromRedisToken(token);
+        System.out.println("进来了service:"+id);
         Theme theme = new Theme();
         theme.setThemeTitle((String) map.get("themeTitle"));
         theme.setTypeId((Integer)map.get("typeId"));
@@ -54,7 +56,7 @@ public class ThemeServiceImpl implements ThemeService {
         UploadUtil uploadUtil = new UploadUtil();
         String imgUrl = uploadUtil.ImgUpload(file);
         theme.setImgUrl(imgUrl);
-        theme.setThemeUserId(userIdFromRedisToken);
+        theme.setThemeUserId(id);
         theme.setUploadTime(new Date());
         int i = themeMapper.addTheme(theme);
         JsonResult jsonResult = new JsonResult();

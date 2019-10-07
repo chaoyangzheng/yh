@@ -43,13 +43,14 @@ public class BbsController {
         /*@begin:发现页
         *@author:zxs
         *@Date:19/10/3
-        *@description:发现页包含6个jsonResult
+        *@description:
         * 1.未登录前默认显示最新，返回findAllTheme方法中的帖子默认是按最新时间排列
-        * 2.最上方的活动图片
+        * 2.发现页最上方的活动图片
         * 3.热门达人，一天换一个，一共7个
-        * 4.默认是Type类型的typeName集合
-        * 5.获取到当前typeName集合的值，按名字查看帖子
+        * 4.帖子类型的导航栏默认是Type类型的typeName集合
+        * 5.按帖子类型查看帖子，获取到当前typeName集合的值
         * 6.关注热门达人
+        * 7.取消关注热门达人
         * */
     @ApiOperation(value = "社区发现-默认最新的内容，不需要参数,postman已测",notes = "查看社区发现页面默认的最新展示栏")
     @ApiModelProperty(value = "")
@@ -99,7 +100,7 @@ public class BbsController {
         return new JsonResult("0",hotUser);
     }
 
-    @ApiOperation(value = "社区发现-关注热门达人，需要参数-postman已测可用，但代码逻辑仍需完善",notes = "关注社区发现热门达人，需要用户的userId传token,以及要加关注用户的userId命名为followId")
+    @ApiOperation(value = "社区发现-关注热门达人，需要参数-postman已测",notes = "关注社区发现热门达人，需要用户的userId传token,以及要加关注用户的userId命名为followId")
     @ApiModelProperty(value = "")
     @RequestMapping(value = "/followHotUser.do",method = RequestMethod.POST)
     public JsonResult followHotUser(@RequestBody Map<String,Object> map){
@@ -140,19 +141,37 @@ public class BbsController {
     *@Date:19/10/4
     * @Date:19/10/5
     *@description:社区关注页,
-    * 1.发布帖子，图片上传尚未完善
+    * 1.发布帖子，图片上传
     * 2.登录就展示金牌讲师，没登录就展示所有用户信息
     * 3.关注页面的最新发布，先从粉丝表查出所有关注的用户，再展示所有关注的用户的所有帖子按时间倒序排列。
     * */
-    @ApiOperation(value = "社区关注-发布帖子-需要参数",notes = "用户必须已经登录过且themeUserId存在token中")
+    @ApiOperation(value = "社区关注-发布帖子-需要参数-postman已测",notes = "用户必须已经登录过且themeUserId存在token中")
     @ApiModelProperty(value = "传递的字段应该为帖子标题，描述，图片地址，标签，以及当前时间和themeUserId")
     @RequestMapping(value = "/addTheme.do",method = RequestMethod.POST)
-    public JsonResult addTheme(MultipartFile file,String token,String themeInfo,Integer typeId,String themeTitle){
-        System.out.println("aaaaa");
+    public JsonResult addTheme(MultipartFile file,String token,String themeInfo,String typeId,String themeTitle){
+        if (token == null||token.equals("")){
+            return new JsonResult("1","还未登录，赶快登录吧");
+        }
+        if (file == null||file.equals("")){
+            return new JsonResult("1","图片未空哦,请重试");
+        }
+
+        if (typeId == null||typeId.equals("")){
+            return new JsonResult("1","您帖子类型是什么呢，请重试");
+        }
+        Integer i = Integer.valueOf(typeId);
+        System.out.println(i);
+
+        if (themeInfo == null||themeInfo.equals("")){
+            return new JsonResult("1","帖子不能没有内容哦");
+        }
+        if (themeTitle == null||themeTitle.equals("")){
+            return new JsonResult("1","请为您的帖子添加一个标题吧");
+        }
         HashMap<String, Object> map = new HashMap<>();
         map.put("token",token);
         map.put("themeInfo",themeInfo);
-        map.put("typeId",typeId);
+        map.put("typeId",i);
         map.put("themeTitle",themeTitle);
         JsonResult jsonResult = themeService.addTheme(map,file);
         return jsonResult;
@@ -174,6 +193,9 @@ public class BbsController {
     @ApiModelProperty(value = "")
     @RequestMapping(value = "/findFollowUserTheme.do",method = RequestMethod.POST)
     public JsonResult findFollowUserTheme(@RequestBody Map<String,Object> map){
+        if (map.get("token") == null){
+            return new JsonResult("1","还未登录，请登录后再查看您关注的用户");
+        }
         List<User> userList = followFanService.findAllFollowUser(map);
         List<Theme> themeList = themeService.findAllFollowUserTheme(userList);
         return new JsonResult("0",themeList);

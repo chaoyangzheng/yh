@@ -1,6 +1,7 @@
 package com.yh.mapper;
 
 import com.yh.entity.VideoCourse;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -87,4 +88,14 @@ public interface VideoCourseMapper {
      * 根据课程系列id查询视频课程列表
      */
     List<VideoCourse> findVideoCourseByCourseSysId(Integer courseSysId);
+
+    /**
+     * @param tagIdList     标签id的list集合
+     * @param conditionList 搜索条件的list集合
+     * @return 视频课程列表
+     * @author SHIGUANGYI
+     * @date 2019/10/6
+     * 根据搜索条件查询视频课程列表
+     */
+    List<VideoCourse> findVideoCourseByCondition(@Param("tagIdList") List<String> tagIdList, @Param("conditionList") List<String> conditionList);
 }
