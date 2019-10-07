@@ -127,7 +127,7 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
         </association>
         <collection property="user" javaType="User">
             <id property="userId" column="user_id"></id>
-            <result column="ID" property="Id"></result>
+            <result column="id" property="id"></result>
             <result column="username" property="username"></result>
             <result column="password" property="password"></result>
             <result column="phone" property="phone"></result>

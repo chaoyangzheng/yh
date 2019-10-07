@@ -143,13 +143,15 @@ public class UserServiceImpl implements UserService {
     public boolean findEmailOrPhone(Map<String, Object> map){
         String  loginCount = (String) map.get("loginCount");
         Integer emailLocation = loginCount.indexOf("@");
+        System.out.println(emailLocation);
         User user = new User();
-        if (emailLocation<0){
+        if (emailLocation==null||emailLocation<0){
             //验证手机号
             if (!phoneCheck(loginCount)){
                 throw new RuntimeException("regedit/请不要调皮，请输入正确的手机号");
             }
             user = userMapper.findUserByPhone(loginCount);
+            System.out.println(user);
         }else {
             if(!emailCheck(loginCount)){
                 throw new RuntimeException("regedit/请使用正确的邮箱格式，支持的邮箱：QQ、网易、谷歌、阿里云");
