@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ws.schild.jave.MultimediaInfo;
 import ws.schild.jave.MultimediaObject;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
@@ -22,7 +23,8 @@ public class UploadUtil {
 
     public String ImgUpload(MultipartFile file) {
 
-        String serverPath = "/usr/local/tomcat/webapps/show";
+//        String serverPath = "/usr/local/tomcat/webapps/show";
+        String serverPath ="C:\\Users\\Administrator\\Desktop\\show";
 
 
         File file1 = new File(serverPath);
