@@ -14,4 +14,9 @@ public interface CollectionVideoService {
 
     //视频收藏
     public void insertVideoToCollection(String useId,String videoCourseId);
+
+
+
+    //取消视频收藏
+    public void deleteVideoToCollection(String userId,String videoCourseId);
 }

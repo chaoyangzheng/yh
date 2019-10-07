@@ -10,8 +10,13 @@ public interface CollectionThemeService {
      */
 
 
+
     //帖子收藏
     public void insertThemeToCollection(String userId,String themeId);
+
+
+    //取消帖子收藏
+    public void deleteThemeToCollection(String userId,String themeId);
 
 
 

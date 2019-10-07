@@ -9,9 +9,16 @@
 
 
 
-    <!--  用户收藏视频    更改人：rongjing 时间：2019/10/06-->
+    <!--  用户收藏视频    更改人：rongjing 时间：2019/10/07-->
     <insert id="insertVideoToCollection" parameterType="string">
-        insert into t_collection_video (user_id,video_course_id) values (#{userId},#{videoCourseId})
+        insert into t_collection_video (user_id,video_course_id,collection_video_id) values (#{userId},#{videoCourseId},#{collectionVideoId})
     </insert>
+
+
+
+    <!--  用户取消收藏帖子  更改人：rongjing    时间：2019/10/07  -->
+    <delete id="deleteVideoToCollection" parameterType="string">
+        delete from t_collection_video where user_id = #{userId} and video_course_id = #{videoCourseId}
+    </delete>
 
 </mapper>

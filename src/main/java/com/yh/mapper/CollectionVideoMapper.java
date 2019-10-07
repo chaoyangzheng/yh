@@ -8,15 +8,21 @@ public interface CollectionVideoMapper {
 
 
     /**
-     * 收藏测试，但未完善，不可用
+     * 收藏
      *收藏视频
-     * @param user_id (用户id) string
-     * @param  video_course_id (视频id) string
+     * @param userId (用户id) string
+     * @param  videoCourseId (视频id) string
+     *  @param  collectionVideoId (视频id) string
      *@author rongjing
-     * @date 2019/10/05
+     * @date 2019/10/07
      */
 
 
-    //收藏视频测试
-    public void  insertVideoToCollection(String user_id,String video_course_id);
+    //收藏视频
+    public void  insertVideoToCollection(String userId,String videoCourseId,String collectionVideoId);
+
+
+
+    //取消收藏视频
+    public void  deleteVideoToCollection(String userId,String videoCourseId);
 }
