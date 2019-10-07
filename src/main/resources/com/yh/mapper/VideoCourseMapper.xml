@@ -11,8 +11,10 @@
         <result column="teacher_user_id" property="teacherUserId"/>
         <association property="type" select="com.yh.mapper.TypeMapper.findTypeByTypeId" column="type_id"/>
         <association property="uploadUser" select="com.yh.mapper.UserMapper.findUserByUserId" column="upload_user_id"/>
-        <association property="teacherUser" select="com.yh.mapper.UserMapper.findUserByUserId" column="teacher_user_id"/>
-        <collection property="tagList" select="com.yh.mapper.TagMapper.findTagByVideoCourseId" column="video_course_id"/>
+        <association property="teacherUser" select="com.yh.mapper.UserMapper.findUserByUserId"
+                     column="teacher_user_id"/>
+        <collection property="tagList" select="com.yh.mapper.TagMapper.findTagByVideoCourseId"
+                    column="video_course_id"/>
     </resultMap>
 
     <select id="findLatestSingleVideoCourse" resultMap="VideoCourseMap">
@@ -248,4 +250,46 @@
         RIGHT JOIN t_sys_video ON t_video_course.video_course_id = t_sys_video.video_course_id
         WHERE t_sys_video.course_sys_id = #{courseSysId}
     </select>
+
+    <select id="findVideoCourseByCondition" resultMap="VideoCourseMap">
+        SELECT
+        t_video_course.video_course_id,
+        t_video_course.video_course_name,
+        t_video_course.video_title,
+        t_video_course.video_info,
+        t_video_course.type_id,
+        t_video_course.video_course_url,
+        t_video_course.video_course_img_url,
+        t_video_course.upload_user_id,
+        t_video_course.upload_time,
+        t_video_course.teacher_user_id,
+        t_video_course.watch_number,
+        t_video_course.video_price,
+        t_video_course.course_type_id,
+        t_video_course.video_time
+        FROM
+        t_video_course
+        <where>
+            <foreach collection="tagIdList" item="tagId" open="and" separator="and">
+                EXISTS (
+                SELECT
+                t_video_tag.video_tag_id
+                FROM
+                t_video_tag
+                WHERE
+                t_video_tag.video_id = t_video_course.video_course_id
+                AND t_video_tag.tag_id = #{tagId}
+                )
+            </foreach>
+            <foreach collection="conditionList" item="condition" open="and" separator="and">
+                (
+                t_video_course.video_course_name Like '%${condition}%'
+                OR t_video_course.video_title Like '%${condition}%'
+                OR t_video_course.video_info Like '%${condition}%'
+                )
+            </foreach>
+        </where>
+
+    </select>
+
 </mapper>
